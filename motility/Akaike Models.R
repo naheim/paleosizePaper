@@ -32,6 +32,24 @@ my.n[i] <- length(temp.data)
 my.ts <- as.paleoTS(mm=my.mean, vv=my.var, nn=my.n, tt=my.time, oldest="last")
 fit3models(my.ts, method="Joint", pool=FALSE)
 
-# REPEAT FOR EACH MOTILITY LEVEL, & NON-MOTILE (3-5) VS MOTILE (1-2)
+# REPEAT FOR EACH MOTILITY LEVEL
 
+# for motile
+motile <- sizeData[(sizeData[,"motility"]==1 | sizeData[,"motility"]==2) & !is.na(sizeData$motility),]
 
+for(i in 1:n.bins) {
+temp.data <- log10(motile$max_vol[motility1$fad_age > timescale$age_top[i] & motile$lad_age < timescale$age_bottom[i]])
+my.mean[i] <- mean(temp.data)
+my.var[i] <- var(temp.data)
+my.n[i] <- length(temp.data)
+}
+
+# for nonmotile
+nonmotile <- sizeData[(sizeData[,"motility"]!=1 | sizeData[,"motility"]!=2) & !is.na(sizeData$motility),]
+
+for(i in 1:n.bins) {
+temp.data <- log10(nonmotile$max_vol[motility1$fad_age > timescale$age_top[i] & nonmotile$lad_age < timescale$age_bottom[i]])
+my.mean[i] <- mean(temp.data)
+my.var[i] <- var(temp.data)
+my.n[i] <- length(temp.data)
+}
