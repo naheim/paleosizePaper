@@ -21,7 +21,7 @@ for(i in 1:nrow(timescale)){temp.data = sizeData$tiering[sizeData$fad_age > time
 	my.tiering = rbind(my.tiering, temp.count)
 	}
 
-plot(1:10,1:10, type="n", xlim=c(541,0), ylim=range(my.tiering), pch=21, xlab="Geologic Time (Ma)", ylab="Amount of Gentra")
+plot(1:10,1:10, type="n", xlim=c(541,0), ylim=range(my.tiering), pch=21, xlab="Geologic Time (Ma)", ylab="Amount of Gentra", main="The Change in the Amount of Gentra Categorized by Tiering Level Over Million-Years")
 for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i])}
 
 abline(v = c(66, 251.2), col=)
