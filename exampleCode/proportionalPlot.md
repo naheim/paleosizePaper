@@ -65,5 +65,4 @@ polygon(xPoly, yPoly3, col=classCols[3])
 # we can even add a legend
 legend("topright", legend=rev(levels(mollusca$class)), fill=rev(classCols), bg="white", title="Linnaean Class") # I use rev() here so the classes are listed on the legend in the same order they appear in on the plot.
 ````
-
-![molluscan proportions](propMollClass.pdf)
+<img src="propMollClass.pdf" alt="molluscan proportions" />
