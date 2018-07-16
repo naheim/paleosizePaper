@@ -104,7 +104,7 @@ time.plot <- function(y.range, ylab="Time Series Data", main="", x.axis.pct=6, p
 ## Nice time series plots with geological time scale as x-axis
 ## This function plots multiple windows with a single time-axis
 ## if directly writing to file, close dev.off
-time.plot.mult <- function(nrow, ncol=1, plot.height=6.22, plot.width=7, time.height=1, bg="white", 
+time.plot.mult <- function(nrow, ncol=1, plot.height=6.22, plot.width=7, time.height=1.25, bg="white", 
 	cex.axis=1.2, cex.lab=1.2, cex=1.2, cex.intervals=0.75, 
 	bottom.mar = 3.25, left.mar = 3.5, top.mar = 0.75, right.mar = 1, mgp=c(2, 0.75, 0), las = 0, xaxs="i", 
 	lab.length = 1, pdf.name = NA, tiff.name = NA, all.cols=NULL, timescale='phanerozoic') {
@@ -116,7 +116,7 @@ time.plot.mult <- function(nrow, ncol=1, plot.height=6.22, plot.width=7, time.he
 	n.frames <- nrow*ncol+ncol
 #	print(n.frames)
 	total.height = sum(plot.height) + time.height
-	height.prop <- c(plot.height/total.height, time.height/total.height)
+	height.prop <- c(rep(plot.height/total.height/nrow, nrow), time.height/total.height)
 #	print(height.prop)
 	width.prop <- plot.width/total.width
 
@@ -252,7 +252,7 @@ time.plot.mult <- function(nrow, ncol=1, plot.height=6.22, plot.width=7, time.he
 		quartz(height=total.height, width=total.width, bg=bg)
 	}
 	layout(my.layout, widths=width.prop, heights=height.prop)
-	#layout.show(length(my.layout))
+	layout.show(length(my.layout))
 	par(mar=c(bottom.mar, left.mar, 0, right.mar), mgp=mgp, xaxs=xaxs, yaxs="i", cex=cex, cex.axis=cex.axis, cex.lab=cex.lab)
 	
 	#plot time scale
