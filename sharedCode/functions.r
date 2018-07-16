@@ -52,7 +52,9 @@ time.plot <- function(y.range, ylab="Time Series Data", main="", x.axis.pct=6, p
 		y.bottom <- min(y.axis.labs)*10*x.scale
 	}
 	y.top <- max(y.axis.labs)
-	if(show.plot==TRUE & layout==FALSE) {
+	if(show.plot==TRUE & layout==FALSE & grepl("Windows", Sys.info()['sysname'])) {
+		window(height=height, width=width)
+	} else if(show.plot==TRUE & layout==FALSE & grepl("Windows", Sys.info()['sysname'])) {
 		quartz(height=height, width=width)
 	} else if (show.plot==FALSE & layout==FALSE) {
 		pdf(file=file.name, height=height, width=width)
