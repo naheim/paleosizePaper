@@ -53,7 +53,7 @@ time.plot <- function(y.range, ylab="Time Series Data", main="", x.axis.pct=6, p
 	}
 	y.top <- max(y.axis.labs)
 	if(show.plot==TRUE & layout==FALSE & grepl("Windows", Sys.info()['sysname'])) {
-		window(height=height, width=width)
+		windows(height=height, width=width)
 	} else if(show.plot==TRUE & layout==FALSE & grepl("Windows", Sys.info()['sysname'])) {
 		quartz(height=height, width=width)
 	} else if (show.plot==FALSE & layout==FALSE) {
