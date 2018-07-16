@@ -29,18 +29,18 @@ coeffVector[coeffVector < -3 | coeffVector > 3] <- NA
 ciMinus[coeffVector < -3 | coeffVector > 3 | is.na(coeffVector)] <- NA
 ciPlus[coeffVector < -3 | coeffVector > 3 | is.na(coeffVector)] <- NA
 
-plot(timescale$age_mid,coeffVector)
-plot(timescale$age_mid,coeffVector, xlab = "Geologic Time (Ma)", ylab="Selectivity Coefficient", xlim=c(550,0), ylim=c(-3,3))
-plot(timescale$age_mid,coeffVector, main = "Extinction Selectivity Coefficient of Motility Over Time", xlab = "Geologic Time (Ma)", ylab="Selectivity Coefficient", xlim=c(550,0), ylim=c(-3,3))
-
+time.plot(c(-3,3), "Selectivity Coefficient")
+points(timescale$age_mid,coeffVector)
 segments(timescale$age_mid,ciMinus,timescale$age_mid,ciPlus,col="black")
+title(main="Extinction Selectivity Coefficient of Motility Over Time")
 
 # line through selectivity coefficients
 #construct error bars
 
 
 #vector for extinction rate
-rateVector <- array(data=NA, dim=nrow(timescale))
+rateVector1 <- array(data=NA, dim=nrow(timescale))
+rateVector2 <- array(data=NA, dim=nrow(timescale))
 
 # loop goes through each row of timescale dataset, ratio of extinct-motile/motile
 for (i in 1:nrow(timescale)) {
@@ -50,7 +50,7 @@ for (i in 1:nrow(timescale)) {
  	interval$extinct[interval$lad_age < intervalTime$age_bottom & interval$lad_age >= intervalTime$age_top] <- 1
 	motileRows <- interval[interval$motile==1,]
 	motileRowsExt <- motileRows[motileRows$extinct==1,]
-	rateVector[i] <- nrow(motileRowsExt)/nrow(motileRows) }
+	rateVector1[i] <- nrow(motileRowsExt)/nrow(motileRows) }
 
 # nonmotileRows <- sizeData[sizeData$motile==0]
 for (i in 1:nrow(timescale)) {
@@ -60,8 +60,13 @@ for (i in 1:nrow(timescale)) {
  	interval$extinct[interval$lad_age < intervalTime$age_bottom & interval$lad_age >= intervalTime$age_top] <- 1
 	nonmotileRows <- interval[interval$motile==0,]
 	nonmotileRowsExt <- nonmotileRows[nonmotileRows$extinct==0,]
-	rateVector[i] <- nrow(nonmotileRowsExt)/nrow(nonmotileRows) }
+	rateVector2[i] <- nrow(nonmotileRowsExt)/nrow(nonmotileRows) }
 
-plot(timescale$age_mid,rateVector)
-plot(timescale$age_mid,rateVector, main = "Extinction Rate of Nonmotile Marine Genera", xlab = "Geologic Time (Ma)", ylab="Extinction Rate", xlim=c(550,0), ylim=c(0,1))
-lines(x=timescale$age_mid,y=rateVector, col="black", lwd=1.0)
+time.plot(c(-0.2,1.2), "Extinction Rate")
+points(timescale$age_mid,rateVector1, col="blue")
+lines(x=timescale$age_mid,y=rateVector1, col="blue", lwd=1.0)
+points(timescale$age_mid,rateVector2, col="red")
+lines(x=timescale$age_mid,y=rateVector2, col="red", lwd=1.0)
+classCols <- c("red", "blue")
+title(main="Extinction Rate of Genera Over Time")
+legend("topright", legend=rev(c("Nonmotile","Motile")), fill=rev(classCols), bg="white", title="Motility Levels")
