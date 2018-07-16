@@ -1,0 +1,8 @@
+x <- 1:10
+factor(x, levels=1:10)
+table(sample(1:10, 100, TRUE))
+data.frame(table(sample(1:10, 100, TRUE)))
+vector(table(sample(1:10, 100, TRUE)))
+numeric(table(sample(1:10, 100, TRUE)))
+data.frame(table(sample(1:10, 100, TRUE)))$Freq
+getwd()
