@@ -246,7 +246,7 @@ time.plot.mult <- function(nrow, ncol=1, plot.height=6.22, plot.width=7, time.he
 		pdf(file = pdf.name, height=total.height, width=total.width, bg=bg)
 	} else if (!is.na(tiff.name)) {
 		tiff(filename=tiff.name, height=total.height, width=total.width, units = "in", bg = bg, res = 300)
-	} else (grepl("Windows", Sys.info()['sysname'])) {
+	} else if (grepl("Windows", Sys.info()['sysname'])) {
 		windows(height=total.height, width=total.width, bg=bg)
 	} else {
 		quartz(height=total.height, width=total.width, bg=bg)
