@@ -1,6 +1,6 @@
 sizeData$log10max_vol <- log10(sizeData$max_vol)
 
-making the plot not cut off
+# making the plot not cut off
 
 
 plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Motility Level 1", xlim=c(550,0), ylim=c(-2,12))
