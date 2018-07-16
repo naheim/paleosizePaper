@@ -27,6 +27,9 @@ for(i in 1:nrow(timescale)){temp.data = sizeData$tiering[sizeData$fad_age > time
 
 par(xaxs = "i", yaxs = "i")
 my.col = c("red", "orange", "green", "cyan", "magenta", "blue")
+
+#SPACE FOR COOL X-AXIS LABELS FOR GEOLOGIC AGES
+
 plot(1:10,1:10, type="n", xlim=c(541,-5), ylim=range(my.tiering), pch=21, xlab="Geologic Time (Ma)", ylab="Amount of Gentra")
 for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i])}
 abline(v = c(65, 201, 251.2, 445), col="black")
