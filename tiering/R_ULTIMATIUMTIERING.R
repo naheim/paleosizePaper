@@ -24,7 +24,7 @@ for(i in 1:nrow(timescale)){temp.data = sizeData$tiering[sizeData$fad_age > time
 par(xaxs = "i", yaxs = "i")
 my.col = c("red", "orange", "green", "cyan", "magenta", "blue")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-time.plot(c(0,range(my.tiering)), "Proportion of Genera", mar = c(4, 3.5, 6, 3.5)+0.1, mgp = c(2.5, 0.75, 0))
+time.plot(c(0,range(my.tiering)), "Amount of Genera", mar = c(4, 3.5, 6, 3.5)+0.1, mgp = c(2.5, 0.75, 0))
 #plot(1:10,1:10, type="n", xlim=c(541,-5), ylim=range(my.tiering), pch=21, xlab="Geologic Time (Ma)", ylab="Amount of Gentra")
 for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i])}
 abline(v = c(65, 200, 251.2, 443.8), col="black")
@@ -127,8 +127,8 @@ legend("topleft", legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect",
 
 par(col="black")
 my.col = c("red", "orange", "green", "cyan", "magenta", "blue")
-my.opp = c("chartreuse3", "dodgerblue2", "red", "darkorange1", "chartreuse3", "orange2")
-par(mar = c(5, 5, 5, 5)+0.1)
+my.opp = c("chartreuse3", "dodgerblue2", "red", "darkorange1", "forestgreen", "orange2")
+par(mar = c(5.5, 5.5, 2, 2)+0.1)
 par(mgp = c(3, 1.7, 0))
 boxplot(log10(max_vol)~tiering, bodySize, xlab="Tiering Level", ylab=expression(paste("Biovolume (log  "[10]," cm"^3,")")), col=my.col, names=c("Tiering Level 1:\n Pelagic", "Tiering Level 2:\n Erect", "Tiering Level 3:\n Surficial", "Tiering Level 4:\n Semi-infaunal", "Tiering Level 5:\n Shallow infaunal", "Tiering Level 6:\n Deep infaunal"), border = my.opp)
 mtext(side=3, line=0.5, "Biovolume vs. Tiering Level", col="black", font=4, cex=1.3)
