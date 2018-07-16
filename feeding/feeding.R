@@ -1,13 +1,11 @@
 library(paleoTS)
 setwd("/Users/ashlijain/Documents/git/paleosizePaper/rawDataFiles")
+source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
 
 bodySize <- read.delim(file="bodySizes.txt")
 timescale <- read.delim(file="timescale.txt")[-1,]
 
 bodySize <- subset(bodySize, !is.na(feeding) & feeding != 0)
-
-
-#bodySize$feeding[1:1000]
 
 suspensionFeeding <- subset(bodySize, feeding == 1)
 depositFeeding <- subset(bodySize, feeding == 2)
@@ -17,11 +15,10 @@ predatoryFeeding <- subset(bodySize, feeding == 5)
 otherFeeding <- subset(bodySize, feeding == 6)
 
 #*************************************************Feeding Type vs. Geologic Time***************************************************
-par(col="deepskyblue")
-plot(1:10,xlab="Feeding Type", ylab="Biovolume (log10mm^3)", xlim=c(1,6), ylim=c(0,30), type="n")
+par(col="black")
 
-boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylab="Biovolume (log10mm^3)", main="Biovolume (log10mm^3)
-        vs. Feeding Type")
+#plot(1:10,xlab="Feeding Type", ylab="Biovolume (log10mm^3)", xlim=c(1,6), ylim=c(0,30), type="n")
+boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylab="Biovolume (log10mm^3)", main="Biovolume vs. Feeding Type")
 
 #***************************graph all body sizes against geologic time (each feeding type is a different color)********************
 
@@ -50,7 +47,8 @@ for (i in 1:n.bins) {
   }
 }
 par(col="black")
-plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size", ylim=c(1.2,6.5))
+time.plot(c(0,6), "Mean Size per Feeding Type")
+plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size", ylim=c(1.2,6.5), main="Mean Size per Feeding Type")
 my.col=c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")
 #loop per column
 for(i in 1:6) {
@@ -59,20 +57,19 @@ for(i in 1:6) {
   #par(col=my.mean$color[k]); par(col="deepskyblue3")
   lines(timescale$age_mid, my.mean[, i], col=my.col[i])
 }
-#fix legend
+
 par(col="black")
-legend("topleft", legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = my.col, lty = 1, title="Feeding Color Legend", bg = NA, box.col=NA, title.adj = 0.26, cex=0.45)
-#add legend
+legend("topleft", legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = my.col, lty = 1, title="Feeding Color Legend", bg = NA, box.col=NA, title.adj = 0.26, cex=0.47)
 
 
 #95% confidence intervals
-par(col="deepskyblue")
-for (i in 1:n.bins) {
-  ci <- 1.96 * sqrt(my.var[i]) / sqrt(my.n[i])
-  my.x <- rep(timescale$age_bottom[i], 2)
-  my.y <- c(my.mean[i] + ci, my.mean[i] - ci)
-  lines(my.x, my.y, lwd=0.75)
-}
+#par(col="deepskyblue")
+#for (i in 1:n.bins) {
+#  ci <- 1.96 * sqrt(my.var[i]) / sqrt(my.n[i])
+#  my.x <- rep(timescale$age_bottom[i], 2)
+#  my.y <- c(my.mean[i] + ci, my.mean[i] - ci)
+#  lines(my.x, my.y, lwd=0.75)
+#}
 
 #******************************************Proportional Diversity of Feeding Type***************************************************
 #create 1 value vector of proportion of feeding time (corresponds to color) - 5 different ones needed
@@ -85,6 +82,7 @@ for(i in 1:nrow(timescale)) {
 }
 
 plot(1:10, type="n", xlim=c(541,0), ylim=c(0,1))
+time.plot(c(0,1), "Proportion of feeding", main="Feeding Proportions")
 
 propOrange <- myProp[,1]
 propBlue <- myProp[,2]
@@ -107,6 +105,8 @@ myCyan <- c((propOrange + propBlue + propPink + propGreen), rev(propOrange + pro
 polygon(myX, myCyan, col="cyan")
 myPurple <- c((propOrange + propBlue + propPink + propGreen + propCyan), rev(propOrange + propBlue + propPink + propGreen + propCyan + propPurple))
 polygon(myX, myPurple, col="mediumorchid4")
+
+legend(535, .23, legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = my.col, lty = 1, title="Feeding Color Legend", bg = "white", box.col=NA, title.adj = 0.26, cex=0.5)
 
 
 
