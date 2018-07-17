@@ -18,7 +18,7 @@ otherFeeding <- subset(bodySize, feeding == 6)
 par(col="black")
 
 #plot(1:10,xlab="Feeding Type", ylab="Biovolume (log10mm^3)", xlim=c(1,6), ylim=c(0,30), type="n")
-boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylab="Biovolume (log10mm^3)", main="Biovolume vs. Feeding Type")
+boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylim=c(-3, 12), ylab="Biovolume (log10mm^3)", main="Biovolume vs. Feeding Type", col=(c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")), names=c("Suspension", "Dep.", "Mining", "Grazing", "Predatory", "Other"))
 
 #***************************graph all body sizes against geologic time (each feeding type is a different color)********************
 
@@ -122,21 +122,74 @@ propPurple <- myProp[,6]
 
 myX <- c(timescale$age_mid, rev(timescale$age_mid))
 myOrange <- c(rep(0, nrow(timescale)), rev(propOrange))
-polygon(myX, myOrange, col="orange")
+polygon(myX, myOrange, col="blue1")
 myBlue <- c(propOrange, rev(propOrange + propBlue))
-polygon(myX, myBlue, col="royalblue")
+polygon(myX, myBlue, col="chartreuse2")
 myPink <- c((propOrange + propBlue), rev(propOrange + propBlue + propPink))
-polygon(myX, myPink, col="orchid1")
+polygon(myX, myPink, col="orange3")
 myGreen <- c((propOrange + propBlue + propPink), rev(propOrange + propBlue + propPink + propGreen))
-polygon(myX, myGreen, col="green")
+polygon(myX, myGreen, col="darkorchid1")
 myCyan <- c((propOrange + propBlue + propPink + propGreen), rev(propOrange + propBlue + propPink + propGreen + propCyan))
-polygon(myX, myCyan, col="cyan")
+polygon(myX, myCyan, col="deeppink1")
 myPurple <- c((propOrange + propBlue + propPink + propGreen + propCyan), rev(propOrange + propBlue + propPink + propGreen + propCyan + propPurple))
-polygon(myX, myPurple, col="mediumorchid4")
+polygon(myX, myPurple, col="lightskyblue")
 
-my.col=c("orange", "royalblue", "orchid1", "green", "cyan", "mediumorchid4")
+my.col=c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")
 
 legend(535, .23, legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = my.col, lty = 1, title="Feeding Color Legend", bg = "white", box.col=NA, title.adj = 0.26, cex=0.5)
 
+#***************************************************Logistic Regression************************************************************
+nBins <- nrow(timescale) # a variable of convenience for when the number of stages is used
 
+# for this example plot, we're going to plot the size selectivity of the animals with feeding type = 1 to 6
+FeedingType <- c("Suspension", "Surface Deposit", "Mining", "Grazing", "Predatory", "Other")
+for(type in 1:6) {
+  feed <- subset(sizeData, feeding==type)
+  
+  # define an empty data frame to hold all the proportions
+  feedExtSel <- data.frame(matrix(NA, nrow=nBins, ncol=3, dimnames=list(timescale$interval_name, c('coef','ci.minus','ci.plus'))))
+  
+  # here is our loop to calculate extinction selectivity over time
+  # this should be very familiar to you by now.
+  for(i in 1:nBins) {
+    temp <- subset(feed, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i]) # get all genera alive in interval
+    
+    
+    if(nrow(temp) > 0) {
+      # add a column to temp for extinction
+      temp$extinct <- 0 # default give every genus a 0 (=survivor)
+      temp$extinct[temp$lad_age >= timescale$age_top[i] & temp$lad_age < timescale$age_bottom[i]] <- 1 # assign a 1 to the victims
+      
+      # before we do the regression, we want to make sure there are at least 3 survivors & 3 victims
+      if(sum(temp$extinct) >= 3 & nrow(temp) >= 6) {
+        # run the logistic regression
+        myGlm <- glm("extinct ~ log10(max_vol)", data=temp, family="binomial")
+        summary(myGlm)
+        
+        # assign size coefficient to our output matrix
+        feedExtSel$coef[i] <- myGlm$coefficients[2] # the second value is the size coefficient, the first is the intercept
+        
+        # get the conficence intervals
+        myCi <- confint(myGlm)
+        
+        feedExtSel$ci.minus[i] <- myCi[2,1]
+        feedExtSel$ci.plus[i] <- myCi[2,2]
+      }
+    }
+  }
+  
+  # opens a new plot window with properly scaled and labeled axes
+  
+  title <- FeedingType[type]
+  dev.new();
+  time.plot(c(-2,2), "Log-odds of extinction", main=title)
+  
+  abline(h=0, lty=2) # adding a horizontal line at 0
+  
+  # the coefficients
+  points(timescale$age_mid, feedExtSel$coef, pch=16, cex=1.25, col="tomato")
+  
+  # the error bars
+  segments(timescale$age_mid,feedExtSel$ci.minus,timescale$age_mid,feedExtSel$ci.plus, col="#41dbb1")
+}
 
