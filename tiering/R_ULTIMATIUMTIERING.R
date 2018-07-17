@@ -142,9 +142,14 @@ sizeData <- subset(sizeData, !is.na(tiering) & tiering > 0)
 sizeData$log10_volume <- log10(sizeData$max_vol)
 dim(sizeData)
 head(sizeData)
+
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt')
-par(mar=c(5,4.5,2,2), xaxs="i")
-plot(1:10,1:10, type="n", xlim=c(550,0), ylim=c(-4,12), xlab="Geological time (Ma)", ylab=expression(paste("Biovolume (log  "[10]," cm"^3,")")))
+source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
+
+time.plot(c(-10, 15), expression(paste("Biovolume (log  "[10]," cm"^3,")")), mar=c(4,4,4,4), mgp = c(2, 0.75, 0))
+
+#plot(1:10,1:10, type="n", xlim=c(550,0), ylim=c(-4,12), xlab="Geological time (Ma)", ylab=expression(paste("Biovolume (log  "[10]," cm"^3,")")))
+
 segments(sizeData$fad_age, sizeData$log10_volume, sizeData$lad_age, sizeData$log10_volume)
 myMean <- vector(mode="numeric", length=nrow(timescale))
 my05 <- myMean
@@ -153,8 +158,160 @@ myCols<- c("red", "orange", "green", "cyan", "magenta", "blue")
 sizeData$color<-myCols[sizeData$tiering]
 head(sizeData)
 segments(sizeData$fad_age, sizeData$log10_volume, sizeData$lad_age, sizeData$log10_volume, col=sizeData$color)
-legend("topleft", lty = 1, title = "Tiering Levels:",legend = c("Tiering Level 1:\n Pelagic", "Tiering Level 2:\n Erect", "Tiering Level 3:\n Surficial", "Tiering Level 4:\n Semi-infaunal", "Tiering Level 5:\n Shallow infaunal", "Tiering Level 6:\n Deep infaunal"),col = c("red", "orange", "green", "cyan", "magenta", "blue"), cex = 0.89)
+#legend("topleft", lty = 1, title = "Tiering Levels:",legend = c("Tiering Level 1:\n Pelagic", "Tiering Level 2:\n Erect", "Tiering Level 3:\n Surficial", "Tiering Level 4:\n Semi-infaunal", "Tiering Level 5:\n Shallow infaunal", "Tiering Level 6:\n Deep infaunal"),col = c("red", "orange", "green", "cyan", "magenta", "blue"), cex = 1)
+legend(540, 14.9, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA, title.adj = 0.31)
 mtext(side=3, line=0.5, "Body Size Evolution Catagorized by Tiering Level Over 541 Million-Years", col="black", font=4, cex=1.3)
+
+Num1<-sizeData[which(sizeData$tiering == 1),]
+Num2<-sizeData[which(sizeData$tiering == 2),]
+Num3<-sizeData[which(sizeData$tiering == 3),]
+Num4<-sizeData[which(sizeData$tiering == 4),]
+Num5<-sizeData[which(sizeData$tiering == 5),]
+Num6<-sizeData[which(sizeData$tiering == 6),]
+
+myMeanNum1 <- vector(mode="numeric", length=nrow(timescale)) 
+for(i in 1:nrow(timescale)) {
+	temp<-Num1[Num1$fad_age > timescale$age_top[i] & Num1$lad_age < timescale$age_bottom[i], ] 
+	myMeanNum1[i]<-mean(temp$log10_volume) 
+}
+lines(timescale$age_mid, myMeanNum1, col="red4", lwd=6) 
+
+myMeanNum2 <- vector(mode="numeric", length=nrow(timescale))
+for(i in 1:nrow(timescale)) {
+	temp2<-Num2[Num2$fad_age > timescale$age_top[i] & Num2$lad_age < timescale$age_bottom[i], ]
+	myMeanNum2[i]<-mean(temp2$log10_volume)
+}
+lines(timescale$age_mid, myMeanNum2, col="orange3", lwd=6)
+
+myMeanNum3 <- vector(mode="numeric", length=nrow(timescale))
+for(i in 1:nrow(timescale)) {
+	temp3<-Num3[Num3$fad_age > timescale$age_top[i] & Num3$lad_age < timescale$age_bottom[i], ]
+	myMeanNum3[i]<-mean(temp3$log10_volume)
+}
+lines(timescale$age_mid, myMeanNum3, col="forestgreen", lwd=6)
+
+myMeanNum4 <- vector(mode="numeric", length=nrow(timescale))
+for(i in 1:nrow(timescale)) {
+	temp4<-Num4[Num4$fad_age > timescale$age_top[i] & Num4$lad_age < timescale$age_bottom[i], ]
+	myMeanNum4[i]<-mean(temp4$log10_volume)
+}
+lines(timescale$age_mid, myMeanNum4, col="cyan3", lwd=6)
+
+myMeanNum5 <- vector(mode="numeric", length=nrow(timescale))
+for(i in 1:nrow(timescale)) {
+	temp5<-Num5[Num5$fad_age > timescale$age_top[i] & Num5$lad_age < timescale$age_bottom[i], ]
+	myMeanNum5[i]<-mean(temp5$log10_volume)
+}
+lines(timescale$age_mid, myMeanNum5, col="magenta3", lwd=6)
+
+myMeanNum6 <- vector(mode="numeric", length=nrow(timescale))
+for(i in 1:nrow(timescale)) {
+	temp6<-Num6[Num6$fad_age > timescale$age_top[i] & Num6$lad_age < timescale$age_bottom[i], ]
+	myMeanNum6[i]<-mean(temp6$log10_volume)
+}
+lines(timescale$age_mid, myMeanNum6, col="blue3", lwd=6)
+
+**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+
+# MultiGraph with Previous Stephanie Graph
+
+sizeData <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt')
+sizeData <- subset(sizeData, !is.na(tiering) & tiering > 0)
+sizeData$log10_volume <- log10(sizeData$max_vol)
+dim(sizeData)
+head(sizeData)
+
+timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt')
+source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
+
+sizeData$log10max_vol <- log10(sizeData$max_vol)
+
+Num1<-sizeData[which(sizeData$tiering == 1),]
+Num2<-sizeData[which(sizeData$tiering == 2),]
+Num3<-sizeData[which(sizeData$tiering == 3),]
+Num4<-sizeData[which(sizeData$tiering == 4),]
+Num5<-sizeData[which(sizeData$tiering == 5),]
+Num6<-sizeData[which(sizeData$tiering == 6),]
+
+#"Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"
+
+time.plot.mult(nrow=2, ncol=3,las=1,top.mar=2.5)
+par(las=1)
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log  "[10]," mm"^3*")")))
+ sizeData$log10max_vol <- log10(sizeData$max_vol)
+ segments(Num1$fad_age,Num1$log10max_vol,Num1$lad_age,Num1$log10max_vol, col="red")
+ title(main="Tiering Level 1: Pelagic")
+ meanVector <- vector(mode='numeric', length=nrow(timescale))
+ for(i in 1:nrow(timescale)) { 
+  	meanVector[i] <- mean(Num1$log10max_vol[Num1$fad_age > timescale$age_top[i] & Num1$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
+
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log  "[10]," mm"^3*")")))
+segments(Num2$fad_age,Num2$log10max_vol,Num2$lad_age,Num2$log10max_vol, col="orange")
+meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) { 
+  	meanVector[i] <- mean(Num2$log10max_vol[Num2$fad_age > timescale$age_top[i] & Num2$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
+ title(main="Tiering Level 2: Erect")
+
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log  "[10]," mm"^3*")")))
+segments(Num3$fad_age,Num3$log10max_vol,Num3$lad_age,Num3$log10max_vol, col="green")
+ title(main="Tiering Level 3: Surficial")
+ meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) { 
+ 	meanVector[i] <- mean(Num3$log10max_vol[Num3$fad_age > timescale$age_top[i] & Num3$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
+
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log"[10]," mm"^3*")")))
+segments(Num4$fad_age,Num4$log10max_vol,Num4$lad_age,Num4$log10max_vol, col="cyan")
+title(main="Tiering Level 4: Semi-infaunal")
+ meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) { 
+ 	meanVector[i] <- mean(Num4$log10max_vol[Num4$fad_age > timescale$age_top[i] & Num4$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
+
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log  "[10]," mm"^3*")")))
+segments(Num5$fad_age,Num5$log10max_vol,Num5$lad_age,Num5$log10max_vol, col="magenta")
+title(main="Tiering Level 5: Shallow infaunal")
+meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) { 
+ 	meanVector[i] <- mean(Num5$log10max_vol[Num5$fad_age > timescale$age_top[i] & Num5$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
+
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log  "[10]," mm"^3*")")))
+segments(Num6$fad_age,Num6$log10max_vol,Num6$lad_age,Num6$log10max_vol, col="blue")
+title(main="Tiering Level 6: Deep infaunal")
+meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) { 
+ 	meanVector[i] <- mean(Num6$log10max_vol[Num6$fad_age > timescale$age_top[i] & Num6$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
+
+
+
+plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 1", xlim=c(550,0), ylim=c(-2,12))
+segments(Num1$fad_age,Num1$log10max_vol,Num1$lad_age,Num1$log10max_vol, col="red")
+
+plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 2", xlim=c(550,0), ylim=c(-2,12))
+segments(Num2$fad_age,Num2$log10max_vol,Num2$lad_age,Num2$log10max_vol, col="orange")
+
+plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 3", xlim=c(550,0), ylim=c(-2,12))
+segments(Num3$fad_age,Num3$log10max_vol,Num3$lad_age,Num3$log10max_vol, col="green")
+
+plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 4", xlim=c(550,0), ylim=c(-2,12))
+segments(Num4$fad_age,Num4$log10max_vol,Num4$lad_age,Num4$log10max_vol, col="cyan")
+
+plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 5", xlim=c(550,0), ylim=c(-2,12))
+segments(Num5$fad_age,Num5$log10max_vol,Num5$lad_age,Num5$log10max_vol, col="magenta")
+
+plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 6", xlim=c(550,0), ylim=c(-2,12))
+segments(Num6$fad_age,Num6$log10max_vol,Num6$lad_age,Num6$log10max_vol, col="blue")
+
+meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) { 
+ 	meanVector[i] <- mean(sizeData$log10max_vol[sizeData$fad_age > timescale$age_top[i] & sizeData$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=2.5)
+
+
 
 
 
