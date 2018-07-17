@@ -1,262 +1,250 @@
-getwd()
-# read in size and timescale data files#
-sizeData <- read.delim('bodySizes.txt') #
+precip
+as(precip,"vector")
+precip
+precip <- as(precip, "vector")
+is(precip, "vector")
+precip
+head(precip)
+i used trees <- as(trees,"matrix")
+trees <- as(trees,"matrix
+trees <- as(trees,"matrix")
+trees
+A
+B
+precip <- as(precip,"matrix")
+precip
+precip[1,8]
+precip[8,1]
+precip[1:8,1]
+sum(precip[1:8])
+sum(precip[1:8, 1])
+c <- sum(precip[1:8, 1])
+c / B
++A
+a
+A
+(c/B)+A
+?sample
+mymatrix
+set.seed(154)
+MatrixElements<-sample(c(1,2,3,4,5,6,7,8,9,10), size = 96, replace=TRUE)
+MyMatrix<-matrix(MatrixElements,8,12)
+MyMatrix
+Which(MyMatrix ==7)
+which(mymatrix == 7)
+which(MyMatrix == 7)
+which(MyMatrix <8)
+which(MyMatrix <8 | >6)
+which(MyMatrix <8 | MyMatrix >6)
+MyMatrix[which(MyMatrix <8 | MyMatrix >6)]
+MyMatrix[which(MyMatrix == 7)]
+sum(MyMatrix[1, ])
+?colSums
+colSums(MyMarix)
+colSums(MyMatrix)
+sum(MyMatrix[,1 ])
+product
+MyMatrix(which(MyMatrix <8 and Mymatrix > 3))
+MyMatrix(which(MyMatrix <8 | Mymatrix > 3))
+MyMatrix(which(MyMatrix <8 | MyMatrix > 3))
+MyMatrix[which(MyMatrix <8 | MyMatrix > 3)]
+MyMatrix[which(MyMatrix <8 & MyMatrix > 3)]
+MyMatrix[which(MyMatrix ==10 & Mymatrix ==12)] <-7
+MyMatrix[which(MyMatrix ==10 & MyMatrix ==12)] <-7
+MyMatrix
+MyMatrix[row,] = TRUE
+is(MyMatrix[1,] = TRUE)
+is(MyMatrix[1,], TRUE)
+is(MyMatrix[1,]
+set.seed(541)
+MatrixElements<-sample(c(TRUE,FALSE), size = 96, replace=TRUE)
+MyMatrix<-array(data=MatrixElements,dim=c(8,12))
+MyMatrix[1,] =TRUE
+is(MyMatrix[1,], TRUE)
+is(MyMatrix[1,], true)
+a
+A
+B
+C
+c
+SuS
+SuS <- (MyMatrix*1)
+SuS
+MyMatrix
+MyMatrix[1,] = TRUE
+MyMatrix
+MyMatrix[2,] = TRUE
+MyMatrix
+is(MyMatrix[3,] = TRUE)
+is(MyMatrix[3,] == TRUE)
+rowSums(MyMatrix)
+rowSums(MyMatrix) == ncol(MyMatrix)
+set.seed(154)
+MatrixElements<-sample(c(1,2,3,4,5,6,7,8,9,10), size = 96, replace=TRUE)
+MyMatrix<-matrix(MatrixElements,8,12)
+MyMatrix(which[MyMatrix == 10])
+MyMatrix(which(MyMatrix == 10))
+which(MyMatrix == 10)
+which(MyMatrix ==10) <- 12
+f
+dfd
+f
+df
+dfdf
+d
+f
+af
+d
+asd
+f
+dfa
+df
+da
+sd
+f
+d
+fdsa
+f
+da
+sf
+d
+df
+SuS
+set.seed(154)
+MatrixElements<-sample(c(1,2,3,4,5,6,7,8,9,10), size = 96, replace=TRUE)
+MyMatrix<-matrix(MatrixElements,8,12)
+10 <- 12
+sus <- "sauce"
+sus
+Quotations <- ""
+Quotations
+Loss <- | || || |_
+Clear
+sizeData <- read.delim('bodySizes.txt')
+sizeData <- read.delim('bodySizes.txt')
 timescale <- read.delim('timescale.txt')
-nrow(sizeData)
-maasTime <- timescale[timescale$interval_name == 'Maastrichtian',]#
-maas <- suset(sizeData, fad_age > maasTime$age_top & lad_age < maasTime$age_bottom) # note the introduction of a new functino, subset()
-maasTime <- timescale[timescale$interval_name == 'Maastrichtian',]#
-maas <- subset(sizeData, fad_age > maasTime$age_top & lad_age < maasTime$age_bottom) # note the introduction of a new functino, subset()
-maas
-maasTime
-nrow(maas)
-maas$extinct <- 0 # this makes a new column called extinct and gives every genus a value of 0#
-maas$extinct[maas$lad_age < maasTime$age_bottom & maas$lad_age >= maasTime$age_top] <- 1 # set thouse genera whose lad is within the Maastrichtian. Note the use of >=, which is "greater than or equal to".
-sum(maas$extinct)
-head(sizeData)
-sizeData$logVolume <- log10(sizeData$max_vol)
-plot(sizeData$logVolume, sizeData$extinct, xlab="log biovolume (cubic mm)", ylab="Extinction status", pch=16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
-head(sizeData$extinct)
-plot(maas$logVolume, maas$extinct, xlab="log biovolume (cubic mm)", ylab="Extinction status", pch=16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
-head(maas)
-maas$logVolume <- log10(maas$max_vol)
-plot(maas$logVolume, maas$extinct, xlab="log biovolume (cubic mm)", ylab="Extinction status", pch=16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
-maasGlm <- glm(glmEqn, family="binomial", data=maas) # this runs the regression#
-#
-summary(maasGlm)
-glmEqn <-"extinction ~ logVol" # these correspond to colu
-maasGlm <- glm(glmEqn, family="binomial", data=maas) # this runs the regression#
-#
-summary(maasGlm)
-glmEqn <-"extinct ~ logVol" # these correspond to column names in maas.
-maasGlm <- glm(glmEqn, family="binomial", data=maas) # this runs the regression#
-#
-summary(maasGlm)
-head(maas)
-````r
-glmEqn <-"extinct ~ logVolume" # these correspond to column names in maas.
-maasGlm <- glm(glmEqn, family="binomial", data=maas) # this runs the regression#
-#
-summary(maasGlm)
-summary(maasGlm)$coefficients
-exp(-0.7422)
-points(maas$logVolume, maasGlm$fitted, col="red", pch=16)
-install.packages("readstata13")
-library(readstata13)
-?unzip
-dat <- read.dta13("HT_2012_DHS_07032018_1750_92273.zip")
-dat <- read.dta13("HT_2012_DHS_07032018_1750_92273")
-dat <- read.dta13("HT_2012_DHS_07032018_1750_92273.zip")
-dat <- read.dta13("HT_2012_DHS_07032018_1750_92273")
-init.dir <- getwd()#
-if(is.element(Sys.info()["nodename"], c("es-naheim.local","sr12-cf96e71ca1.stanford.edu"))) {#
-	my.root <- "/Volumes/Blastoid/noelheim_data"#
-} else {#
-	my.root <- "/Users/noelheim"#
-}#
-Sys.setenv(TZ="America/Los_Angeles")#
-source(paste(my.root,"/Box Sync/Includes/myFunctions.r", sep=""));#
-#
-setwd(paste(my.root,"/Box Sync/Emily", sep=""))#
-#
-library(readstata13)#
-#
-dat <- read.dta13("HTIR61DT/HTIR61DT.DTA")
-getwd()
-init.dir <- getwd()#
-if(is.element(Sys.info()["nodename"], c("es-naheim.local","sr12-cf96e71ca1.stanford.edu"))) {#
-	my.root <- "/Volumes/Blastoid/noelheim_data"#
-} else {#
-	my.root <- "/Users/noelheim"#
-}#
-Sys.setenv(TZ="America/Los_Angeles")#
-source(paste(my.root,"/Box Sync/Includes/myFunctions.r", sep=""));#
-#
-setwd(paste(my.root,"/Box Sync/Emily", sep=""))#
-#
-library(readstata13)#
-#
-dat <- read.dta13("/HTIR61DT/HTIR61DT.DTA")
-setwd(paste(my.root,"/Box Sync/Emily/HTIR61DT", sep=""))
-getwd()
-dat <- read.dta13("HTIR61FL.DTA")
-warnings()dat
-warnings()
-head(dat)
-nrow(dat)
-ncol(dat)
-dim(dat)
-head(dat$v375a)
-table(dat$v375a)
-dat <- readstata13("HTIR61DT")
-dat <- read.stata13("HTIR61DT")
-install.packages("haven")
-library(haven)
-getwd()
-read_stata("HT_2012_DHS_07032018_1750_92273.zip")
-citation('haven')
-read_stata("HTIR61DT")
-read_stata("HTIR61DT/HTIR61FL.DTA")
-dta <- read_stata("HTIR61DT/HTIR61FL.DTA")
-dim(dta)
-table(dta$v375a)
-class9dta
-class(dta)
-length(dta)
-head9dta
-head(dta)
-df <- as.data.frame(dta)
-head(df)
-dim(df)
-table(df$v375a)
-df <- unlist(dta)
-head(df)
-?attr
-dat <- readstata13("HTIR61DT/HTIR61FL.DTA")
-dat <- read.dta13("HTIR61DT/HTIR61FL.DTA")
-cladd(dat)
-class(dat)
-table(dat$v3402)
-table(dat$v3A02)
-table(dat$v375a)
-table(dat$V3A02)
-table(dat$V3A03)
-table(dat$V3A04)
-table(dat$V3A05)
-table(dat$V3A05)
-table(df$V3A05)
-table(dat$V301)
-install.packages("foreign")
-library(foreign)
-dta <- read.dta("HTIR61DT/HTIR61FL.DTA")
-?read.sav
-sav
-sav <- read.spss("HTIR61SV/HTIR61FL.SAV", to.data.frame=TRUE)
-head(sav)
-table(sav$V375a)
-table(sav$v375a)
-head(sav$v375a)
-head(sav$V375a)
-colnames(sav)[375]
-colnames(sav)
-table(sav$V375A)
-table(sav$V3A02)
-barplot(sav$V3A02)
-barplot(table(sav$V3A02))
-box()
-barplot(table(sav$V3A03))
-barplot(table(sav$V3A04))
-barplot(table(sav$V3A05))
-table(sav$V3A08A)
-vars2 <- paste("V3A08", LETTERS[1:26], sep="")
-vars2
-table(sav$V375.A)
-table(sav$V3A08A)
-table(sav$V375A)
-length(table(sav$V375A))
-getwd()
-# load the paleoTS library#
-# packages installed through the Package Installer are not automatically loaded, so you need to tell R to load the packages you want with the library() command#
-# it is always a good idea to load all the needed libraries at the top of your script#
-library(paleoTS) #
-#
-# read in size and timescale data files#
-sizeData <- read.delim('bodySizes.txt') #
-timescale <- read.delim('timescale.txt') #
-#
-# USING the paleoTS package.#
-n.bins <- nrow(timescale) # t
-n.bins
-# load the paleoTS library#
-# packages installed through the Package Installer are not automatically loaded, so you need to tell R to load the packages you want with the library() command#
-# it is always a good idea to load all the needed libraries at the top of your script#
-library(paleoTS) #
-#
-# read in size and timescale data files#
-sizeData <- read.delim('bodySizes.txt') #
-timescale <- read.delim('timescale.txt') #
-#
-# USING the paleoTS package.#
-n.bins <- nrow(timescale) # t
-my.mean <- vector(mode="numeric", length=n.bins)  # this is a vector that will hold number and has the same length as our timescale#
-my.var <- vector(mode="numeric", length=n.bins)#
-my.n <- vector(mode="numeric", length=n.bins)#
-my.time <- timescale$age_bottom  # we don't really need to make a separate variable for this, but just for clarity I have.  Also not that I've used age_bottom (rather than interval midpoint or age_top) so that the duration of each stage are calculated by paleoTS#
-#
-# just to make thigs easier to read, we are optionally naming each value in our vectors after the time interval they correspond to#
-my.mean # look at the nameless empty vector#
-names(my.mean) <- timescale$interval_name#
-my.mean # now look at the empty vector with each value named#
-names(my.var) <- timescale$interval_name#
-names(my.n) <- timescale$interval_name#
-names(my.time) <- timescale$interval_name#
-#
-for(i in 1:n.bins) {  #all three parts of the for loop are called inside for function.  i = iterator variable, 1 = start value, n.bins = end value.  In english this means For each value of i between 1 and n.bins (97 in this case), including the endpoints, do whatever is inside the curly braces#
-    temp.data <- log10(sizeData$max_vol[sizeData$fad_age > timescale$age_top[i] & sizeData$lad_age < timescale$age_bottom[i]])#
-    # Here we're getting the subset of max_length from my.data where#
-    #   a. the base of the stratigraphic range  (fad_age) is older than the top of the i-th interval#
-    #   b. AND the top of the stratigraphic range  (lad_age) is younger than the base of the i-th interval#
-    #   this will give us all genera whos stratigraphic range intersects the i-th interval#
-    # NOTE that we've taken the log10 of the max lengths#
-    my.mean[i] <- mean(temp.data)  # we are setting the i-th value of my.mean to the mean of our subset of data#
-    my.var[i] <- var(temp.data)  # variance#
-    my.n[i] <- length(temp.data)  # sample size#
-}
-my.var
-my.ts <- as.paleoTS(mm=my.mean, vv=my.var, nn=my.n, tt=my.time, oldest="last")  #
-#
-# fit three evolutionary models#
-fit3models(my.ts, method="Joint")
-?fir3models
-?firtmodels
-?fit3models
-my.var
-range(my.var)
-length(unique(my.var))
-length(my.var)
-my.ts <- as.paleoTS(mm=my.mean, vv=my.var, nn=my.n, tt=my.time, oldest="last")  #
-#
-# fit three evolutionary models#
-fit3models(my.ts, method="Joint", pool=TRUE)
-my.ts <- as.paleoTS(mm=my.mean, vv=my.var, nn=my.n, tt=my.time, oldest="last")  #
-#
-# fit three evolutionary models#
-fit3models(my.ts, method="Joint", pool=FALSE)
-plot(timescale$age_bottom, my.mean, xlim=c(541,0), type="o", pch=16, xlab="Geologic time (Ma)", ylab=expression(paste("Mean body size (log"[10],"mm)")))
-for(i in 1:n.bins) {#
-	ci <- 1.96 * sqrt(my.var[i]) / sqrt(my.n[i])#
-	# 2 points will define our confidence interval lines so let's just make x and y vectors to make the lines() command look neater#
-	my.x <- rep(timescale$age_bottom[i], 2)  # rep() repeats a value.  Since we want a vertical line, both points will have the same x-value#
-	my.y <- c(my.mean[i] + ci, my.mean[i] - ci)#
-	lines(my.x, my.y, lwd=0.75) # ldw is line width and here we're plotting CI lines that are 0.75 times as thick as the default line (i.e., 25% thinner)#
-}
-plot(timescale$age_bottom, my.mean, xlim=c(541,0), type="o", pch=16, xlab="Geologic time (Ma)", ylab=expression(paste("Mean body size (log"[10],"mm)")))
-for(i in 1:n.bins) {#
-	ci <- 1.96 * sqrt(my.var[i]) / sqrt(my.n[i])#
-	# 2 points will define our confidence interval lines so let's just make x and y vectors to make the lines() command look neater#
-	my.x <- rep(timescale$age_bottom[i], 2)  # rep() repeats a value.  Since we want a vertical line, both points will have the same x-value#
-	my.y <- c(my.mean[i] + ci, my.mean[i] - ci)#
-	lines(my.x, my.y, lwd=0.75) # ldw is line width and here we're plotting CI lines that are 0.75 times as thick as the default line (i.e., 25% thinner)#
-}
-x <- 1:10
-mean(x)
-var(x)
-sum(mean(x)-x)^2
-sum(mean(x)-x)
-mean(x)
-x <- rnorm(10)
-mean(x)
-var(x)
-sum(mean(x)-x)^2
-sum(mean(x)-x)
-man(x)-x
-mean(x)-x
-(mean(x)-x)^2
-sum()(mean(x)-x)^2)
-sum((mean(x)-x)^2)
-var(x)
-sum((mean(x)-x)^2)/length(x)
-sum((mean(x)-x)^2)/length(x)^2
-sum((mean(x)-x)^2)/(length(x)-1)
-var(x)
-q()
+callTime <- timescale[timescale$interval_name == 'Callovian',]
+call <- subset(sizeData, fad_age > callTime$age_top & lad_age < callTime$age_bottom)
+call$extinct <- 0
+call$extinct[call$lad_age < callTime$age_bottom & call$lad_age >= callTime$age_top] <- 1
+call$logVolume <- log10(call$max_vol)
+plot(maas$feeding, maas$extinct, xlab ="Feeding", ylab = "Extinction status", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+plot(call$feeding, call$extinct, xlab ="Feeding", ylab = "Extinction status", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+plot(call$feeding, call$fad_age, xlab ="Feeding", ylab = "Callovian age", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+glmEqn <-"feeding ~ fad_age
+""
+v
+v
+v
+v
+djgpaej
+ri
+``
+glm
+fdfdf
+fd
+f
+df
+d
+f
+d
+f
+df
+d
+f
+d
+f
+df
+d
+f
+df
+d
+f
+d
+f
+d
+f
+df
+d
+f
+df
+df
+d
+fdf
+d
+f
+df
+df
+fd
+f
+df
+d
+f
+df
+d
+f
+d
+f
+qqqq'
+q
+c
+glmEqn <-"feeding ~ fad_age"
+glmEqn <-"feeding ~ fad_age"
+callGlm <- glm(glmEqn, family="binomial", data=call)
+as.numeric(callGlm) <- glm(glmEqn, family="binomial", data=call)
+as.numeric(callGlm) -1 <- glm(glmEqn, family="binomial", data=call)
+callGlm <- glm(glmEqn, data=call)
+summary(callGlm)
+call <- call[!is,na(call$feeding),]
+call <- call[!is.na(call$feeding),]
+plot(call$feeding, call$fad_age, xlab ="Feeding", ylab = "Callovian age", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$feeding, maasGlm$fitted, col="blue", pch=16)
+points(call$feeding, callGlm$fitted, col="blue", pch=16)
+points(call$feeding, callGlm$fitted, col="blue")
+plot(call$feeding, call$fad_age, xlab ="Feeding", ylab = "Callovian age", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$feeding, callGlm$fitted, col="blue")
+points(call$feeding, callGlm$fitted, col="darkolivegreen1")
+plot(call$feeding, call$fad_age, xlab ="Feeding", ylab = "Callovian age", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$feeding, callGlm$fitted, col="darkolivegreen1")
+head(callGlm$fitted)
+glmEqn <-"fad_age ~ feeding"
+head(callGlm$fitted)
+callGlm <- glm(glmEqn, data=call)
+points(call$feeding, callGlm$fitted, col="darkolivegreen1")
+points(call$feeding, callGlm$fitted, col="deepskyblue1")
+points(call$feeding, callGlm$fitted, col="deepskyblue1", pch = 16)
+plot(call$fad_age, call$feeding, xlab ="Callovian Age", ylab = "Feeding", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+glmEqn <-"feeding ~ fad_age"
+callGlm <- glm(glmEqn, data=call)
+points(call$feeding, callGlm$fitted, col="deepskyblue1", pch = 16)
+head(callGlm$fitted)
+points(call$fad_age, callGlm$fitted, col="deepskyblue1", pch = 16)
+plot(call$fad_age, call$feeding, xlab ="Callovian Age", ylab = "Feeding", pch =16, xlim= c(541,0), col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$fad_age, callGlm$fitted, col="deepskyblue1", pch = 16)
+points(call$fad_age, callGlm$fitted, col="deepskyblue1", pch = 11)
+plot(call$fad_age, call$feeding, xlab ="Callovian Age", ylab = "Feeding",type ="l" pch =16, xlim= c(541,0), col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+plot(call$fad_age, call$feeding, xlab ="Callovian Age", ylab = "Feeding",type ="l", pch =16, xlim= c(541,0), col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+plot(call$fad_age, call$feeding, xlab ="Callovian Age", ylab = "Feeding", pch =16, xlim= c(541,0), col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$fad_age, callGlm$fitted, col="deepskyblue1", pch = 11)
+call <- call[!is.na(maas$feeding),]
+call <- call[!is.na(call$feeding),]
+call$sus <- 0
+call$sus[call$feeding == 1] <- 1
+head(call)
+table(call$sus)
+glm.eqn <- "extinct ~ logVolume + sus"
+ext.glm <- glm(glm.eqn, family=binomial(logit), data = call)
+summary(ext.glm)
+plot(call$fad_age, call$sus, xlab ="Callovian Age", ylab = "Suspension", pch =16, xlim= c(541,0), col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$fad_age, callGlm$fitted, col="deepskyblue1", pch = 11)
+points(call$sus, callGlm$fitted, col="deepskyblue1", pch = 11)
+glm.eqn <- "extinct ~ logVolume + sus"
+callGlm <- glm(glmEqn,family =binomial(logit), data=call)
+head(call)
+callGlm <- glm(glmEqn,family =binomial(logit), data=call)
+callGlm <- glm(glmEqn,family =binomial, data=call)
+glmEqn
+callGlm <- glm(glm.eqn,family =binomial, data=call)
+points(call$sus, callGlm$fitted, col="deepskyblue1", pch = 11)
+callGlm
+callGlm$coefficients
