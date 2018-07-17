@@ -213,7 +213,7 @@ lines(timescale$age_mid, myMeanNum6, col="blue3", lwd=6)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
-# MultiGraph with Previous Stephanie Graph
+#MultiGraph with Previous Stephanie Graph
 
 sizeData <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt')
 sizeData <- subset(sizeData, !is.na(tiering) & tiering > 0)
@@ -286,35 +286,9 @@ for(i in 1:nrow(timescale)) {
  	meanVector[i] <- mean(Num6$log10max_vol[Num6$fad_age > timescale$age_top[i] & Num6$lad_age < timescale$age_bottom[i]]) }
 lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
 
+**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
-
-plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 1", xlim=c(550,0), ylim=c(-2,12))
-segments(Num1$fad_age,Num1$log10max_vol,Num1$lad_age,Num1$log10max_vol, col="red")
-
-plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 2", xlim=c(550,0), ylim=c(-2,12))
-segments(Num2$fad_age,Num2$log10max_vol,Num2$lad_age,Num2$log10max_vol, col="orange")
-
-plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 3", xlim=c(550,0), ylim=c(-2,12))
-segments(Num3$fad_age,Num3$log10max_vol,Num3$lad_age,Num3$log10max_vol, col="green")
-
-plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 4", xlim=c(550,0), ylim=c(-2,12))
-segments(Num4$fad_age,Num4$log10max_vol,Num4$lad_age,Num4$log10max_vol, col="cyan")
-
-plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 5", xlim=c(550,0), ylim=c(-2,12))
-segments(Num5$fad_age,Num5$log10max_vol,Num5$lad_age,Num5$log10max_vol, col="magenta")
-
-plot(NA, xlab="Geologic Time (Ma)", ylab=expression(paste("Body Size log"[10],"mm"^3)), main="Body Size Evolution of Marine Genera with Tiering Level 6", xlim=c(550,0), ylim=c(-2,12))
-segments(Num6$fad_age,Num6$log10max_vol,Num6$lad_age,Num6$log10max_vol, col="blue")
-
-meanVector <- vector(mode='numeric', length=nrow(timescale))
-for(i in 1:nrow(timescale)) { 
- 	meanVector[i] <- mean(sizeData$log10max_vol[sizeData$fad_age > timescale$age_top[i] & sizeData$lad_age < timescale$age_bottom[i]]) }
-lines(x=timescale$age_mid,y=meanVector, col="black", lwd=2.5)
-
-
-
-
-
+#Stephanie Logistic Regression Combined Tiering Graph 
 
 
 
