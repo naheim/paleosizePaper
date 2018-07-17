@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 precip
 as(precip,"vector")
 precip
@@ -248,3 +249,664 @@ callGlm <- glm(glm.eqn,family =binomial, data=call)
 points(call$sus, callGlm$fitted, col="deepskyblue1", pch = 11)
 callGlm
 callGlm$coefficients
+=======
+exp(0.14088)
+e
+exp(1)
+2.718281^0.14088
+getwd()
+# read in size and timescale data files#
+sizeData <- read.delim('bodySizes.txt') #
+timescale <- read.delim('timescale.txt')
+# subset data frame to get only genera alive at some time during the Maastrichtian#
+maasTime <- timescale[timescale$interval_name == 'Maastrichtian',]#
+maas <- subset(sizeData, fad_age > maasTime$age_top & lad_age < maasTime$age_bottom) # note the introduction of a new functino, subset()
+# create a column that indicates taht a genus has gone extinct (1) or not (0)#
+maas$extinct <- 0 # this makes a new column called extinct and gives every element a value of 0#
+maas$extinct[maas$lad_age < maasTime$age_bottom & maas$lad_age >= maasTime$age_top] <- 1 # set thouse genera whose lad is within the Maastrichtian. Note the use of >=, which is "greater than or equal to".
+maas$logVolume <- log10(maas$max_vol)
+plot(maas$logVolume, maas$extinct, xlab="log biovolume (cubic mm)", ylab="Extinction status", pch=16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+glmEqn <-"extinct ~ logVolume" # these correspond to column names in maas.
+maasGlm <- glm(glmEqn, family="binomial", data=maas) # this runs the regression#
+#
+summary(maasGlm) # view a summary of the results
+points(maas$logVolume, maasGlm$fitted, col="red", pch=16)
+# first remove genera without a feeding mode#
+maas <- maas[!is.na(maas$feeding),]#
+#
+# make new column for binary feeding mode (1 = predator; 0 = non-predator)#
+maas$pred <- 0 # set all values to 0#
+maas$pred[maas$feeding == 5] <- 1 # this changes our code to 1 for those that have feeding mode 5#
+#
+# check out your new column#
+head(maas) #
+table(maas$pred) # this counts the number of predators and non-predators#
+#
+# Once again, we want to specify a regression equation, then run the regression.  #
+glm.eqn <-"extinct ~ logVolume + pred"#
+#
+ext.glm <- glm(glm.eqn, family=binomial(logit), data=maas)#
+#
+# Let's see what we have found... #
+summary(ext.glm)
+?boxplot
+boxplot(maas$logVolume ~ maas$pred, notch=TRUE, names=c("non-predators","predators"))
+boxplot(maas$logVolume ~ maas$pred, notch=TRUE, names=c("non-predators","predators"), las=0, ylab="log biovolume (cubic mm)")
+table(maas$tiering)
+glm(extinct ~ logVolume + as.factor(tiering))
+glm(extinct ~ logVolume + as.factor(tiering), data=maas, family="binomial")
+maas$feed1 <- 0 # set all values to 0#
+maas$feed1[maas$feeding == 1] <- 1
+maas$feed2 <- 0 # set all values to 0#
+maas$feed2[maas$feeding == 2] <- 1
+maas$feed3 <- 0 # set all values to 0#
+maas$feed3[maas$feeding == 3] <- 1
+maas$feed4 <- 0 # set all values to 0#
+maas$feed4[maas$feeding == 4] <- 1
+maas$feed5 <- 0 # set all values to 0#
+maas$feed5[maas$feeding == 5] <- 1
+glm(extinct ~ logVolume + feed1 + feed2 + feed3 + feed4 + feed5, data=maas, family="binomial")
+glm(extinct ~ logVolume + feed1 + feed2 + feed3 + feed4 + feed5, data=subset(maas, feeding != 0 & !is.na(feeding)), family="binomial")
+maas$feed6 <- 0 # set all values to 0#
+maas$feed6[maas$feeding == 6] <- 1
+glm(extinct ~ logVolume + feed1 + feed2 + feed3 + feed4 + feed5 + feed6, data=subset(maas, feeding != 0 & !is.na(feeding)), family="binomial")
+table(maas$feed6)
+glm(extinct ~ logVolume + feed1 + feed2 + feed3 + feed4 + feed5, data=subset(maas, feeding > 0 & feeding < 6 & !is.na(feeding)), family="binomial")
+glm(extinct ~ logVolume + feeding, data=subset(maas, feeding > 0 & feeding < 6 & !is.na(feeding)), family="binomial")
+glm(extinct ~ logVolume + feed1 + feed2 + feed3 + feed4 + feed5, data=subset(maas, feeding > 0 & feeding < 6 & !is.na(feeding)), family="binomial")
+glm(extinct ~ logVolume + as.factor(feeding), data=subset(maas, feeding > 0 & feeding < 6 & !is.na(feeding)), family="binomial")
+head(maas)
+exp(1)
+exp(3.45)
+logit
+?rnorm
+?rep
+rep(c(0,1),10)
+rep(c(0,1),each=10)
+quartz(height=7, width=10) # if using Windows, use 'window' instead of 'quartz'#
+par(mfrow=c(2,5), pch=16)#
+increments <- seq(0, 3, length.out=10)#
+my0 <- rnorm(100, mean=0)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+    my1 <- rnorm(100, mean=increments[i])#
+    plot(c(my0, my1, rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2))#
+}
+quartz(height=7, width=10) # if using Windows, use 'window' instead of 'quartz'#
+par(mfrow=c(2,5), pch=16)#
+increments <- seq(0, 3, length.out=10)#
+my0 <- rnorm(100, mean=0)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my1 <- rnorm(100, mean=increments[i])#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2))#
+}
+quartz(height=5, width=10) # if using Windows, use 'window' instead of 'quartz'#
+par(mfrow=c(2,5), pch=16)#
+increments <- seq(0, 4, length.out=10)#
+my0 <- rnorm(100, mean=0)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my1 <- rnorm(100, mean=increments[i])#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-5,6), cex=1.5, xlab="Predictor", ylab="Response")#
+}
+quartz(height=5, width=10) # if using Windows, use 'window' instead of 'quartz'#
+par(mfrow=c(2,5), pch=16)#
+increments <- seq(0, 6, length.out=10)#
+my0 <- rnorm(100, mean=0)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+    my1 <- rnorm(100, mean=increments[i])#
+    plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-5,10), cex=1.5, xlab="Predictor", ylab="Response")#
+    myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+    points(c(my0, my1), myGlm$fitted, col= myCols[i], pch=16)#
+}
+quartz(height=5, width=10) # if using Windows, use 'window' instead of 'quartz'#
+par(mfrow=c(2,5), pch=16)#
+increments <- seq(0, 6, length.out=10)#
+my0 <- rnorm(100, mean=0)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my1 <- rnorm(100, mean=increments[i])#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-5,10), cex=1.5, xlab="Predictor", ylab="Response")#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	lines(c(my0, my1), myGlm$fitted, col= myCols[i], pch=16)#
+}
+quartz(height=5, width=10) # if using Windows, use 'window' instead of 'quartz'#
+par(mfrow=c(2,5), pch=16)#
+increments <- seq(0, 6, length.out=10)#
+my0 <- rnorm(100, mean=0)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my1 <- rnorm(100, mean=increments[i])#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-5,10), cex=1.5, xlab="Predictor", ylab="Response")#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 6, length.out=10)#
+sdIncriments <- seq(1, 3, length.out=10)#
+my0 <- rnorm(100, mean=0)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-5,10), cex=1.5, xlab="Predictor", ylab="Response")#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 6, length.out=10)#
+my0 <- rnorm(100, mean=0)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-5,15), cex=1.5, xlab="Predictor", ylab="Response")#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 6, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,15), cex=1.5, xlab="Predictor", ylab="Response")#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 6, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,15), cex=1.5, xlab="Predictor", ylab="Response")#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 6, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,20), cex=1.5, xlab="Predictor", ylab="Response")#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+myGlm
+myGlm$coefficients
+myGlm$coefficients[2]
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 6, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,20), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Ceof: ", round(myGlm$coefficients[2],3), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 20, length.out=10)#
+sdIncriments <- seq(1, 6, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,20), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Ceof: ", round(myGlm$coefficients[2],3), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 6, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,20), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Ceof: ", round(myGlm$coefficients[2],3), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 6, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0)#
+	my1 <- rnorm(100, mean=meanIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,20), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Ceof: ", round(myGlm$coefficients[2],3), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 3, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,20), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Ceof: ", round(myGlm$coefficients[2],3), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,20), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Ceof: ", round(myGlm$coefficients[2],3), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+	my0 <- rnorm(100, mean=0)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,20), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Ceof: ", round(myGlm$coefficients[2],3), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+	my0 <- rnorm(100, mean=0, sd=1.5)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,20), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Ceof: ", round(myGlm$coefficients[2],3), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,20), cex=1.5, xlab="Predictor", ylab="Response")#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,25), cex=1.5, xlab="Predictor", ylab="Response")#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,25), cex=1.5, xlab="Predictor", ylab="Response", main=expression(paste(Delta, "Response: ", round(my1 - my0, 3), sep="")))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myDiff <- round(my1 - my0, 3)#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,25), cex=1.5, xlab="Predictor", ylab="Response", main=expression(paste(Delta, " Response: ", myDiff, sep="")))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myDiff <- round(mean(my1) - mean(my0), 3)#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,25), cex=1.5, xlab="Predictor", ylab="Response", main=expression(paste(Delta, " Response: ", myDiff, sep="")))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+myDiff
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myDiff <- round(mean(my1) - mean(my0), 3)#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,25), cex=1.5, xlab="Predictor", ylab="Response", main=expression(paste("Response Difference: ", myDiff, sep="")))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myDiff <- round(mean(my1) - mean(my0), 3)#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", myDiff, sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+for(i in 1:10) {#
+	my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+quartz(height=5, width=10) # if using Windows, use 'window' instead of 'quartz'#
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+my0 <- rnorm(100, mean=0, sd=sdIncriments[8])#
+for(i in 1:10) {#
+	#my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	#my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-15,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 12, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+my0 <- rnorm(100, mean=0, sd=sdIncriments[8])#
+for(i in 1:10) {#
+	#my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	#my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-20,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+my0 <- rnorm(100, mean=0, sd=sdIncriments[8])#
+for(i in 1:10) {#
+	#my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	#my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-20,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+my0 <- rnorm(100, mean=0, sd=sdIncriments[9])#
+for(i in 1:10) {#
+	#my0 <- rnorm(100, mean=0, sd=sdIncriments[i])#
+	#my1 <- rnorm(100, mean=meanIncriments[i], sd=sdIncriments[i])#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-18,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+sdIncriments[9]
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+sdIncriments <- seq(1, 5, length.out=10)#
+myCols <- rainbow(10)#
+my0 <- rnorm(100, mean=0, sd=4.5)#
+for(i in 1:10) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-18,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(-10, 10, length.out=10)#
+myCols <- rainbow(10)#
+my0 <- rnorm(100, mean=0, sd=4.5)#
+for(i in 1:10) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	lines(sort(c(my0, my1)), sort(myGlm$fitted), col= myCols[i], pch=16)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:10) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-18,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	lines(c(my0, my1), myGlm$fitted, col= myCols[i], pch=16)#
+}
+myGlm$fitted
+plot(myGlm$fitted)
+plot(sort(myGlm$fitted))
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:10) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-18,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex-0.5)#
+}
+quartz(height=5, width=10) # if using Windows, use 'window' instead of 'quartz'#
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:10) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-18,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex-0.5)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(0, 10, length.out=10)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:10) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-18,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+par(mfrow=c(2,5), pch=16)#
+meanIncriments <- seq(-10, 10, length.out=10)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:10) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-18,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+par(mfrow=c(2,6), pch=16)#
+meanIncriments <- seq(-10, 10, length.out=11)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:10) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+par(mfrow=c(2,6), pch=16)#
+meanIncriments <- seq(-10, 10, length.out=13)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:10) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+par(mfrow=c(2,6), pch=16)#
+meanIncriments <- seq(-10, 10, length.out=12)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:12) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+par(mfrow=c(2,6), pch=16)#
+meanIncriments <- seq(-10, 10, length.out=11)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:11) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+meanIncriments
+quartz(height=5, width=10) # if using Windows, use 'window' instead of 'quartz'#
+par(mfrow=c(2,6), pch=16)#
+meanIncriments <- seq(-10, 10, length.out=11)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:11) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Difference: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+par(mfrow=c(2,6), pch=16)#
+meanIncriments <- seq(-10, 10, length.out=11)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:11) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Resp. Diff.: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+myGlm
+myGlm$fitted
+par(mfrow=c(2,6), pch=16)#
+meanIncriments <- seq(-10, 10, length.out=11)#
+myCols <- rainbow(10)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:11) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Resp. Diff.: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	print(i)#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+par(mfrow=c(2,6), pch=16)#
+meanIncriments <- seq(-10, 10, length.out=11)#
+myCols <- rainbow(11)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:11) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Resp. Diff.: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+nPlots <- 9
+seq(-10, 10, length.out= nPlots)
+nPlots <- 9#
+quartz(height=5, width=10) # if using Windows, use 'window' instead of 'quartz'#
+par(mfrow=c(3,3), pch=16)#
+meanIncriments <- seq(-10, 10, length.out= nPlots)#
+myCols <- rainbow(nPlots)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:nPlots) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Resp. Diff.: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+quartz(height=8, width=8) # if using Windows, use 'window' instead of 'quartz'#
+par(mfrow=c(3,3), pch=16)#
+meanIncriments <- seq(-10, 10, length.out= nPlots)#
+myCols <- rainbow(nPlots)#
+my0 <- sort(rnorm(100, mean=0, sd=4.5))#
+for(i in 1:nPlots) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Resp. Diff.: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+par(mfrow=c(3,3), pch=16)#
+meanIncriments <- seq(-10, 10, length.out= nPlots)#
+myCols <- rainbow(nPlots) # rainbow() generated colors from the rainbow spectrum#
+my0 <-rnorm(100, mean=0, sd=4.5) # rnorm() generates random numbers taken from normal distribution with the specified mean and stadard deviation#
+for(i in 1:nPlots) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Resp. Diff.: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+par(mfrow=c(3,3), pch=16)#
+meanIncriments <- seq(-10, 10, length.out= nPlots)#
+myCols <- rainbow(nPlots) # rainbow() generated colors from the rainbow spectrum#
+my0 <-rnorm(100, mean=0, sd=4.5) # rnorm() generates random numbers taken from normal distribution with the specified mean and stadard deviation#
+for(i in 1:nPlots) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Diff.: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5)#
+}
+par(mfrow=c(3,3), pch=16)#
+meanIncriments <- seq(-10, 10, length.out= nPlots)#
+myCols <- rainbow(nPlots) # rainbow() generated colors from the rainbow spectrum#
+my0 <-rnorm(100, mean=0, sd=4.5) # rnorm() generates random numbers taken from normal distribution with the specified mean and stadard deviation#
+for(i in 1:nPlots) {#
+	my1 <- my0 + meanIncriments[i]#
+	myGlm <- glm(rep(c(0,1),each=100) ~ c(my0, my1), family="binomial")#
+	plot(c(my0, my1), rep(c(0,1),each=100), col=rgb(0.2,0.2,0.2,0.2), xlim=c(-25,25), cex=1.5, xlab="Predictor", ylab="Response", main=paste("Response Diff.: ", round(mean(my1) - mean(my0), 1), sep=""))#
+	points(c(my0, my1), myGlm$fitted, col= myCols[i], cex=0.5); print(myGlm)#
+}
+set.seed(123)#
+x <- rnorm(100)#
+DF <- data.frame(x = x,#
+                 y = 4 + (1.5*x) + rnorm(100, sd = 2),#
+                 b = gl(5, 20))#
+head(DF)#
+str(DF)#
+#
+m1 <- lm(y ~ x + b, data = DF)#
+summary(m1)
+DF
+head(DF)
+class(DF$b)
+within(DF, b <- relevel(b, ref = 3))
+lm(y ~ x + b, data = DF)
+DF <- within(DF, b <- relevel(b, ref = 3))
+lm(y ~ x + b, data = DF)
+q()
+>>>>>>> e26344fb89b1f7d7494a41e9801f0be1e3b388f3

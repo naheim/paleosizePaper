@@ -1,0 +1,58 @@
+# within each motility level, evalutes which evolutionary model best supports the trend in mean body size
+
+library(paleoTS)
+# reads in sizeData and timescale datasets
+sizeData <- read.delim(file="https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt")
+timescale <- read.delim(file="https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt")
+
+# variable for time intervals
+n.bins <- nrow(timescale)
+
+#creating empty vectors
+my.mean <- vector(mode="numeric", length=n.bins)
+my.var <- vector(mode="numeric", length=n.bins)
+my.n <- vector(mode="numeric", length=n.bins)
+my.time <- timescale$age_bottom 
+
+names(my.var) <- timescale$interval_name
+names(my.n) <- timescale$interval_name
+names(my.time) <- timescale$interval_name
+
+motility1 <- sizeData[sizeData[,"motility"]==1 & !is.na(sizeData$motility),]
+
+# for each interval, calculate mean body size for genera with motility level 1
+for(i in 1:n.bins) {
+temp.data <- log10(motility1$max_vol[motility1$fad_age > timescale$age_top[i] & motility1$lad_age < timescale$age_bottom[i]])
+my.mean[i] <- mean(temp.data)
+my.var[i] <- var(temp.data)
+my.n[i] <- length(temp.data)
+}
+
+# outputs statistics for 3 models
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly
+fit3models(my.ts, method="Joint", pool=FALSE)
+
+# REPEAT FOR EACH MOTILITY LEVEL
+
+# for motile
+motile <- sizeData[(sizeData[,"motility"]==1 | sizeData[,"motility"]==2) & !is.na(sizeData$motility),]
+
+for(i in 1:n.bins) {
+temp.data <- log10(motile$max_vol[motile$fad_age > timescale$age_top[i] & motile$lad_age < timescale$age_bottom[i]])
+my.mean[i] <- mean(temp.data)
+my.var[i] <- var(temp.data)
+my.n[i] <- length(temp.data)
+}
+
+# for nonmotile
+nonmotile <- sizeData[(sizeData[,"motility"]!=1 | sizeData[,"motility"]!=2) & !is.na(sizeData$motility),]
+
+for(i in 1:n.bins) {
+temp.data <- log10(nonmotile$max_vol[motility1$fad_age > timescale$age_top[i] & nonmotile$lad_age < timescale$age_bottom[i]])
+my.mean[i] <- mean(temp.data)
+my.var[i] <- var(temp.data)
+my.n[i] <- length(temp.data)
+}
+
+# double-checked all figures
+

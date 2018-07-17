@@ -22,6 +22,7 @@ for(type in 1:6) {
 	for(i in 1:nBins) {
 		temp <- subset(feed, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i]) # get all genera alive in interval
 
+
 		if(nrow(temp) > 0) {
 			# add a column to temp for extinction
 			temp$extinct <- 0 # default give every genus a 0 (=survivor)
