@@ -61,15 +61,43 @@ for(i in 1:6) {
 par(col="black")
 legend("topleft", legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = my.col, lty = 1, title="Feeding Color Legend", bg = NA, box.col=NA, title.adj = 0.26, cex=0.47)
 
+#**************************************Mean Size for Feeding Type WITH 95% Confidence Intervals***********************************
+n.bins <- nrow(timescale)
 
-#95% confidence intervals
-#par(col="deepskyblue")
-#for (i in 1:n.bins) {
-#  ci <- 1.96 * sqrt(my.var[i]) / sqrt(my.n[i])
-#  my.x <- rep(timescale$age_bottom[i], 2)
-#  my.y <- c(my.mean[i] + ci, my.mean[i] - ci)
-#  lines(my.x, my.y, lwd=0.75)
-#}
+my.mean <- vector(mode="numeric", length=n.bins)
+my.var <- vector(mode="numeric", length=n.bins)
+#my.var <- subset(my.var, !is.na(feeding) & feeding == 6)
+#my.var <- subset(my.var, !is.na(feeding & feeding == 6))
+my.n <- vector(mode="numeric", length=n.bins)
+my.time <- timescale$age_bottom
+
+names(my.mean) <- timescale$interval_name
+names(my.var) <- timescale$interval_name
+names(my.n) <- timescale$interval_name
+names(my.time) <- timescale$interval_name
+
+for (i in 1:n.bins) {
+  temp.data <- log10(bodySize$max_vol[bodySize$fad_age > timescale$age_top[i] & bodySize$lad_age < timescale$age_bottom[i] & bodySize$feeding == 6])
+  
+  my.mean[i] <- mean(temp.data)
+  my.var[i] <- var(temp.data)
+  my.n[i] <- length(temp.data)
+}
+
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my.n[!is.na(my.var)], tt=my.time[!is.na(my.var)], oldest="last")
+
+fit3models(my.ts, method="Joint", pool=FALSE)
+
+par(col="black")
+plot(timescale$age_bottom, my.mean, type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylim=c(0,7.5), ylab="Other Feeders Mean Size", main="Other Feeders")
+
+ci <- vector(mode="numeric", length=n.bins)
+for (i in 1:n.bins) {
+  ci[i] <- 1.96 * sqrt(my.var[i]) / sqrt(my.n[i])
+}
+polygon(c(timescale$age_mid[!is.na(my.var)], rev(timescale$age_mid[!is.na(my.var)])), c(my.mean[!is.na(my.var)] - ci[!is.na(my.var)], rev(my.mean[!is.na(my.var)] + ci[!is.na(my.var)])), col="paleturquoise")
+lines(timescale$age_mid, my.mean, col="lightskyblue", lwd = 3.0)
+
 
 #******************************************Proportional Diversity of Feeding Type***************************************************
 #create 1 value vector of proportion of feeding time (corresponds to color) - 5 different ones needed
@@ -105,6 +133,8 @@ myCyan <- c((propOrange + propBlue + propPink + propGreen), rev(propOrange + pro
 polygon(myX, myCyan, col="cyan")
 myPurple <- c((propOrange + propBlue + propPink + propGreen + propCyan), rev(propOrange + propBlue + propPink + propGreen + propCyan + propPurple))
 polygon(myX, myPurple, col="mediumorchid4")
+
+my.col=c("orange", "royalblue", "orchid1", "green", "cyan", "mediumorchid4")
 
 legend(535, .23, legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = my.col, lty = 1, title="Feeding Color Legend", bg = "white", box.col=NA, title.adj = 0.26, cex=0.5)
 

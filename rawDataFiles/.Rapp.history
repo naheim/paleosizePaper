@@ -1,3 +1,255 @@
+<<<<<<< HEAD
+precip
+as(precip,"vector")
+precip
+precip <- as(precip, "vector")
+is(precip, "vector")
+precip
+head(precip)
+i used trees <- as(trees,"matrix")
+trees <- as(trees,"matrix
+trees <- as(trees,"matrix")
+trees
+A
+B
+precip <- as(precip,"matrix")
+precip
+precip[1,8]
+precip[8,1]
+precip[1:8,1]
+sum(precip[1:8])
+sum(precip[1:8, 1])
+c <- sum(precip[1:8, 1])
+c / B
++A
+a
+A
+(c/B)+A
+?sample
+mymatrix
+set.seed(154)
+MatrixElements<-sample(c(1,2,3,4,5,6,7,8,9,10), size = 96, replace=TRUE)
+MyMatrix<-matrix(MatrixElements,8,12)
+MyMatrix
+Which(MyMatrix ==7)
+which(mymatrix == 7)
+which(MyMatrix == 7)
+which(MyMatrix <8)
+which(MyMatrix <8 | >6)
+which(MyMatrix <8 | MyMatrix >6)
+MyMatrix[which(MyMatrix <8 | MyMatrix >6)]
+MyMatrix[which(MyMatrix == 7)]
+sum(MyMatrix[1, ])
+?colSums
+colSums(MyMarix)
+colSums(MyMatrix)
+sum(MyMatrix[,1 ])
+product
+MyMatrix(which(MyMatrix <8 and Mymatrix > 3))
+MyMatrix(which(MyMatrix <8 | Mymatrix > 3))
+MyMatrix(which(MyMatrix <8 | MyMatrix > 3))
+MyMatrix[which(MyMatrix <8 | MyMatrix > 3)]
+MyMatrix[which(MyMatrix <8 & MyMatrix > 3)]
+MyMatrix[which(MyMatrix ==10 & Mymatrix ==12)] <-7
+MyMatrix[which(MyMatrix ==10 & MyMatrix ==12)] <-7
+MyMatrix
+MyMatrix[row,] = TRUE
+is(MyMatrix[1,] = TRUE)
+is(MyMatrix[1,], TRUE)
+is(MyMatrix[1,]
+set.seed(541)
+MatrixElements<-sample(c(TRUE,FALSE), size = 96, replace=TRUE)
+MyMatrix<-array(data=MatrixElements,dim=c(8,12))
+MyMatrix[1,] =TRUE
+is(MyMatrix[1,], TRUE)
+is(MyMatrix[1,], true)
+a
+A
+B
+C
+c
+SuS
+SuS <- (MyMatrix*1)
+SuS
+MyMatrix
+MyMatrix[1,] = TRUE
+MyMatrix
+MyMatrix[2,] = TRUE
+MyMatrix
+is(MyMatrix[3,] = TRUE)
+is(MyMatrix[3,] == TRUE)
+rowSums(MyMatrix)
+rowSums(MyMatrix) == ncol(MyMatrix)
+set.seed(154)
+MatrixElements<-sample(c(1,2,3,4,5,6,7,8,9,10), size = 96, replace=TRUE)
+MyMatrix<-matrix(MatrixElements,8,12)
+MyMatrix(which[MyMatrix == 10])
+MyMatrix(which(MyMatrix == 10))
+which(MyMatrix == 10)
+which(MyMatrix ==10) <- 12
+f
+dfd
+f
+df
+dfdf
+d
+f
+af
+d
+asd
+f
+dfa
+df
+da
+sd
+f
+d
+fdsa
+f
+da
+sf
+d
+df
+SuS
+set.seed(154)
+MatrixElements<-sample(c(1,2,3,4,5,6,7,8,9,10), size = 96, replace=TRUE)
+MyMatrix<-matrix(MatrixElements,8,12)
+10 <- 12
+sus <- "sauce"
+sus
+Quotations <- ""
+Quotations
+Loss <- | || || |_
+Clear
+sizeData <- read.delim('bodySizes.txt')
+sizeData <- read.delim('bodySizes.txt')
+timescale <- read.delim('timescale.txt')
+callTime <- timescale[timescale$interval_name == 'Callovian',]
+call <- subset(sizeData, fad_age > callTime$age_top & lad_age < callTime$age_bottom)
+call$extinct <- 0
+call$extinct[call$lad_age < callTime$age_bottom & call$lad_age >= callTime$age_top] <- 1
+call$logVolume <- log10(call$max_vol)
+plot(maas$feeding, maas$extinct, xlab ="Feeding", ylab = "Extinction status", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+plot(call$feeding, call$extinct, xlab ="Feeding", ylab = "Extinction status", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+plot(call$feeding, call$fad_age, xlab ="Feeding", ylab = "Callovian age", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+glmEqn <-"feeding ~ fad_age
+""
+v
+v
+v
+v
+djgpaej
+ri
+``
+glm
+fdfdf
+fd
+f
+df
+d
+f
+d
+f
+df
+d
+f
+d
+f
+df
+d
+f
+df
+d
+f
+d
+f
+d
+f
+df
+d
+f
+df
+df
+d
+fdf
+d
+f
+df
+df
+fd
+f
+df
+d
+f
+df
+d
+f
+d
+f
+qqqq'
+q
+c
+glmEqn <-"feeding ~ fad_age"
+glmEqn <-"feeding ~ fad_age"
+callGlm <- glm(glmEqn, family="binomial", data=call)
+as.numeric(callGlm) <- glm(glmEqn, family="binomial", data=call)
+as.numeric(callGlm) -1 <- glm(glmEqn, family="binomial", data=call)
+callGlm <- glm(glmEqn, data=call)
+summary(callGlm)
+call <- call[!is,na(call$feeding),]
+call <- call[!is.na(call$feeding),]
+plot(call$feeding, call$fad_age, xlab ="Feeding", ylab = "Callovian age", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$feeding, maasGlm$fitted, col="blue", pch=16)
+points(call$feeding, callGlm$fitted, col="blue", pch=16)
+points(call$feeding, callGlm$fitted, col="blue")
+plot(call$feeding, call$fad_age, xlab ="Feeding", ylab = "Callovian age", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$feeding, callGlm$fitted, col="blue")
+points(call$feeding, callGlm$fitted, col="darkolivegreen1")
+plot(call$feeding, call$fad_age, xlab ="Feeding", ylab = "Callovian age", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$feeding, callGlm$fitted, col="darkolivegreen1")
+head(callGlm$fitted)
+glmEqn <-"fad_age ~ feeding"
+head(callGlm$fitted)
+callGlm <- glm(glmEqn, data=call)
+points(call$feeding, callGlm$fitted, col="darkolivegreen1")
+points(call$feeding, callGlm$fitted, col="deepskyblue1")
+points(call$feeding, callGlm$fitted, col="deepskyblue1", pch = 16)
+plot(call$fad_age, call$feeding, xlab ="Callovian Age", ylab = "Feeding", pch =16, col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+glmEqn <-"feeding ~ fad_age"
+callGlm <- glm(glmEqn, data=call)
+points(call$feeding, callGlm$fitted, col="deepskyblue1", pch = 16)
+head(callGlm$fitted)
+points(call$fad_age, callGlm$fitted, col="deepskyblue1", pch = 16)
+plot(call$fad_age, call$feeding, xlab ="Callovian Age", ylab = "Feeding", pch =16, xlim= c(541,0), col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$fad_age, callGlm$fitted, col="deepskyblue1", pch = 16)
+points(call$fad_age, callGlm$fitted, col="deepskyblue1", pch = 11)
+plot(call$fad_age, call$feeding, xlab ="Callovian Age", ylab = "Feeding",type ="l" pch =16, xlim= c(541,0), col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+plot(call$fad_age, call$feeding, xlab ="Callovian Age", ylab = "Feeding",type ="l", pch =16, xlim= c(541,0), col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+plot(call$fad_age, call$feeding, xlab ="Callovian Age", ylab = "Feeding", pch =16, xlim= c(541,0), col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$fad_age, callGlm$fitted, col="deepskyblue1", pch = 11)
+call <- call[!is.na(maas$feeding),]
+call <- call[!is.na(call$feeding),]
+call$sus <- 0
+call$sus[call$feeding == 1] <- 1
+head(call)
+table(call$sus)
+glm.eqn <- "extinct ~ logVolume + sus"
+ext.glm <- glm(glm.eqn, family=binomial(logit), data = call)
+summary(ext.glm)
+plot(call$fad_age, call$sus, xlab ="Callovian Age", ylab = "Suspension", pch =16, xlim= c(541,0), col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+points(call$fad_age, callGlm$fitted, col="deepskyblue1", pch = 11)
+points(call$sus, callGlm$fitted, col="deepskyblue1", pch = 11)
+glm.eqn <- "extinct ~ logVolume + sus"
+callGlm <- glm(glmEqn,family =binomial(logit), data=call)
+head(call)
+callGlm <- glm(glmEqn,family =binomial(logit), data=call)
+callGlm <- glm(glmEqn,family =binomial, data=call)
+glmEqn
+callGlm <- glm(glm.eqn,family =binomial, data=call)
+points(call$sus, callGlm$fitted, col="deepskyblue1", pch = 11)
+callGlm
+callGlm$coefficients
+=======
 exp(0.14088)
 e
 exp(1)
@@ -657,3 +909,4 @@ lm(y ~ x + b, data = DF)
 DF <- within(DF, b <- relevel(b, ref = 3))
 lm(y ~ x + b, data = DF)
 q()
+>>>>>>> e26344fb89b1f7d7494a41e9801f0be1e3b388f3

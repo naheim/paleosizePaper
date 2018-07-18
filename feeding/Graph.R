@@ -1,0 +1,2 @@
+plot(call$fad_age, call$feeding, xlab ="Callovian Age", ylab = "Feeding", pch =16, xlim= c(541,0), col=rgb(0.2,0.2,0.2,0.4), cex=1.5)
+> points(call$fad_age, callGlm$fitted, col="deepskyblue1", pch = 16)
