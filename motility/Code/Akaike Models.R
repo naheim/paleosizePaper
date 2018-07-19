@@ -48,7 +48,7 @@ my.n[i] <- length(temp.data)
 nonmotile <- sizeData[(sizeData[,"motility"]!=1 | sizeData[,"motility"]!=2) & !is.na(sizeData$motility),]
 
 for(i in 1:n.bins) {
-temp.data <- log10(nonmotile$max_vol[motility1$fad_age > timescale$age_top[i] & nonmotile$lad_age < timescale$age_bottom[i]])
+temp.data <- log10(nonmotile$max_vol[nonmotile$fad_age > timescale$age_top[i] & nonmotile$lad_age < timescale$age_bottom[i]])
 my.mean[i] <- mean(temp.data)
 my.var[i] <- var(temp.data)
 my.n[i] <- length(temp.data)
