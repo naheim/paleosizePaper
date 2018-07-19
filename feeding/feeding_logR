@@ -1,0 +1,62 @@
+## MAKE SURE TO SET YOUR WORKING DIRECTORY!!!
+
+# source() loads a file that contains custom functions
+# this particular file only contains two for making a geologic timescales
+source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
+
+# read in size data & timescale
+sizeData <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/bodySizes.txt")
+timescale <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/timescale.txt")
+nBins <- nrow(timescale) # a variable of convenience for when the number of stages is used
+
+# for this example plot, we're going to plot the size selectivity of the animals with feeding type = 1 to 6
+FeedingType <- c("Suspension", "Surface Deposit", "Mining", "Grazing", "Predatory", "Other")
+for(type in 1:6) {
+	feed <- subset(sizeData, feeding==type)
+
+	# define an empty data frame to hold all the proportions
+	feedExtSel <- data.frame(matrix(NA, nrow=nBins, ncol=3, dimnames=list(timescale$interval_name, c('coef','ci.minus','ci.plus'))))
+
+	# here is our loop to calculate extinction selectivity over time
+	# this should be very familiar to you by now.
+	for(i in 1:nBins) {
+		temp <- subset(feed, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i]) # get all genera alive in interval
+
+
+		if(nrow(temp) > 0) {
+			# add a column to temp for extinction
+			temp$extinct <- 0 # default give every genus a 0 (=survivor)
+			temp$extinct[temp$lad_age >= timescale$age_top[i] & temp$lad_age < timescale$age_bottom[i]] <- 1 # assign a 1 to the victims
+			
+			# before we do the regression, we want to make sure there are at least 3 survivors & 3 victims
+			if(sum(temp$extinct) >= 3 & nrow(temp) >= 6) {
+				# run the logistic regression
+				myGlm <- glm("extinct ~ log10(max_vol)", data=temp, family="binomial")
+				summary(myGlm)
+		
+				# assign size coefficient to our output matrix
+				feedExtSel$coef[i] <- myGlm$coefficients[2] # the second value is the size coefficient, the first is the intercept
+			
+				# get the conficence intervals
+				myCi <- confint(myGlm)
+				
+				feedExtSel$ci.minus[i] <- myCi[2,1]
+				feedExtSel$ci.plus[i] <- myCi[2,2]
+		 	}
+		}
+	}
+
+	# opens a new plot window with properly scaled and labeled axes
+	
+        title <- FeedingType[type]
+	dev.new();
+	time.plot(c(-2,2), "Log-odds of extinction", main=title)
+	
+	abline(h=0, lty=2) # adding a horizontal line at 0
+	
+	# the coefficients
+	points(timescale$age_mid, feedExtSel$coef, pch=16, cex=1.25, col="tomato")
+	
+	# the error bars
+	segments(timescale$age_mid,feedExtSel$ci.minus,timescale$age_mid,feedExtSel$ci.plus, col="#41dbb1")
+}

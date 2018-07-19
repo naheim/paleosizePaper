@@ -17,7 +17,6 @@ otherFeeding <- subset(bodySize, feeding == 6)
 #*************************************************Feeding Type vs. Geologic Time***************************************************
 par(col="black")
 
-#plot(1:10,xlab="Feeding Type", ylab="Biovolume (log10mm^3)", xlim=c(1,6), ylim=c(0,30), type="n")
 boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylim=c(-3, 12), ylab="Biovolume (log10mm^3)", main="Biovolume vs. Feeding Type", col=(c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")), names=c("Suspension", "Dep.", "Mining", "Grazing", "Predatory", "Other"))
 
 #***************************graph all body sizes against geologic time (each feeding type is a different color)********************
@@ -38,7 +37,6 @@ names(my.n) <- timescale$interval_name
 names(my.time) <- timescale$interval_name
 
 for (i in 1:n.bins) {
-  
   for (j in 1:6) {
     temp.data <- log10(bodySize$max_vol[bodySize$fad_age > timescale$age_top[i] & bodySize$lad_age < timescale$age_bottom[i] & bodySize$feeding == j])
     my.mean[i,j] <- mean(temp.data)
@@ -50,6 +48,7 @@ par(col="black")
 time.plot(c(0,6), "Mean Size per Feeding Type")
 plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size", ylim=c(1.2,6.5), main="Mean Size per Feeding Type")
 my.col=c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")
+
 #loop per column
 for(i in 1:6) {
   my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var[,i]), i], vv=my.var[!is.na(my.var[,i]), i], nn=my.n[!is.na(my.var[,i]), i], tt=my.time[!is.na(my.var[,i])], oldest="last")
@@ -112,6 +111,7 @@ for(i in 1:nrow(timescale)) {
 plot(1:10, type="n", xlim=c(541,0), ylim=c(0,1))
 time.plot(c(0,1), "Proportion of feeding", main="Feeding Proportions")
 
+#assigning colors to proportions
 propOrange <- myProp[,1]
 propBlue <- myProp[,2]
 propPink <- myProp[,3]
@@ -119,7 +119,7 @@ propGreen <- myProp[,4]
 propCyan <- myProp[,5]
 propPurple <- myProp[,6]
 
-
+#creating all the polygons - each builds upon previous ones
 myX <- c(timescale$age_mid, rev(timescale$age_mid))
 myOrange <- c(rep(0, nrow(timescale)), rev(propOrange))
 polygon(myX, myOrange, col="blue1")
@@ -179,7 +179,6 @@ for(type in 1:6) {
   }
   
   # opens a new plot window with properly scaled and labeled axes
-  
   title <- FeedingType[type]
   dev.new();
   time.plot(c(-2,2), "Log-odds of extinction", main=title)

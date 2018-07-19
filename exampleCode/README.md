@@ -4,3 +4,4 @@ This directory contains example code that demonstrates how to do analyses or plo
 
 * [Making a proportional plot](proportionalPlot.md)
 * [Logistic regression time series](logisticRegression.md)
+* [Multi-panel time serires plots](multiTimePlot.md)
