@@ -1,3 +1,6 @@
+ source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
+sizeData <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/bodySizes.txt")
+timescale <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/timescale.txt")
 nBins <- nrow(timescale) 
 myCols<- c("red", "orange", "green", "cyan", "magenta", "blue")
 tierLabs <- c("Pelagic", "Erect", "Surficial", "Semi-infaunal", "Shallow infaunal", "Deep infaunal")
@@ -24,3 +27,4 @@ for(j in 1:6){
 	segments(timescale$age_mid,tierExtSel$ci.minus,timescale$age_mid,tierExtSel$ci.plus)
 	title(main= paste("Tiering ", j, ": ", tierLabs[j], sep=""))
 }
+
