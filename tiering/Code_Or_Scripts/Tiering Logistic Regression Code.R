@@ -27,4 +27,3 @@ for(j in 1:6){
 	segments(timescale$age_mid,tierExtSel$ci.minus,timescale$age_mid,tierExtSel$ci.plus)
 	title(main= paste("Tiering ", j, ": ", tierLabs[j], sep=""))
 }
-
