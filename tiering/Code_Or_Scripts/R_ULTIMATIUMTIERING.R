@@ -301,7 +301,7 @@ lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
 
 bodySize <- read.delim("bodySizes.txt") 
 timescale <- read.delim("timescale.txt") 
-bodySize <- subset(sizeData, !is.na(tiering) & tiering != 0)
+bodySize <- subset(bodySize, !is.na(tiering) & tiering != 0)
 
 library(paleoTS)
 
@@ -323,6 +323,16 @@ temp.data <- log10(bodySize$max_vol[bodySize$fad_age > timescale$age_top[i] & bo
 my.mean[i,j] <- mean(temp.data)
 my.var[i,j] <- var(temp.data)
 my.n[i,j] <- length(temp.data)
+}
+}
+allTS <- list()
+for (i in 1:1:6){my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var[,i]),i], vv=my.var[!is.na(my.var[,i]),i], nn=my.n[!is.na(my.var[,i]),i], tt=my.time[!is.na(my.var[,i])], oldest="last")  
+}
+fit3models(my.ts[1,], method="Joint", pool=FALSE)
+
+allTS[[i]] <- my.ts
+
+**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
 
 
