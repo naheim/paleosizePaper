@@ -11,7 +11,7 @@ nBins <- nrow(timescale) # a variable of convenience for when the number of stag
 
 # for this example plot, we're going to plot the size selectivity of the animals with feeding type = 1 to 6
 feedingType <- c("Suspension", "Surface Deposit", "Mining", "Grazing", "Predatory", "Other")
-feedColors <- c("cadetblue", "mediumblue", "darkblue", "cornflowerblue", "cyan", "dodgerblue")
+feedColors <- c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")
 
 sizeData$feeding[sizeData$feeding == 0] <- NA
 sizeData$feeding <- factor(sizeData$feeding)
@@ -50,4 +50,4 @@ lines(x=timescale$age_mid,y=extRate[,5],col=feedColors[5], lwd=1.0)
 points(timescale$age_mid, extRate[,6], col=feedColors[6], pch='*')
 lines(x=timescale$age_mid,y=extRate[,6],col=feedColors[6], lwd=1.0)
 
-legend("topright", legend=rev(feedingType), fill=rev(feedColors), bg="white", title="Feeding Type")
+legend("topright", legend=(feedingType), fill=(feedColors), bg="white", title="Feeding Type")

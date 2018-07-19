@@ -1,3 +1,6 @@
+ source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
+sizeData <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/bodySizes.txt")
+timescale <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/timescale.txt")
 nBins <- nrow(timescale) 
 myCols<- c("red", "orange", "green", "cyan", "magenta", "blue")
 tierLabs <- c("Pelagic", "Erect", "Surficial", "Semi-infaunal", "Shallow infaunal", "Deep infaunal")
