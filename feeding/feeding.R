@@ -3,7 +3,7 @@ setwd("/Users/ashlijain/Documents/git/paleosizePaper/rawDataFiles")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
 
 bodySize <- read.delim(file="bodySizes.txt")
-timescale <- read.delim(file="timescale.txt")[-1,]
+timescale <- read.delim(file="timescale.txt")
 
 bodySize <- subset(bodySize, !is.na(feeding) & feeding != 0)
 
@@ -46,13 +46,13 @@ for (i in 1:n.bins) {
 }
 par(col="black")
 time.plot(c(0,6), "Mean Size per Feeding Type")
-plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size", ylim=c(1.2,6.5), main="Mean Size per Feeding Type")
+plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size (log10mm^3)", ylim=c(1.2,6.5), main="Mean Size per Feeding Type")
 my.col=c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")
 
 #loop per column
 for(i in 1:6) {
-  my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var[,i]), i], vv=my.var[!is.na(my.var[,i]), i], nn=my.n[!is.na(my.var[,i]), i], tt=my.time[!is.na(my.var[,i])], oldest="last")
-  fit3models(my.ts, method="Joint", pool=FALSE)
+  #my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var[,i]), i], vv=my.var[!is.na(my.var[,i]), i], nn=my.n[!is.na(my.var[,i]), i], tt=my.time[!is.na(my.var[,i])], oldest="last")
+  #fit3models(my.ts, method="Joint", pool=FALSE)
   #par(col=my.mean$color[k]); par(col="deepskyblue3")
   lines(timescale$age_mid, my.mean[, i], col=my.col[i])
 }
