@@ -24,9 +24,9 @@ for(i in 1:nrow(timescale)){temp.data = sizeData$tiering[sizeData$fad_age > time
 	}
 
 par(xaxs = "i", yaxs = "i")
-my.col = c("#FF5640", "#FFD900", "#00FFD7", "#FD7DEA", "#FF00FF", "#0000FF")
+my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-time.plot(c(0,range(my.tiering)), "Amount of Genera", mar = c(4, 3.5, 6, 3.5)+0.1, mgp = c(2.5, 0.75, 0))
+time.plot(c(0,range(my.tiering)), "Amount of Genera", mar = c(4, 3.5, 4, 3.5)+0.1, mgp = c(2.5, 0.75, 0))
 #plot(1:10,1:10, type="n", xlim=c(541,-5), ylim=range(my.tiering), pch=21, xlab="Geologic Time (Ma)", ylab="Amount of Gentra")
 for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i], lwd = 4)}
 abline(v = c(65, 200, 251.2, 443.8), col="black")
