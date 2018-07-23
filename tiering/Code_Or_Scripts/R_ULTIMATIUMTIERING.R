@@ -295,11 +295,7 @@ lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
 
 #Stephanie Logistic Regression Combined Tiering Graph 
 
-<<<<<<< HEAD
- source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-=======
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
->>>>>>> 03f296261301d7fe8a933f0329b14d87e1493cef
 sizeData <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/bodySizes.txt")
 timescale <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/timescale.txt")
 nBins <- nrow(timescale) 
@@ -323,21 +319,16 @@ for(j in 1:6){
 			}
 		}
 	}
-	plot(timescale$age_mid[tierExtSel$coef > -5 & tierExtSel$coef < 5], tierExtSel$coef[tierExtSel$coef > -5 & tierExtSel$coef < 5], pch=16, cex=1.25, xaxt="n", xlab="", xlim=c(541,0), col=myCols[j], ylab=" Log-Odds of Extinction")
+	plot(timescale$age_mid[tierExtSel$coef > -5 & tierExtSel$coef < 5], tierExtSel$coef[tierExtSel$coef > -5 & tierExtSel$coef < 5], pch=16, cex=1.25, xaxt="n", xlab="", xlim=c(541,0), ylim=c(-2.5,2.5), col=myCols[j], ylab=" Log-Odds of Extinction")
 	abline(h=0, lty=2)
 	segments(timescale$age_mid,tierExtSel$ci.minus,timescale$age_mid,tierExtSel$ci.plus)
 	title(main= paste("Tiering ", j, ": ", tierLabs[j], sep=""))
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 03f296261301d7fe8a933f0329b14d87e1493cef
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
 #Tiering Akike Walks 
 
-<<<<<<< HEAD
 bodySize <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt') 
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt') 
 bodySize <- subset(sizeData, !is.na(tiering) & tiering != 0)
