@@ -6,7 +6,9 @@
 #The Change in the Amount of Gentra Categorized by Tiering Level Over Million-Years
 
 #WORKS: 
+#install.packages("RColorBrewer")
 
+library("RColorBrewer")
 sizeData <- read.delim("bodySizes.txt") 
 timescale <- read.delim("timescale.txt") 
 sizeData = subset(sizeData, !is.na(tiering) & tiering != 0)
