@@ -1,4 +1,4 @@
-#TOTAL GRAPH SINGLE DOC:
+#TOTAL CODE SINGLE DOC:
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 #1: # of Gentra in Each Tiering Lvl Over Time:
@@ -107,8 +107,13 @@ my.n[i,j] <- length(temp.data)
 }
 par(col="black")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
+<<<<<<< HEAD
 time.plot(c(0, 8), expression(paste("Biovolume (log  "[10]," cm"^3,")")), mar = c(3.5, 3.5, 3.5, 3.5)+0.1, mgp = c(2, 0.75, 0))
 #plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size", ylim=c(1.2,6.5), main="Mean expression(paste("Biovolume (log"[10]," mm"^3)"))
+=======
+time.plot(c(0, 8), expression(paste("Biovolume (log  "[10]," mm"^3,")")), mar = c(3.5, 3.5, 3.5, 3.5)+0.1, mgp = c(2, 0.75, 0))
+#plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size", ylim=c(1.2,6.5), main="Mean expression(paste("Biovolume (log"[10]," cm"^3)"))
+>>>>>>> 03f296261301d7fe8a933f0329b14d87e1493cef
 my.col = c("red", "orange", "green", "cyan", "magenta", "blue")
 for(i in 1:6) {
   my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var[,i]), i], vv=my.var[!is.na(my.var[,i]), i], nn=my.n[!is.na(my.var[,i]), i], tt=my.time[!is.na(my.var[,i])], oldest="last")
@@ -290,7 +295,11 @@ lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
 
 #Stephanie Logistic Regression Combined Tiering Graph 
 
+<<<<<<< HEAD
  source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
+=======
+source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
+>>>>>>> 03f296261301d7fe8a933f0329b14d87e1493cef
 sizeData <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/bodySizes.txt")
 timescale <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/timescale.txt")
 nBins <- nrow(timescale) 
@@ -319,15 +328,26 @@ for(j in 1:6){
 	segments(timescale$age_mid,tierExtSel$ci.minus,timescale$age_mid,tierExtSel$ci.plus)
 	title(main= paste("Tiering ", j, ": ", tierLabs[j], sep=""))
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 03f296261301d7fe8a933f0329b14d87e1493cef
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
 #Tiering Akike Walks 
 
+<<<<<<< HEAD
 bodySize <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt') 
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt') 
 bodySize <- subset(sizeData, !is.na(tiering) & tiering != 0)
+=======
+#Final Graph/Data
+
+bodySize <- read.delim("bodySizes.txt") 
+timescale <- read.delim("timescale.txt") 
+bodySize <- subset(bodySize, !is.na(tiering) & tiering != 0)
+>>>>>>> 03f296261301d7fe8a933f0329b14d87e1493cef
 
 library(paleoTS)
 
@@ -349,17 +369,12 @@ temp.data <- log10(bodySize$max_vol[bodySize$fad_age > timescale$age_top[i] & bo
 my.mean[i,j] <- mean(temp.data)
 my.var[i,j] <- var(temp.data)
 my.n[i,j] <- length(temp.data)
+}
+}
+allTS <- list()
+for (i in 1:1:6){my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var[,i]),i], vv=my.var[!is.na(my.var[,i]),i], nn=my.n[!is.na(my.var[,i]),i], tt=my.time[!is.na(my.var[,i])], oldest="last")  
+fit3models(my.ts, method="Joint", pool=FALSE)
+allTS[[i]] <- my.ts
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************

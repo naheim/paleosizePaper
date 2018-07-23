@@ -3,7 +3,7 @@ setwd("/Users/ashlijain/Documents/git/paleosizePaper/rawDataFiles")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
 
 bodySize <- read.delim(file="bodySizes.txt")
-timescale <- read.delim(file="timescale.txt")[-1,]
+timescale <- read.delim(file="timescale.txt")
 
 bodySize <- subset(bodySize, !is.na(feeding) & feeding != 0)
 
@@ -46,7 +46,7 @@ for (i in 1:n.bins) {
 }
 par(col="black")
 time.plot(c(0,6), "Mean Size per Feeding Type")
-plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size", ylim=c(1.2,6.5), main="Mean Size per Feeding Type")
+plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size (log10mm^3)", ylim=c(1.2,6.5), main="Mean Size per Feeding Type")
 my.col=c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")
 
 #loop per column
@@ -76,7 +76,7 @@ names(my.n) <- timescale$interval_name
 names(my.time) <- timescale$interval_name
 
 for (i in 1:n.bins) {
-  temp.data <- log10(bodySize$max_vol[bodySize$fad_age > timescale$age_top[i] & bodySize$lad_age < timescale$age_bottom[i] & bodySize$feeding == 6])
+  temp.data <- log10(bodySize$max_vol[bodySize$fad_age > timescale$age_top[i] & bodySize$lad_age < timescale$age_bottom[i] & bodySize$feeding == 5])
   
   my.mean[i] <- mean(temp.data)
   my.var[i] <- var(temp.data)
@@ -88,14 +88,14 @@ my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my
 fit3models(my.ts, method="Joint", pool=FALSE)
 
 par(col="black")
-plot(timescale$age_bottom, my.mean, type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylim=c(0,7.5), ylab="Other Feeders Mean Size", main="Other Feeders")
+plot(timescale$age_bottom, my.mean, type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylim=c(0,7.5), ylab="Predatory Feeders Mean Size", main="Predatory Feeders")
 
 ci <- vector(mode="numeric", length=n.bins)
 for (i in 1:n.bins) {
   ci[i] <- 1.96 * sqrt(my.var[i]) / sqrt(my.n[i])
 }
-polygon(c(timescale$age_mid[!is.na(my.var)], rev(timescale$age_mid[!is.na(my.var)])), c(my.mean[!is.na(my.var)] - ci[!is.na(my.var)], rev(my.mean[!is.na(my.var)] + ci[!is.na(my.var)])), col="paleturquoise")
-lines(timescale$age_mid, my.mean, col="lightskyblue", lwd = 3.0)
+polygon(c(timescale$age_mid[!is.na(my.var)], rev(timescale$age_mid[!is.na(my.var)])), c(my.mean[!is.na(my.var)] - ci[!is.na(my.var)], rev(my.mean[!is.na(my.var)] + ci[!is.na(my.var)])), col="lightpink")
+lines(timescale$age_mid, my.mean, col="deeppink1", lwd = 3.0)
 
 
 #******************************************Proportional Diversity of Feeding Type***************************************************
@@ -192,3 +192,49 @@ for(type in 1:6) {
   segments(timescale$age_mid,feedExtSel$ci.minus,timescale$age_mid,feedExtSel$ci.plus, col="#41dbb1")
 }
 
+#************************************************Extinction Rate vs. Feeding Type*************************************************
+nBins <- nrow(timescale) # a variable of convenience for when the number of stages is used
+
+# for this example plot, we're going to plot the size selectivity of the animals with feeding type = 1 to 6
+feedingType <- c("Suspension", "Surface Deposit", "Mining", "Grazing", "Predatory", "Other")
+feedColors <- c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")
+
+sizeData$feeding[sizeData$feeding == 0] <- NA
+sizeData$feeding <- factor(sizeData$feeding)
+# Calculate the extintion rate for each type of feeder
+extRate <- data.frame(matrix(NA, nrow=nrow(timescale), ncol=6, dimnames=list(timescale$interval_name, paste("feeding", 1:6))))
+meanSize <- extRate
+
+for(i in 1:nBins) {
+  temp <- subset(sizeData, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])
+  tempSize <- tapply(log10(temp$max_vol), temp$feeding, mean)
+  meanSize[i,] <- as.numeric(tempSize)
+  tempExt <- table(temp$feeding)
+  totalDiv <- nrow(temp)
+  extRate[i,] <- as.numeric(tempExt) / as.numeric(totalDiv)
+}
+
+# Now plot the extRate of the Genera over the time scale
+time.plot(c(-0.2,1.2), "Extinction Rate")
+# since there are only six feeding types, we can afford to plot of them with out
+# a loop. We can pick and choose colors and other parameters one by one.
+points(timescale$age_mid, extRate[,1], col=feedColors[1], pch='*')
+lines(x=timescale$age_mid,y=extRate[,1],col=feedColors[1], lwd=1.0)
+
+points(timescale$age_mid, extRate[,2], col=feedColors[2], pch='*')
+lines(x=timescale$age_mid,y=extRate[,2],col=feedColors[2], lwd=1.0)
+
+points(timescale$age_mid, extRate[,3], col=feedColors[3], pch='*')
+lines(x=timescale$age_mid,y=extRate[,3],col=feedColors[3], lwd=1.0)
+
+points(timescale$age_mid, extRate[,4], col=feedColors[4], pch='*')
+lines(x=timescale$age_mid,y=extRate[,4],col=feedColors[4], lwd=1.0)
+
+points(timescale$age_mid, extRate[,5], col=feedColors[5], pch='*')
+lines(x=timescale$age_mid,y=extRate[,5],col=feedColors[5], lwd=1.0)
+
+points(timescale$age_mid, extRate[,6], col=feedColors[6], pch='*')
+lines(x=timescale$age_mid,y=extRate[,6],col=feedColors[6], lwd=1.0)
+
+mtext(side=3, line=0.3, "Extinction Rate per Feeding Type", col="black", cex=0.9)
+legend("topright", legend=(feedingType), fill=(feedColors), bg="white", title="Feeding Type", cex=0.75)

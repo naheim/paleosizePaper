@@ -1797,10 +1797,10 @@ taxon_id	taxon_name	taxon_rank	taxon_clade	phylum	subphylum	class	subclass	order
 58271	Idioprioniodus	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida			Prioniodidae		Idioprioniodus		33949	57.439595	196.00524514944	Visean	Kasimovian	346.7	303.7	1	1	5	115	f	paleozoic	water	dedicated	closed
 43999	Mehlina	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida			Spathognathodontidae		Mehlina		33971	67.578026666667	319.19060778121	Frasnian	Tournaisian	382.7	346.7	1	1	5	115	f	paleozoic	water	dedicated	closed
 37606	Acanthocordylodus	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Acanthocordylodus		33830	42.689558076923	80.463433952807	Sandbian	Sandbian	458.4	453	1	1	5	115	f	paleozoic	water	dedicated	closed
-34178	Acanthodina	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Acanthodina		33831	39.710714516129	64.767433864392	Katian	Katian	453	445.2	1	1	6	116	f	paleozoic	water	dedicated	closed
-57028	Acanthodus	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Acanthodus		33832	43.296100096154	83.942117997558	Tremadocian	Tremadocian	485.4	477.7	1	1	6	116	f	paleozoic	water	dedicated	closed
-54160	Adetognathus	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Adetognathus		33833	61.241506875	237.55883707243	Serpukhovian	Sakmarian	330.9	290.1	1	1	6	116	f	paleozoic	water	dedicated	closed
-54161	Aethotaxis	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Aethotaxis		33834	420	727671.3453474	Serpukhovian	Kasimovian	330.9	303.7	1	1	6	116	t	paleozoic	water	dedicated	closed
+34178	Acanthodina	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Acanthodina		33831	39.710714516129	64.767433864392	Katian	Katian	453	445.2	1	1	5	116	f	paleozoic	water	dedicated	closed
+57028	Acanthodus	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Acanthodus		33832	43.296100096154	83.942117997558	Tremadocian	Tremadocian	485.4	477.7	1	1	5	116	f	paleozoic	water	dedicated	closed
+54160	Adetognathus	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Adetognathus		33833	61.241506875	237.55883707243	Serpukhovian	Sakmarian	330.9	290.1	1	1	5	116	f	paleozoic	water	dedicated	closed
+54161	Aethotaxis	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Aethotaxis		33834	420	727671.3453474	Serpukhovian	Kasimovian	330.9	303.7	1	1	5	116	t	paleozoic	water	dedicated	closed
 33046	Anastrophognathus	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Anastrophognathus		33839	33.853513846154	40.127753384478	Anisian	Anisian	247.2	242					f	paleozoic	water	dedicated	closed
 47751	Ancoradella	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Ancoradella		33840	55.83879	180.07009030763	Gorstian	Ludfordian	427.4	423	1		5		f	paleozoic	water	dedicated	closed
 44795	Ancyrodella	genus	Craniata	Chordata	Cephalochordata	Conodonta		Conodontophorida					Ancyrodella		33841	52.392011666667	148.74035321531	Givetian	Frasnian	387.7	372.2	1		5		f	paleozoic	water	dedicated	closed
@@ -2051,48 +2051,48 @@ taxon_id	taxon_name	taxon_rank	taxon_clade	phylum	subphylum	class	subclass	order
 42233	Bolcyrus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes	Anguilloidei		Congridae		Bolcyrus		35350	240	145948.57280835	Lutetian	Bartonian	47.8	38	3	1	5	315	f	modern	water	dedicated	closed
 41345	Conger	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes	Anguilloidei		Congridae		Conger		35353	3000	103773584.90566	Ypresian	Holocene	56	0	3	1	5	315	t	modern	water	dedicated	closed
 42248	Voltaconger	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes	Anguilloidei		Congridae		Voltaconger		35414	250	164095.69447873	Lutetian	Bartonian	47.8	38	3	1	5	315	f	modern	water	dedicated	closed
-41344	Anguilla	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Anguilla		35345	2000	23584905.660377	Ypresian	Holocene	56	0	1	1	6	116	t	modern	water	dedicated	closed
-39011	Anguillavus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Anguillavus		35346	65	3432.0232424285	Cenomanian	Cenomanian	100.5	93.9	1	1	6	116	f	modern	water	dedicated	closed
-42232	Anguilloides	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Anguilloides		35347	380	545946.47035386	Lutetian	Bartonian	47.8	38	1	1	6	116	f	modern	water	dedicated	closed
-51217	Ariosoma	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Ariosoma		35348	750	3844675.2577287	Rupelian	Holocene	33.9	0	1	1	6	116	t	modern	water	dedicated	closed
-41941	Bolcanguilla	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Bolcanguilla		35349	260	183652.99868754	Lutetian	Bartonian	47.8	38	1	1	6	116	f	modern	water	dedicated	closed
-33415	Brannerion	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Brannerion		35351	330	364125.95658513	Aptian	Aptian	125	113	1	1	6	116	f	modern	water	dedicated	closed
-38551	Dinelops	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Dinelops		35357	800	4627293.3801602	Cenomanian	Turonian	100.5	89.8	1	1	6	116	f	modern	water	dedicated	closed
-48451	Echelus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Echelus		35358	1000	8781020.4750852	Aquitanian	Holocene	23.03	0	1	1	6	116	t	modern	water	dedicated	closed
-36836	Echidnocephalus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Echidnocephalus		35359	300	276960.48226258	Campanian	Campanian	83.6	72.1	1	1	6	116	f	modern	water	dedicated	closed
-39012	Enchelion	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Enchelion		35361	130	25105.803313922	Cenomanian	Cenomanian	100.5	93.9	1	1	6	116	f	modern	water	dedicated	closed
-38552	Enchelurus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Enchelurus		35362	2500	121895267.80995	Cenomanian	Campanian	100.5	72.1	1	1	6	116	f	modern	water	dedicated	closed
-42235	Eoanguilla	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Eoanguilla		35363	313.5	314266.84626886	Lutetian	Bartonian	47.8	38	1	1	6	116	f	modern	water	dedicated	closed
-41942	Eomyrophis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Eomyrophis		35366	180	63902.01097574	Lutetian	Holocene	47.8	0	1	1	6	116	t	modern	water	dedicated	closed
-41943	Gazolapodus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Gazolapodus		35368	147	35727.689910843	Lutetian	Bartonian	47.8	38	1	1	6	116	f	modern	water	dedicated	closed
-41347	Gnathophis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Gnathophis		35369	600	2026010.5780907	Ypresian	Holocene	56	0	1	1	6	116	t	modern	water	dedicated	closed
-42237	Goslinophis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Goslinophis		35370	320	333338.27182499	Lutetian	Bartonian	47.8	38	1	1	6	116	f	modern	water	dedicated	closed
-39013	Haljulia	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Haljulia			76.73	5525.9010918733	Cenomanian	Cenomanian	100.5	93.9	1	1	6	116	f	modern	water	dedicated	closed
-42238	Hildebrandia	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Hildebrandia		35372	945	7464701.1074088	Lutetian	Holocene	47.8	0	1	1	6	116	t	modern	water	dedicated	closed
-41348	Hoplunnis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Hoplunnis		35373	1250	16663374.082669	Ypresian	Holocene	56	0	1	1	6	116	t	modern	water	dedicated	closed
-53862	Istieus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Istieus		35374	330	364125.95658513	Santonian	Campanian	86.3	72.1	1	1	6	116	f	modern	water	dedicated	closed
-52915	Japonoconger	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Japonoconger		35375	570	1748592.6047545	Zanclean	Holocene	5.333	0	1	1	6	116	t	modern	water	dedicated	closed
-38553	Lebonichthyes	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Lebonichthyes			190	74632.185712107	Cenomanian	Santonian	100.5	83.6	1	1	6	116	f	modern	water	dedicated	closed
-42239	Milananguilla	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Milananguilla		35380	150	37861.159050517	Lutetian	Bartonian	47.8	38	1	1	6	116	f	modern	water	dedicated	closed
-49902	Muraena	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Muraena		35381	1500	28124419.33177	Tortonian	Holocene	11.62	0	1	1	6	116	t	modern	water	dedicated	closed
-41350	Muraenesox	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Muraenesox		35382	2200	6698113.2075472	Ypresian	Holocene	56	0	1	1	6	116	t	modern	water	dedicated	closed
-42240	Mylomyrus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Mylomyrus		35383	310	304299.0077032	Lutetian	Bartonian	47.8	38	1	1	6	116	f	modern	water	dedicated	closed
-51218	Myroconger	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Myroconger		35384	538	1481325.8747177	Rupelian	Holocene	33.9	0	1	1	6	116	t	modern	water	dedicated	closed
-48452	Mystriophis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Mystriophis		35385	1400	23070789.487471	Aquitanian	Holocene	23.03	0	1	1	6	116	t	modern	water	dedicated	closed
-42241	Nettastoma	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Nettastoma		35386	820	4967227.7127334	Lutetian	Holocene	47.8	0	1	1	6	116	t	modern	water	dedicated	closed
-42242	Notacanthus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Notacanthus		35387	1200	14820594.003168	Lutetian	Holocene	47.8	0	1	1	6	116	t	modern	water	dedicated	closed
-49544	Ophisurus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Ophisurus		35388	2500	121895267.80995	Langhian	Holocene	15.97	0	1	1	6	116	t	modern	water	dedicated	closed
-49545	Panturichthys	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Panturichthys		35390	1490	27589489.015453	Langhian	Holocene	15.97	0	1	1	6	116	t	modern	water	dedicated	closed
-41352	Paraconger	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Paraconger		35393	627	2298912.6451631	Ypresian	Holocene	56	0	1	1	6	116	t	modern	water	dedicated	closed
-42243	Paracongroides	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Paracongroides		35394	140	31057.950740317	Lutetian	Bartonian	47.8	38	1	1	6	116	f	modern	water	dedicated	closed
-42244	Paranguilla	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Paranguilla		35392	300	276960.48226258	Lutetian	Bartonian	47.8	38	1	1	6	116	f	modern	water	dedicated	closed
-42245	Patavichthys	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Patavichthys		35396	130	25105.803313922	Lutetian	Bartonian	47.8	38	1	1	6	116	f	modern	water	dedicated	closed
-49546	Pisodonophis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Pisodonophis		35397	1080	10952188.34677	Langhian	Holocene	15.97	0	1	1	6	116	t	modern	water	dedicated	closed
-51219	Proserrivomer	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Proserrivomer		35399	121.62	20734.582881128	Rupelian	Rupelian	33.9	28.1	1	1	6	116	f	modern	water	dedicated	closed
-42246	Proteomyrus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Proteomyrus		35400	173.57	57565.285811957	Lutetian	Bartonian	47.8	38	1	1	6	116	f	modern	water	dedicated	closed
-42823	Pseudophichthyes	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Pseudophichthyes			309	301489.41037139	Priabonian	Holocene	38	0	1	1	6	116	t	modern	water	dedicated	closed
-53267	Pseudoxenomystax	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Pseudoxenomystax		35403	1000	8781020.4750852	Zanclean	Holocene	5.333	0	1	1	6	116	t	modern	water	dedicated	closed
-42824	Rhechias	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Rhechias		35405	390	588215.68191084	Priabonian	Holocene	38	0	1	1	6	116	t	modern	water	dedicated	closed
+41344	Anguilla	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Anguilla		35345	2000	23584905.660377	Ypresian	Holocene	56	0	1	1	5	116	t	modern	water	dedicated	closed
+39011	Anguillavus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Anguillavus		35346	65	3432.0232424285	Cenomanian	Cenomanian	100.5	93.9	1	1	5	116	f	modern	water	dedicated	closed
+42232	Anguilloides	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Anguilloides		35347	380	545946.47035386	Lutetian	Bartonian	47.8	38	1	1	5	116	f	modern	water	dedicated	closed
+51217	Ariosoma	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Ariosoma		35348	750	3844675.2577287	Rupelian	Holocene	33.9	0	1	1	5	116	t	modern	water	dedicated	closed
+41941	Bolcanguilla	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Bolcanguilla		35349	260	183652.99868754	Lutetian	Bartonian	47.8	38	1	1	5	116	f	modern	water	dedicated	closed
+33415	Brannerion	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Brannerion		35351	330	364125.95658513	Aptian	Aptian	125	113	1	1	5	116	f	modern	water	dedicated	closed
+38551	Dinelops	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Dinelops		35357	800	4627293.3801602	Cenomanian	Turonian	100.5	89.8	1	1	5	116	f	modern	water	dedicated	closed
+48451	Echelus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Echelus		35358	1000	8781020.4750852	Aquitanian	Holocene	23.03	0	1	1	5	116	t	modern	water	dedicated	closed
+36836	Echidnocephalus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Echidnocephalus		35359	300	276960.48226258	Campanian	Campanian	83.6	72.1	1	1	5	116	f	modern	water	dedicated	closed
+39012	Enchelion	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Enchelion		35361	130	25105.803313922	Cenomanian	Cenomanian	100.5	93.9	1	1	5	116	f	modern	water	dedicated	closed
+38552	Enchelurus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Enchelurus		35362	2500	121895267.80995	Cenomanian	Campanian	100.5	72.1	1	1	5	116	f	modern	water	dedicated	closed
+42235	Eoanguilla	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Eoanguilla		35363	313.5	314266.84626886	Lutetian	Bartonian	47.8	38	1	1	5	116	f	modern	water	dedicated	closed
+41942	Eomyrophis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Eomyrophis		35366	180	63902.01097574	Lutetian	Holocene	47.8	0	1	1	5	116	t	modern	water	dedicated	closed
+41943	Gazolapodus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Gazolapodus		35368	147	35727.689910843	Lutetian	Bartonian	47.8	38	1	1	5	116	f	modern	water	dedicated	closed
+41347	Gnathophis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Gnathophis		35369	600	2026010.5780907	Ypresian	Holocene	56	0	1	1	5	116	t	modern	water	dedicated	closed
+42237	Goslinophis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Goslinophis		35370	320	333338.27182499	Lutetian	Bartonian	47.8	38	1	1	5	116	f	modern	water	dedicated	closed
+39013	Haljulia	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Haljulia			76.73	5525.9010918733	Cenomanian	Cenomanian	100.5	93.9	1	1	5	116	f	modern	water	dedicated	closed
+42238	Hildebrandia	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Hildebrandia		35372	945	7464701.1074088	Lutetian	Holocene	47.8	0	1	1	5	116	t	modern	water	dedicated	closed
+41348	Hoplunnis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Hoplunnis		35373	1250	16663374.082669	Ypresian	Holocene	56	0	1	1	5	116	t	modern	water	dedicated	closed
+53862	Istieus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Istieus		35374	330	364125.95658513	Santonian	Campanian	86.3	72.1	1	1	5	116	f	modern	water	dedicated	closed
+52915	Japonoconger	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Japonoconger		35375	570	1748592.6047545	Zanclean	Holocene	5.333	0	1	1	5	116	t	modern	water	dedicated	closed
+38553	Lebonichthyes	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Lebonichthyes			190	74632.185712107	Cenomanian	Santonian	100.5	83.6	1	1	5	116	f	modern	water	dedicated	closed
+42239	Milananguilla	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Milananguilla		35380	150	37861.159050517	Lutetian	Bartonian	47.8	38	1	1	5	116	f	modern	water	dedicated	closed
+49902	Muraena	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Muraena		35381	1500	28124419.33177	Tortonian	Holocene	11.62	0	1	1	5	116	t	modern	water	dedicated	closed
+41350	Muraenesox	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Muraenesox		35382	2200	6698113.2075472	Ypresian	Holocene	56	0	1	1	5	116	t	modern	water	dedicated	closed
+42240	Mylomyrus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Mylomyrus		35383	310	304299.0077032	Lutetian	Bartonian	47.8	38	1	1	5	116	f	modern	water	dedicated	closed
+51218	Myroconger	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Myroconger		35384	538	1481325.8747177	Rupelian	Holocene	33.9	0	1	1	5	116	t	modern	water	dedicated	closed
+48452	Mystriophis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Mystriophis		35385	1400	23070789.487471	Aquitanian	Holocene	23.03	0	1	1	5	116	t	modern	water	dedicated	closed
+42241	Nettastoma	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Nettastoma		35386	820	4967227.7127334	Lutetian	Holocene	47.8	0	1	1	5	116	t	modern	water	dedicated	closed
+42242	Notacanthus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Notacanthus		35387	1200	14820594.003168	Lutetian	Holocene	47.8	0	1	1	5	116	t	modern	water	dedicated	closed
+49544	Ophisurus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Ophisurus		35388	2500	121895267.80995	Langhian	Holocene	15.97	0	1	1	5	116	t	modern	water	dedicated	closed
+49545	Panturichthys	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Panturichthys		35390	1490	27589489.015453	Langhian	Holocene	15.97	0	1	1	5	116	t	modern	water	dedicated	closed
+41352	Paraconger	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Paraconger		35393	627	2298912.6451631	Ypresian	Holocene	56	0	1	1	5	116	t	modern	water	dedicated	closed
+42243	Paracongroides	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Paracongroides		35394	140	31057.950740317	Lutetian	Bartonian	47.8	38	1	1	5	116	f	modern	water	dedicated	closed
+42244	Paranguilla	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Paranguilla		35392	300	276960.48226258	Lutetian	Bartonian	47.8	38	1	1	5	116	f	modern	water	dedicated	closed
+42245	Patavichthys	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Patavichthys		35396	130	25105.803313922	Lutetian	Bartonian	47.8	38	1	1	5	116	f	modern	water	dedicated	closed
+49546	Pisodonophis	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Pisodonophis		35397	1080	10952188.34677	Langhian	Holocene	15.97	0	1	1	5	116	t	modern	water	dedicated	closed
+51219	Proserrivomer	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Proserrivomer		35399	121.62	20734.582881128	Rupelian	Rupelian	33.9	28.1	1	1	5	116	f	modern	water	dedicated	closed
+42246	Proteomyrus	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Proteomyrus		35400	173.57	57565.285811957	Lutetian	Bartonian	47.8	38	1	1	5	116	f	modern	water	dedicated	closed
+42823	Pseudophichthyes	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Pseudophichthyes			309	301489.41037139	Priabonian	Holocene	38	0	1	1	5	116	t	modern	water	dedicated	closed
+53267	Pseudoxenomystax	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Pseudoxenomystax		35403	1000	8781020.4750852	Zanclean	Holocene	5.333	0	1	1	5	116	t	modern	water	dedicated	closed
+42824	Rhechias	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Rhechias		35405	390	588215.68191084	Priabonian	Holocene	38	0	1	1	5	116	t	modern	water	dedicated	closed
 49547	Rhynchoconger	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Rhynchoconger		35406	1500	28124419.33177	Langhian	Holocene	15.97	0	4	3	1	431	t	modern	water	dedicated	closed
 49548	Scalanago	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Scalanago		35409	350	431136.36209603	Langhian	Holocene	15.97	0	4	3	1	431	t	modern	water	dedicated	closed
 51542	Taenioconger	genus	Elopomorpha	Chordata		Actinopterygii		Anguilliformes					Taenioconger		35410	304	287694.86363892	Chattian	Holocene	28.1	0	4	3	1	431	t	modern	water	dedicated	closed
