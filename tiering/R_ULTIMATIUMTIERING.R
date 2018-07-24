@@ -131,11 +131,10 @@ legend("topleft", legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect",
 #4: Body Size Box Plot for Each Tier/Biovolume vs. Tiering Level
 
 par(col="black")
-my.col = c("red", "orange", "green", "cyan", "magenta", "blue")
-my.opp = c("chartreuse3", "dodgerblue2", "red", "darkorange1", "forestgreen", "orange2")
-par(mar = c(5.5, 5.5, 2, 2)+0.1)
-par(mgp = c(3, 1.7, 0))
-boxplot(log10(max_vol)~tiering, bodySize, xlab="Tiering Level", ylab=expression(paste("Biovolume (log  "[10]," cm"^3,")")), col=my.col, names=c("Tiering Level 1:\n Pelagic", "Tiering Level 2:\n Erect", "Tiering Level 3:\n Surficial", "Tiering Level 4:\n Semi-infaunal", "Tiering Level 5:\n Shallow infaunal", "Tiering Level 6:\n Deep infaunal"), border = my.opp)
+my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
+par(mar = c(4, 3.5, 4, 3.5)+0.5)
+par(mgp = c(2.5, 1.5, 0))
+boxplot(log10(max_vol)~tiering, bodySize, xlab="Tiering Level", ylab=expression(paste("Biovolume (log  "[10]," mm"^3,")")), col=my.col, names=c("Tiering Level 1:\n Pelagic", "Tiering Level 2:\n Erect", "Tiering Level 3:\n Surficial", "Tiering Level 4:\n Semi-infaunal", "Tiering Level 5:\n Shallow infaunal", "Tiering Level 6:\n Deep infaunal"))
 mtext(side=3, line=0.5, "Biovolume vs. Tiering Level", col="black", font=4, cex=1.3)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
