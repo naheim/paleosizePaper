@@ -211,7 +211,7 @@ sizeData$log10_volume <- log10(sizeData$max_vol)
 
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt')
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-
+myCols<- c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 sizeData$log10max_vol <- log10(sizeData$max_vol)
 
 Num1<-sizeData[which(sizeData$tiering == 1),]
@@ -227,7 +227,7 @@ time.plot.mult(nrow=2, ncol=3,las=1,top.mar=2.5)
 par(las=1)
 plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log  "[10]," mm"^3*")")))
  sizeData$log10max_vol <- log10(sizeData$max_vol)
- segments(Num1$fad_age,Num1$log10max_vol,Num1$lad_age,Num1$log10max_vol, col="red")
+ segments(Num1$fad_age,Num1$log10max_vol,Num1$lad_age,Num1$log10max_vol, col=myCols[1])
  title(main="Tiering Level 1: Pelagic")
  meanVector <- vector(mode='numeric', length=nrow(timescale))
  for(i in 1:nrow(timescale)) { 
@@ -235,7 +235,7 @@ plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(
 lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
 
 plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log  "[10]," mm"^3*")")))
-segments(Num2$fad_age,Num2$log10max_vol,Num2$lad_age,Num2$log10max_vol, col="orange")
+segments(Num2$fad_age,Num2$log10max_vol,Num2$lad_age,Num2$log10max_vol, col=myCols[2])
 meanVector <- vector(mode='numeric', length=nrow(timescale))
 for(i in 1:nrow(timescale)) { 
   	meanVector[i] <- mean(Num2$log10max_vol[Num2$fad_age > timescale$age_top[i] & Num2$lad_age < timescale$age_bottom[i]]) }
@@ -243,7 +243,7 @@ lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
  title(main="Tiering Level 2: Erect")
 
 plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log  "[10]," mm"^3*")")))
-segments(Num3$fad_age,Num3$log10max_vol,Num3$lad_age,Num3$log10max_vol, col="green")
+segments(Num3$fad_age,Num3$log10max_vol,Num3$lad_age,Num3$log10max_vol, col=myCols[3])
  title(main="Tiering Level 3: Surficial")
  meanVector <- vector(mode='numeric', length=nrow(timescale))
 for(i in 1:nrow(timescale)) { 
@@ -251,7 +251,7 @@ for(i in 1:nrow(timescale)) {
 lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
 
 plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log"[10]," mm"^3*")")))
-segments(Num4$fad_age,Num4$log10max_vol,Num4$lad_age,Num4$log10max_vol, col="cyan")
+segments(Num4$fad_age,Num4$log10max_vol,Num4$lad_age,Num4$log10max_vol, col=myCols[4])
 title(main="Tiering Level 4: Semi-infaunal")
  meanVector <- vector(mode='numeric', length=nrow(timescale))
 for(i in 1:nrow(timescale)) { 
@@ -259,7 +259,7 @@ for(i in 1:nrow(timescale)) {
 lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
 
 plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log  "[10]," mm"^3*")")))
-segments(Num5$fad_age,Num5$log10max_vol,Num5$lad_age,Num5$log10max_vol, col="magenta")
+segments(Num5$fad_age,Num5$log10max_vol,Num5$lad_age,Num5$log10max_vol, col=myCols[5])
 title(main="Tiering Level 5: Shallow infaunal")
 meanVector <- vector(mode='numeric', length=nrow(timescale))
 for(i in 1:nrow(timescale)) { 
@@ -267,7 +267,7 @@ for(i in 1:nrow(timescale)) {
 lines(x=timescale$age_mid,y=meanVector, col="black", lwd=4)
 
 plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log  "[10]," mm"^3*")")))
-segments(Num6$fad_age,Num6$log10max_vol,Num6$lad_age,Num6$log10max_vol, col="blue")
+segments(Num6$fad_age,Num6$log10max_vol,Num6$lad_age,Num6$log10max_vol, col=myCols[6])
 title(main="Tiering Level 6: Deep infaunal")
 meanVector <- vector(mode='numeric', length=nrow(timescale))
 for(i in 1:nrow(timescale)) { 
@@ -311,7 +311,7 @@ for(j in 1:6){
 
 bodySize <- read.delim("bodySizes.txt") 
 timescale <- read.delim("timescale.txt") 
-bodySize <- subset(sizeData, !is.na(tiering) & tiering != 0)
+bodySize <- subset(bodySize, !is.na(tiering) & tiering !=0)
 
 library(paleoTS)
 
