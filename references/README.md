@@ -15,6 +15,8 @@ Here is a list of references that will be helpful in writing your discussions.
 ## Respiratory Anatomy References
 * Bambach, R. K., Knoll, A. H., & Sepkoski, J. J., Jr. (2002). Anatomical and ecological constraints on Phanerozoic animal diversity in the marine realm. Proceedings of the National Academy of Sciences of the United States of America, 99(10), 6854–6859. [Link](http://doi.org/10.1073/pnas.092150999) [PDF](Bambach2002.pdf)
 
+* Lane, S. J., Shishido, C. M., Moran, A. L., Tobalske, B. W., Arango, C. P., & Woods, H. A. (2017). Upper limits to body size imposed by respiratory–structural trade-offs in Antarctic pycnogonids. Proceedings of the Royal Society B: Biological Sciences, 284(1865), 20171779. [Link](http://doi.org/10.1098/rspb.2017.1779) [PDF](Lane2017.pdf)
+
 ## Phyla References
 * McShea, D. W. (1996). Metazoan complexity and evolution: Is there a trend? Evolution, 50(2), 477–492. [PDF](McShea1996.pdf)
 
@@ -29,12 +31,16 @@ Here is a list of references that will be helpful in writing your discussions.
 
 * Knope, M. L., Heim, N. A., Frishkoff, L. O., & Payne, J. L. (2015). Limited role of functional differentiation in early diversification of animals. Nature Communications, 6, 6455. [Link](http://doi.org/10.1038/ncomms7455) [PDF](Knope2015.pdf)
 
+* Whalen, C. D., & Briggs, D. E. G. (2018). The Palaeozoic colonization of the water column and the rise of global nekton. Proceedings of the Royal Society B: Biological Sciences, 285(1883), 20180883. [Link](http://doi.org/10.1098/rspb.2018.0883) [PDF](Whalen2018.pdf)
+
 ## Motility References
 * Bush, A. M., & Bambach, R. K. (2011). Paleoecologic megatrends in marine Metazoa. Annual Reviews of Earth and Planetary Sciences, 39, 241–269. [Link](http://doi.org/10.1146/annurev-earth-040809-152556) [PDF](Bush2011.pdf)
 
 * Butterfield, N. J. (2017). Oxygen, animals and aquatic bioturbation: An updated account. Geobiology, 333(Suppl. 1), 1627–14. [Link](http://doi.org/10.1111/gbi.12267) [PDF](Butterfield2017.pdf)
 
 * Knope, M. L., Heim, N. A., Frishkoff, L. O., & Payne, J. L. (2015). Limited role of functional differentiation in early diversification of animals. Nature Communications, 6, 6455. [Link](http://doi.org/10.1038/ncomms7455) [PDF](Knope2015.pdf)
+
+* Whalen, C. D., & Briggs, D. E. G. (2018). The Palaeozoic colonization of the water column and the rise of global nekton. Proceedings of the Royal Society B: Biological Sciences, 285(1883), 20180883. [Link](http://doi.org/10.1098/rspb.2018.0883) [PDF](Whalen2018.pdf)
 
 ## Feeding References
 * Bush, A. M., & Bambach, R. K. (2011). Paleoecologic megatrends in marine Metazoa. Annual Reviews of Earth and Planetary Sciences, 39, 241–269. [Link](http://doi.org/10.1146/annurev-earth-040809-152556) [PDF](Bush2011.pdf)
