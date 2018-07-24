@@ -1,3 +1,7 @@
+source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
+sizeData <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/bodySizes.txt")
+timescale <- read.delim(file="https://github.com/naheim/paleosizePaper/raw/master/rawDataFiles/timescale.txt")
+nBins <- nrow(timescale) 
 myCols<- c("red", "orange", "green", "cyan", "magenta", "blue")
 tierLabs <- c("Pelagic", "Erect", "Surficial", "Semi-infaunal", "Shallow infaunal", "Deep infaunal")
 time.plot.mult(nrow=2, ncol=3, plot.width=10, top.mar=2)
@@ -18,7 +22,7 @@ for(j in 1:6){
 			}
 		}
 	}
-	plot(timescale$age_mid[tierExtSel$coef > -5 & tierExtSel$coef < 5], tierExtSel$coef[tierExtSel$coef > -5 & tierExtSel$coef < 5], pch=16, cex=1.25, xaxt="n", xlab="", xlim=c(541,0), col=myCols[j], ylab=" Log-Odds of Extinction")
+	plot(timescale$age_mid[tierExtSel$coef > -5 & tierExtSel$coef < 5], tierExtSel$coef[tierExtSel$coef > -5 & tierExtSel$coef < 5], pch=16, cex=1.25, xaxt="n", xlab="", xlim=c(541,0), ylim=c(-2.5,2.5), col=myCols[j], ylab=" Log-Odds of Extinction")
 	abline(h=0, lty=2)
 	segments(timescale$age_mid,tierExtSel$ci.minus,timescale$age_mid,tierExtSel$ci.plus)
 	title(main= paste("Tiering ", j, ": ", tierLabs[j], sep=""))
