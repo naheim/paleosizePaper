@@ -158,7 +158,7 @@ segments(sizeData$fad_age, sizeData$log10_volume, sizeData$lad_age, sizeData$log
 myMean <- vector(mode="numeric", length=nrow(timescale))
 my05 <- myMean
 my95 <- myMean
-myCols<- c("red", "orange", "green", "cyan", "magenta", "blue")
+myCols<- c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 sizeData$color<-myCols[sizeData$tiering]
 head(sizeData)
 segments(sizeData$fad_age, sizeData$log10_volume, sizeData$lad_age, sizeData$log10_volume, col=sizeData$color)
@@ -178,42 +178,42 @@ for(i in 1:nrow(timescale)) {
 	temp<-Num1[Num1$fad_age > timescale$age_top[i] & Num1$lad_age < timescale$age_bottom[i], ] 
 	myMeanNum1[i]<-mean(temp$log10_volume) 
 }
-lines(timescale$age_mid, myMeanNum1, col="red4", lwd=6) 
+lines(timescale$age_mid, myMeanNum1, col="red4", lwd=3) 
 
 myMeanNum2 <- vector(mode="numeric", length=nrow(timescale))
 for(i in 1:nrow(timescale)) {
 	temp2<-Num2[Num2$fad_age > timescale$age_top[i] & Num2$lad_age < timescale$age_bottom[i], ]
 	myMeanNum2[i]<-mean(temp2$log10_volume)
 }
-lines(timescale$age_mid, myMeanNum2, col="orange3", lwd=6)
+lines(timescale$age_mid, myMeanNum2, col="orange3", lwd=3)
 
 myMeanNum3 <- vector(mode="numeric", length=nrow(timescale))
 for(i in 1:nrow(timescale)) {
 	temp3<-Num3[Num3$fad_age > timescale$age_top[i] & Num3$lad_age < timescale$age_bottom[i], ]
 	myMeanNum3[i]<-mean(temp3$log10_volume)
 }
-lines(timescale$age_mid, myMeanNum3, col="forestgreen", lwd=6)
+lines(timescale$age_mid, myMeanNum3, col="forestgreen", lwd=3)
 
 myMeanNum4 <- vector(mode="numeric", length=nrow(timescale))
 for(i in 1:nrow(timescale)) {
 	temp4<-Num4[Num4$fad_age > timescale$age_top[i] & Num4$lad_age < timescale$age_bottom[i], ]
 	myMeanNum4[i]<-mean(temp4$log10_volume)
 }
-lines(timescale$age_mid, myMeanNum4, col="cyan3", lwd=6)
+lines(timescale$age_mid, myMeanNum4, col="cyan3", lwd=3)
 
 myMeanNum5 <- vector(mode="numeric", length=nrow(timescale))
 for(i in 1:nrow(timescale)) {
 	temp5<-Num5[Num5$fad_age > timescale$age_top[i] & Num5$lad_age < timescale$age_bottom[i], ]
 	myMeanNum5[i]<-mean(temp5$log10_volume)
 }
-lines(timescale$age_mid, myMeanNum5, col="magenta3", lwd=6)
+lines(timescale$age_mid, myMeanNum5, col="magenta3", lwd=3)
 
 myMeanNum6 <- vector(mode="numeric", length=nrow(timescale))
 for(i in 1:nrow(timescale)) {
 	temp6<-Num6[Num6$fad_age > timescale$age_top[i] & Num6$lad_age < timescale$age_bottom[i], ]
 	myMeanNum6[i]<-mean(temp6$log10_volume)
 }
-lines(timescale$age_mid, myMeanNum6, col="blue3", lwd=6)
+lines(timescale$age_mid, myMeanNum6, col="blue3", lwd=3)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
