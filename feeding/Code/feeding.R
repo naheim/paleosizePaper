@@ -215,7 +215,7 @@ for(i in 1:nBins) {
 }
 
 # Now plot the extRate of the Genera over the time scale
-time.plot(c(-0.2,1.2), "Extinction Rate")
+time.plot(c(-0.1,0.8), "Extinction Rate")
 # since there are only six feeding types, we can afford to plot of them with out
 # a loop. We can pick and choose colors and other parameters one by one.
 points(timescale$age_mid, extRate[,1], col=feedColors[1], pch='*')
