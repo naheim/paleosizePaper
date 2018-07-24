@@ -1,5 +1,6 @@
 #TOTAL GRAPH SINGLE DOC:
 
+#title.adj
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 #1: # of Genera in Each Tiering Lvl Over Time:
 
@@ -31,7 +32,7 @@ time.plot(c(0,range(my.tiering)), "Amount of Genera", mar = c(4, 3.5, 4, 3.5)+0.
 for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i], lwd = 3)}
 abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 6)
 mtext(side=3, line=0.5, "The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
-legend(540, 1197, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA, title.adj = 0.31)
+legend(540, 1197, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
@@ -71,7 +72,7 @@ polygon(myX, my1stLast, col=my.col[2])
 myFirst <- c(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3]+myProp[,2], rev(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3]+myProp[,2]+myProp[,1]))
 polygon(myX, myFirst, col=my.col[1])
 
-legend(535, 0.53, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Color Legend", bg = "white", box.col="black", title.adj = 0.26, cex=0.8, text.font = 1)
+legend(535, 0.53, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Color Legend", bg = "white", box.col="black", cex=0.8, text.font = 1)
 mtext(side=3, line=0.5, "The Change in the Proportions of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
@@ -108,30 +109,32 @@ my.n[i,j] <- length(temp.data)
 }
 par(col="black")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-time.plot(c(0, 8), expression(paste("Biovolume (log  "[10]," cm"^3,")")), mar = c(3.5, 3.5, 3.5, 3.5)+0.1, mgp = c(2, 0.75, 0))
+time.plot(c(0, 8), expression(paste("Biovolume (log  "[10]," mm"^3,")")), mar = c(4, 3.5, 4, 3.5)+0.5, mgp = c(2.5, 0.75, 0))
+
 #plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size", ylim=c(1.2,6.5), main="Mean expression(paste("Biovolume (log"[10]," cm"^3)"))
-my.col = c("red", "orange", "green", "cyan", "magenta", "blue")
+
+my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 for(i in 1:6) {
   my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var[,i]), i], vv=my.var[!is.na(my.var[,i]), i], nn=my.n[!is.na(my.var[,i]), i], tt=my.time[!is.na(my.var[,i])], oldest="last")
   fit3models(my.ts, method="Joint", pool=FALSE)
   #par(col=my.mean$color[k]); par(col="deepskyblue3")
-  lines(timescale$age_mid, my.mean[, i], col=my.col[i])
+  lines(timescale$age_mid, my.mean[, i], col=my.col[i], lwd = 3)
 }
-mtext(side=3, line=0.5, "The Change in Mean Biovolume of Gentra Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
-abline(v = c(65, 200, 251.2, 443.8), col="black")
+mtext(side=3, line=0.5, "The Change in Mean Biovolume of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
 par(col="black")
-legend("topleft", legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Level", bg = "white", title.adj = 0.31, cex=1)
+abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 6)
+legend("topleft", legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Level", bg = "white", cex=0.8)
+#END
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
 #4: Body Size Box Plot for Each Tier/Biovolume vs. Tiering Level
 
 par(col="black")
-my.col = c("red", "orange", "green", "cyan", "magenta", "blue")
-my.opp = c("chartreuse3", "dodgerblue2", "red", "darkorange1", "forestgreen", "orange2")
-par(mar = c(5.5, 5.5, 2, 2)+0.1)
-par(mgp = c(3, 1.7, 0))
-boxplot(log10(max_vol)~tiering, bodySize, xlab="Tiering Level", ylab=expression(paste("Biovolume (log  "[10]," cm"^3,")")), col=my.col, names=c("Tiering Level 1:\n Pelagic", "Tiering Level 2:\n Erect", "Tiering Level 3:\n Surficial", "Tiering Level 4:\n Semi-infaunal", "Tiering Level 5:\n Shallow infaunal", "Tiering Level 6:\n Deep infaunal"), border = my.opp)
+my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
+par(mar = c(4, 3.5, 4, 3.5)+0.5)
+par(mgp = c(2.5, 1.5, 0))
+boxplot(log10(max_vol)~tiering, bodySize, xlab="Tiering Level", ylab=expression(paste("Biovolume (log  "[10]," mm"^3,")")), col=my.col, names=c("Tiering Level 1:\n Pelagic", "Tiering Level 2:\n Erect", "Tiering Level 3:\n Surficial", "Tiering Level 4:\n Semi-infaunal", "Tiering Level 5:\n Shallow infaunal", "Tiering Level 6:\n Deep infaunal"))
 mtext(side=3, line=0.5, "Biovolume vs. Tiering Level", col="black", font=4, cex=1.3)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
