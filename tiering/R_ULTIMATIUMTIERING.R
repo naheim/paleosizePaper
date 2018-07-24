@@ -1,5 +1,6 @@
 #TOTAL GRAPH SINGLE DOC:
 
+#title.adj
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 #1: # of Genera in Each Tiering Lvl Over Time:
 
@@ -31,7 +32,7 @@ time.plot(c(0,range(my.tiering)), "Amount of Genera", mar = c(4, 3.5, 4, 3.5)+0.
 for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i], lwd = 3)}
 abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 6)
 mtext(side=3, line=0.5, "The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
-legend(540, 1197, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA, title.adj = 0.31)
+legend(540, 1197, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
@@ -71,7 +72,7 @@ polygon(myX, my1stLast, col=my.col[2])
 myFirst <- c(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3]+myProp[,2], rev(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3]+myProp[,2]+myProp[,1]))
 polygon(myX, myFirst, col=my.col[1])
 
-legend(535, 0.53, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Color Legend", bg = "white", box.col="black", title.adj = 0.26, cex=0.8, text.font = 1)
+legend(535, 0.53, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Color Legend", bg = "white", box.col="black", cex=0.8, text.font = 1)
 mtext(side=3, line=0.5, "The Change in the Proportions of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
@@ -117,12 +118,12 @@ for(i in 1:6) {
   my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var[,i]), i], vv=my.var[!is.na(my.var[,i]), i], nn=my.n[!is.na(my.var[,i]), i], tt=my.time[!is.na(my.var[,i])], oldest="last")
   fit3models(my.ts, method="Joint", pool=FALSE)
   #par(col=my.mean$color[k]); par(col="deepskyblue3")
-  lines(timescale$age_mid, my.mean[, i], col=my.col[i])
+  lines(timescale$age_mid, my.mean[, i], col=my.col[i], lwd = 3)
 }
 mtext(side=3, line=0.5, "The Change in Mean Biovolume of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
 par(col="black")
-abline(v = c(65, 200, 251.2, 443.8), col="black")
-legend("topleft", legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Level", bg = "white", title.adj = 0.31, cex=1)
+abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 6)
+legend("topleft", legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Level", bg = "white", cex=0.8)
 #END
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
