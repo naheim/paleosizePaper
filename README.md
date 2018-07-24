@@ -10,15 +10,21 @@ myCol <- c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 ````
 
 Aspect:
-	timescale = rectangle
-	rest = square
-  3.5 on sides, 4 on top and bottom <- not official
+
+> timescale = rectangle
+
+> rest = square
+
+> 3.5 on sides, 4 on top and bottom <- not official
 
 Plot Decoration:
-	Mass Extinctions --> dashed lines (lty=5)
-	Non-Bordered Legends
-	Line Graphs have '3' boldness
-	cex = ?
+> Mass Extinctions --> dashed lines (lty=5)
+
+> Non-Bordered Legends
+
+> Line Graphs have '3' boldness
+
+> cex = ?
 
 
 # Formatting Instructions for *Paleobiology*
@@ -72,7 +78,7 @@ Below are the journal's instruction to authors on formatting and submission prec
 >	* (K/T boundary)
 > 	* (Eocene–Oligocene mammals)
 
-<!--
+
 ## Reference Examples From the Chicago Manual of Style
 [[Original CMS Text](http://www.chicagomanualofstyle.org/tools_citationguide/citation-guide-2.html)]
 
@@ -80,9 +86,9 @@ Below are the journal's instruction to authors on formatting and submission prec
 
 ***Reference list entries (in alphabetical order)***
 
-Grazer, Brian, and Charles Fishman. 2015. *A Curious Mind: The Secret to a Bigger Life*. New York: Simon & Schuster.
+Grazer, B., and C. Fishman. 2015. *A Curious Mind: The Secret to a Bigger Life*. New York: Simon & Schuster.
 
-Smith, Zadie. 2016. *Swing Time*. New York: Penguin Press.
+Smith, Z. 2016. *Swing Time*. New York: Penguin Press.
 
 ***In-text citations***
 
@@ -98,88 +104,57 @@ In the reference list, include the page range for the chapter or part.
 
 ***Reference list entry***
 
-Thoreau, Henry David. 2016. “Walking.” In *The Making of the American Essay*, edited by John D’Agata, 167–95. Minneapolis: Graywolf Press.
+Thoreau, H. D. 2016. Walking. Pp. 167–195 *In* J. D’Agata, ed. The Making of the American Essay. Graywolf Press, Minneapolis.
 
 In-text citation
 
-(Thoreau 2016, 177–78)
+(Thoreau 2016)
 
-In some cases, you may want to cite the collection as a whole instead.
+In some cases, you may want to cite the collection/book as a whole instead.
 
-Reference list entry
+***Reference list entry***
 
-D’Agata, John, ed. 2016. The Making of the American Essay. Minneapolis: Graywolf Press.
-
-In-text citation
-
-(D’Agata 2016, 177–78)
-
-For more details, see 15.36 and 15.42 in The Chicago Manual of Style.
-
-Translated book
-
-Reference list entry
-
-Lahiri, Jhumpa. 2016. In Other Words. Translated by Ann Goldstein. New York: Alfred A. Knopf.
+D’Agata, J., ed. 2016. The Making of the American Essay. Graywolf Press, Minneapolis.
 
 In-text citation
 
-(Lahiri 2016, 146)
+(D’Agata 2016)
 
-E-book
+### Journal Article
 
-For books consulted online, include a URL or the name of the database in the reference list entry. For other types of e-books, name the format. If no fixed page numbers are available, cite a section title or a chapter or other number in the text, if any (or simply omit).
+In the reference list, include the page range for the whole article. For articles consulted online, include a URL or the name of the database in the reference list entry. Many journal articles list a DOI (Digital Object Identifier). A DOI forms a permanent URL that begins https://doi.org/. This URL is preferable to the URL that appears in your browser’s address bar.
 
-Reference list entries (in alphabetical order)
+***Reference list entries*** (in alphabetical order)
 
-Austen, Jane. 2007. Pride and Prejudice. New York: Penguin Classics. Kindle.
+LaSalle, P. 2017. Conundrum: A Story about Reading. New England Review 38:95–109.
 
-Borel, Brooke. 2016. The Chicago Guide to Fact-Checking. Chicago: University of Chicago Press. ProQuest Ebrary.
+Satterfield, S. 2016. Livy and the Pax Deum. Classical Philology 111:165–76.
 
-Kurland, Philip B., and Ralph Lerner, eds. 1987. The Founders’ Constitution. Chicago: University of Chicago Press. http://press-pubs.uchicago.edu/founders/.
+***In-text citations***
 
-Melville, Herman. 1851. Moby-Dick; or, The Whale. New York: Harper & Brothers. http://mel.hofstra.edu/moby-dick-the-whale-proofs.html.
+(LaSalle 2017)
 
-In-text citations
+(Satterfield 2016)
 
-(Austen 2007, chap. 3)
+### Journal Article with many authors
 
-(Borel 2016, 92)
+Journal articles often list many authors, especially in the sciences. If there are three or more authors, list up to ten in the reference list; in the text, list only the first, followed by et al. (“and others”). For more than ten authors, list the first six in the reference list, followed by et al.
 
-(Kurland and Lerner 1987, chap. 10, doc. 19)
+***Reference list entry***
 
-(Melville 1851, 627)
+Alroy, J., M. Aberhan, D. J. Bottjer, M. Foote, F. T. Fuersich, P. J. Harries, et al. (2008). Phanerozoic trends in the global diversity of marine invertebrates. Science, 321:97–100. doi: 10.1126/science.1156963.
 
-Journal article
+Bay, R. A., N. Rose, R. Barrett, L. Bernatchez, C. K. Ghalambor, J. R. Lasky, R. B. Brem, S. R. Palumbi, and P. Ralph. 2017. Predicting Responses to Contemporary Environmental Change Using Evolutionary Response Architectures. American Naturalist 189:463–73.  doi: 10.1086/691233.
 
-In the reference list, include the page range for the whole article. In the text, cite specific page numbers. For articles consulted online, include a URL or the name of the database in the reference list entry. Many journal articles list a DOI (Digital Object Identifier). A DOI forms a permanent URL that begins https://doi.org/. This URL is preferable to the URL that appears in your browser’s address bar.
+Keng, S.-H., C.-H. Lin, and P. F. Orazem. 2017. Expanding College Access in Taiwan, 1978–2014: Effects on Graduate Quality and Income Inequality. Journal of Human Capital 11:1–34. doi: 10.1086/690235.
 
-Reference list entries (in alphabetical order)
+***In-text citation***
 
-Keng, Shao-Hsun, Chun-Hung Lin, and Peter F. Orazem. 2017. “Expanding College Access in Taiwan, 1978–2014: Effects on Graduate Quality and Income Inequality.” Journal of Human Capital 11, no. 1 (Spring): 1–34. https://doi.org/10.1086/690235.
+(Alroy et al. 2008)
 
-LaSalle, Peter. 2017. “Conundrum: A Story about Reading.” New England Review 38 (1): 95–109. Project MUSE.
+(Bay et al. 2017)
 
-Satterfield, Susan. 2016. “Livy and the Pax Deum.” Classical Philology 111, no. 2 (April): 165–76.
+(Keng et al. 2017)
 
-In-text citations
 
-(Keng, Lin, and Orazem 2017, 9–10)
 
-(LaSalle 2017, 95)
-
-(Satterfield 2016, 170)
-
-Journal articles often list many authors, especially in the sciences. If there are four or more authors, list up to ten in the reference list; in the text, list only the first, followed by et al. (“and others”). For more than ten authors (not shown here), list the first seven in the reference list, followed by et al.
-
-Reference list entry
-
-Bay, Rachael A., Noah Rose, Rowan Barrett, Louis Bernatchez, Cameron K. Ghalambor, Jesse R. Lasky, Rachel B. Brem, Stephen R. Palumbi, and Peter Ralph. 2017. “Predicting Responses to Contemporary Environmental Change Using Evolutionary Response Architectures.” American Naturalist 189, no. 5 (May): 463–73. https://doi.org/10.1086/691233.
-
-In-text citation
-
-(Bay et al. 2017, 465)
-
-For more examples, see 15.46–49 in The Chicago Manual of Style.
-
--->
