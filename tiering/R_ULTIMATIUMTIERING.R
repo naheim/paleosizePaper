@@ -28,7 +28,7 @@ table(my.tiering)
 par(xaxs = "i", yaxs = "i")
 my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-time.plot(c(0,range(my.tiering)), "Amount of Genera", cex.lab = 2)
+time.plot(c(0, max(my.tiering)), "Amount of Genera", cex.lab = 2, mar = c(4,4,4,4)+0.1, mgp=c(2.5, 0.75, 0))
 #plot(1:10,1:10, type="n", xlim=c(541,-5), ylim=range(my.tiering), pch=21, xlab="Geologic Time (Ma)", ylab="Amount of Genera")
 for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i], lwd = 3)}
 abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 5)
