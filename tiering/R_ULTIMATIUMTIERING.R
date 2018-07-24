@@ -70,10 +70,9 @@ my1stLast <- c(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3], rev(myProp[,6]+myPro
 polygon(myX, my1stLast, col=my.col[2])
 myFirst <- c(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3]+myProp[,2], rev(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3]+myProp[,2]+myProp[,1]))
 polygon(myX, myFirst, col=my.col[1])
-mtext(side=3, line=0.5, "The Change in the Proportions of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
 
-par(xpd=TRUE)
 legend(535, 0.53, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Color Legend", bg = "white", box.col="black", title.adj = 0.26, cex=0.8, text.font = 1)
+mtext(side=3, line=0.5, "The Change in the Proportions of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
