@@ -86,15 +86,15 @@ Below are the journal's instruction to authors on formatting and submission prec
 
 ***Reference list entries (in alphabetical order)***
 
-Grazer, B., and C. Fishman. 2015. *A Curious Mind: The Secret to a Bigger Life*. New York: Simon & Schuster.
+* Grazer, B., and C. Fishman. 2015. *A Curious Mind: The Secret to a Bigger Life*. New York: Simon & Schuster.
 
-Smith, Z. 2016. *Swing Time*. New York: Penguin Press.
+* Smith, Z. 2016. *Swing Time*. New York: Penguin Press.
 
 ***In-text citations***
 
-(Grazer and Fishman 2015)
+* (Grazer and Fishman 2015)
 
-(Smith 2016)
+* (Smith 2016)
 
 For more examples, see [15.40–45](http://www.chicagomanualofstyle.org/book/ed17/part3/ch15/psec040.html) in The Chicago Manual of Style.
 
@@ -104,11 +104,11 @@ In the reference list, include the page range for the chapter or part.
 
 ***Reference list entry***
 
-Thoreau, H. D. 2016. Walking. Pp. 167–195 *In* J. D’Agata, ed. The Making of the American Essay. Graywolf Press, Minneapolis.
+* Thoreau, H. D. 2016. Walking. Pp. 167–195 *In* J. D’Agata, ed. The Making of the American Essay. Graywolf Press, Minneapolis.
 
-In-text citation
+***In-text citation***
 
-(Thoreau 2016)
+* (Thoreau 2016)
 
 In some cases, you may want to cite the collection/book as a whole instead.
 
@@ -116,9 +116,9 @@ In some cases, you may want to cite the collection/book as a whole instead.
 
 D’Agata, J., ed. 2016. The Making of the American Essay. Graywolf Press, Minneapolis.
 
-In-text citation
+***In-text citation***
 
-(D’Agata 2016)
+* (D’Agata 2016)
 
 ### Journal Article
 
@@ -126,15 +126,15 @@ In the reference list, include the page range for the whole article. For article
 
 ***Reference list entries*** (in alphabetical order)
 
-LaSalle, P. 2017. Conundrum: A Story about Reading. New England Review 38:95–109.
+* LaSalle, P. 2017. Conundrum: A Story about Reading. New England Review 38:95–109.
 
-Satterfield, S. 2016. Livy and the Pax Deum. Classical Philology 111:165–76.
+* Satterfield, S. 2016. Livy and the Pax Deum. Classical Philology 111:165–76.
 
 ***In-text citations***
 
-(LaSalle 2017)
+* (LaSalle 2017)
 
-(Satterfield 2016)
+* (Satterfield 2016)
 
 ### Journal Article with many authors
 
@@ -142,19 +142,19 @@ Journal articles often list many authors, especially in the sciences. If there a
 
 ***Reference list entry***
 
-Alroy, J., M. Aberhan, D. J. Bottjer, M. Foote, F. T. Fuersich, P. J. Harries, et al. (2008). Phanerozoic trends in the global diversity of marine invertebrates. Science, 321:97–100. doi: 10.1126/science.1156963.
+* Alroy, J., M. Aberhan, D. J. Bottjer, M. Foote, F. T. Fuersich, P. J. Harries, et al. (2008). Phanerozoic trends in the global diversity of marine invertebrates. Science, 321:97–100. doi: 10.1126/science.1156963.
 
-Bay, R. A., N. Rose, R. Barrett, L. Bernatchez, C. K. Ghalambor, J. R. Lasky, R. B. Brem, S. R. Palumbi, and P. Ralph. 2017. Predicting Responses to Contemporary Environmental Change Using Evolutionary Response Architectures. American Naturalist 189:463–73.  doi: 10.1086/691233.
+* Bay, R. A., N. Rose, R. Barrett, L. Bernatchez, C. K. Ghalambor, J. R. Lasky, R. B. Brem, S. R. Palumbi, and P. Ralph. 2017. Predicting Responses to Contemporary Environmental Change Using Evolutionary Response Architectures. American Naturalist 189:463–73.  doi: 10.1086/691233.
 
-Keng, S.-H., C.-H. Lin, and P. F. Orazem. 2017. Expanding College Access in Taiwan, 1978–2014: Effects on Graduate Quality and Income Inequality. Journal of Human Capital 11:1–34. doi: 10.1086/690235.
+* Keng, S.-H., C.-H. Lin, and P. F. Orazem. 2017. Expanding College Access in Taiwan, 1978–2014: Effects on Graduate Quality and Income Inequality. Journal of Human Capital 11:1–34. doi: 10.1086/690235.
 
 ***In-text citation***
 
-(Alroy et al. 2008)
+* (Alroy et al. 2008)
 
-(Bay et al. 2017)
+* (Bay et al. 2017)
 
-(Keng et al. 2017)
+* (Keng et al. 2017)
 
 
 
