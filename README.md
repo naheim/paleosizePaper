@@ -72,6 +72,7 @@ Below are the journal's instruction to authors on formatting and submission prec
 >	* (K/T boundary)
 > 	* (Eocene–Oligocene mammals)
 
+<!--
 ## Reference Examples From the Chicago Manual of Style
 [[Original CMS Text](http://www.chicagomanualofstyle.org/tools_citationguide/citation-guide-2.html)]
 
@@ -181,3 +182,4 @@ In-text citation
 
 For more examples, see 15.46–49 in The Chicago Manual of Style.
 
+-->
