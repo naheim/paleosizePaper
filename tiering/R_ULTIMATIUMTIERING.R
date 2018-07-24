@@ -208,8 +208,6 @@ lines(timescale$age_mid, myMeanNum6, col="blue3", lwd=5)
 sizeData <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt')
 sizeData <- subset(sizeData, !is.na(tiering) & tiering > 0)
 sizeData$log10_volume <- log10(sizeData$max_vol)
-dim(sizeData)
-head(sizeData)
 
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt')
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
