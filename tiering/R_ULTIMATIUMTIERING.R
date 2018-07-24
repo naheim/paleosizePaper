@@ -1,6 +1,7 @@
 #TOTAL GRAPH SINGLE DOC:
 
 #title.adj
+#mtext(side=3, line=0.5, "The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=2)
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 #1: # of Genera in Each Tiering Lvl Over Time:
 
@@ -27,11 +28,11 @@ table(my.tiering)
 par(xaxs = "i", yaxs = "i")
 my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-time.plot(c(0,range(my.tiering)), "Amount of Genera", mar = c(4, 3.5, 4, 3.5)+0.1, mgp = c(2.5, 0.75, 0))
+time.plot(c(0,range(my.tiering)), "Amount of Genera", cex.lab = 2)
 #plot(1:10,1:10, type="n", xlim=c(541,-5), ylim=range(my.tiering), pch=21, xlab="Geologic Time (Ma)", ylab="Amount of Genera")
 for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i], lwd = 3)}
-abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 6)
-mtext(side=3, line=0.5, "The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
+abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 5)
+mtext(side=3, line=0.5, "The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=2)
 legend(540, 1197, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
