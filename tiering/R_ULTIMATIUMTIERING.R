@@ -146,7 +146,7 @@ sizeData <- subset(sizeData, !is.na(tiering) & tiering > 0)
 sizeData$log10_volume <- log10(sizeData$max_vol)
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt')
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-time.plot(c(-10, 15), expression(paste("Biovolume (log  "[10]," mm"^3,")")), mar=c(4,4,4,4), mgp = c(2, 0.75, 0))
+time.plot(c(-10, 15), expression(paste("Biovolume (log  "[10]," mm"^3,")")), mar = c(4, 3.5, 4, 3.5)+0.5, mgp = c(2.5, 0.75, 0))
 #plot(1:10,1:10, type="n", xlim=c(550,0), ylim=c(-4,12), xlab="Geological time (Ma)", ylab=expression(paste("Biovolume (log  "[10]," cm"^3,")")))
 segments(sizeData$fad_age, sizeData$log10_volume, sizeData$lad_age, sizeData$log10_volume)
 myMean <- vector(mode="numeric", length=nrow(timescale))
@@ -175,13 +175,13 @@ for(i in 1:nrow(timescale)) {
 	temp2<-Num2[Num2$fad_age > timescale$age_top[i] & Num2$lad_age < timescale$age_bottom[i], ]
 	myMeanNum2[i]<-mean(temp2$log10_volume)
 }
-lines(timescale$age_mid, myMeanNum2, col="orange3", lwd=5)
+lines(timescale$age_mid, myMeanNum2, col="orange2", lwd=5)
 myMeanNum3 <- vector(mode="numeric", length=nrow(timescale))
 for(i in 1:nrow(timescale)) {
 	temp3<-Num3[Num3$fad_age > timescale$age_top[i] & Num3$lad_age < timescale$age_bottom[i], ]
 	myMeanNum3[i]<-mean(temp3$log10_volume)
 }
-lines(timescale$age_mid, myMeanNum3, col="cyan3", lwd=5)
+lines(timescale$age_mid, myMeanNum3, col="cyan4", lwd=5)
 myMeanNum4 <- vector(mode="numeric", length=nrow(timescale))
 for(i in 1:nrow(timescale)) {
 	temp4<-Num4[Num4$fad_age > timescale$age_top[i] & Num4$lad_age < timescale$age_bottom[i], ]
