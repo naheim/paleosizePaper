@@ -1,9 +1,9 @@
 #TOTAL GRAPH SINGLE DOC:
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
-#1: # of Gentra in Each Tiering Lvl Over Time:
+#1: # of Genera in Each Tiering Lvl Over Time:
 
-#The Change in the Amount of Gentra Categorized by Tiering Level Over Million-Years
+#The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years
 
 
 #COLOR YAY: http://projects.susielu.com/viz-palette?colors=[%22#ff5640%22,%22#ffd900%22,%22#00ffd7%22,%22#ee92ed%22,%22#ff00ff%22,%22#0000ff%22]&backgroundColor=%22white%22&fontColor=%22black%22
@@ -22,15 +22,15 @@ for(i in 1:nrow(timescale)){temp.data = sizeData$tiering[sizeData$fad_age > time
 	temp.count = data.frame(table(temp.data))$Freq
 	my.tiering = rbind(my.tiering, temp.count)
 	}
-
+table(my.tiering)
 par(xaxs = "i", yaxs = "i")
 my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
 time.plot(c(0,range(my.tiering)), "Amount of Genera", mar = c(4, 3.5, 4, 3.5)+0.1, mgp = c(2.5, 0.75, 0))
-#plot(1:10,1:10, type="n", xlim=c(541,-5), ylim=range(my.tiering), pch=21, xlab="Geologic Time (Ma)", ylab="Amount of Gentra")
-for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i], lwd = 4)}
+#plot(1:10,1:10, type="n", xlim=c(541,-5), ylim=range(my.tiering), pch=21, xlab="Geologic Time (Ma)", ylab="Amount of Genera")
+for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i], lwd = 3)}
 abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 6)
-mtext(side=3, line=0.5, "The Change in the Amount of Gentra Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
+mtext(side=3, line=0.5, "The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
 legend(540, 1197, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA, title.adj = 0.31)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
@@ -55,25 +55,25 @@ myProp[i,] <- counts/sum(counts)
 
 par(xaxs = "i", yaxs = "i")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-time.plot(c(0,1), "Proportion of Genera", mar = c(4, 3.5, 6, 3.5)+0.1, mgp = c(2.5, 0.75, 0))
+time.plot(c(0,1), "Proportion of Genera", mar = c(4, 3.5, 4, 3.5)+0.1, mgp = c(2.5, 0.75, 0))
 #plot(1:10, type = "n", xlim = c(541,0), ylim = c(0,1), xlab="Geologic Time (Ma)", ylab="Porportion of Genera")
 myX <- c(timescale$age_mid, rev(timescale$age_mid))
 myLast <- c(rep(0, nrow(timescale)), rev(myProp[,6]))
 polygon(myX, myLast, col=my.col[6])
-my2ndLast <- c(myProp[,1], rev(myProp[,6]+myProp[,5]))
+my2ndLast <- c(myProp[,6], rev(myProp[,6]+myProp[,5]))
 polygon(myX, my2ndLast, col=my.col[5])
-myGreen <- c(myProp[,1]+myProp[,2], rev(myProp[,1]+myProp[,2]+myProp[,3]))
-polygon(myX, myGreen, col="green")
-myCyan <- c(myProp[,1]+myProp[,2]+myProp[,3], rev(myProp[,1]+myProp[,2]+myProp[,3]+myProp[,4]))
-polygon(myX, myCyan, col="cyan")
-myMagenta <- c(myProp[,1]+myProp[,2]+myProp[,3]+myProp[,4], rev(myProp[,1]+myProp[,2]+myProp[,3]+myProp[,4]+myProp[,5]))
-polygon(myX, myMagenta, col="magenta")
-myBlue <- c(myProp[,1]+myProp[,2]+myProp[,3]+myProp[,4]+myProp[,5], rev(myProp[,1]+myProp[,2]+myProp[,3]+myProp[,4]+myProp[,5]+myProp[,6]))
-polygon(myX, myBlue, col="blue")
-mtext(side=3, line=0.5, "The Change in the Proportions of Gentra Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
-my.col = c("red", "orange", "green", "cyan", "magenta", "blue")
+my3rdLast <- c(myProp[,6]+myProp[,5], rev(myProp[,6]+myProp[,5]+myProp[,4]))
+polygon(myX, my3rdLast, col=my.col[4])
+my2ndLast <- c(myProp[,6]+myProp[,5]+myProp[,4], rev(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3]))
+polygon(myX, my2ndLast, col=my.col[3])
+my1stLast <- c(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3], rev(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3]+myProp[,2]))
+polygon(myX, my1stLast, col=my.col[2])
+myFirst <- c(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3]+myProp[,2], rev(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3]+myProp[,2]+myProp[,1]))
+polygon(myX, myFirst, col=my.col[1])
+mtext(side=3, line=0.5, "The Change in the Proportions of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
+
 par(xpd=TRUE)
-legend(550, 1.16, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Color Legend", bg = "NA", box.col=NA, title.adj = 0.26, cex=0.55, text.font = 4)
+legend(535, 0.53, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Color Legend", bg = "white", box.col="black", title.adj = 0.26, cex=0.8, text.font = 1)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
