@@ -14,10 +14,12 @@ grazingFeeding <- subset(bodySize, feeding == 4)
 predatoryFeeding <- subset(bodySize, feeding == 5)
 otherFeeding <- subset(bodySize, feeding == 6)
 
+myCol <- c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
+
 #*************************************************Feeding Type vs. Geologic Time***************************************************
 par(col="black")
 
-boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylim=c(-3, 12), ylab="Biovolume (log10mm^3)", main="Biovolume vs. Feeding Type", col=(c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")), names=c("Suspension", "Dep.", "Mining", "Grazing", "Predatory", "Other"))
+boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylim=c(-3, 12), ylab="Biovolume (log10mm^3)", main="Biovolume vs. Feeding Type", col=myCol, names=c("Suspension", "Dep.", "Mining", "Grazing", "Predatory", "Other"))
 
 #***************************graph all body sizes against geologic time (each feeding type is a different color)********************
 
@@ -54,11 +56,11 @@ for(i in 1:6) {
   my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var[,i]), i], vv=my.var[!is.na(my.var[,i]), i], nn=my.n[!is.na(my.var[,i]), i], tt=my.time[!is.na(my.var[,i])], oldest="last")
   fit3models(my.ts, method="Joint", pool=FALSE)
   #par(col=my.mean$color[k]); par(col="deepskyblue3")
-  lines(timescale$age_mid, my.mean[, i], col=my.col[i])
+  lines(timescale$age_mid, my.mean[, i], col=myCol[i], lwd=3)
 }
 
 par(col="black")
-legend("topleft", legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = my.col, lty = 1, title="Feeding Color Legend", bg = NA, box.col=NA, title.adj = 0.26, cex=0.47)
+legend("topleft", legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = myCol, lty = 1, title="Feeding Color Legend", bg = NA, box.col=NA, title.adj = 0.26, cex=0.47)
 
 #**************************************Mean Size for Feeding Type WITH 95% Confidence Intervals***********************************
 n.bins <- nrow(timescale)
