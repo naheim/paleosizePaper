@@ -25,6 +25,8 @@ Here is a list of references that will be helpful in writing your discussions.
 
 * Chapelle, G., & Peck, L. S. 1999. Polar gigantism dictated by oxygen availability. *Nature*, 399:114–115. doi: 10.1038/20099. [Link](http://doi.org/10.1038/20099) [PDF](Chapelle1999.pdf)
 
+* Gearty, W., C. R. McClain, and J. L. Payne. 2018: Energetic tradeoffs control the size distribution of aquatic mammals. *Proceedings of the National Academy of Sciences of the United States of America* 115:4194–4199. doi: 10.1073/pnas.1712629115 [Link](http://doi.org/10.1073/pnas.1712629115) [PDF](Gearty2018.pdf)
+
 * Lane, S. J., Shishido, C. M., Moran, A. L., Tobalske, B. W., Arango, C. P., & Woods, H. A. 2017. Upper limits to body size imposed by respiratory–structural trade-offs in Antarctic pycnogonids. *Proceedings of the Royal Society B: Biological Sciences*, 284:20171779. doi: 10.1098/rspb.2017.1779. [Link](http://doi.org/10.1098/rspb.2017.1779) [PDF](Lane2017.pdf)
 
 ## Phyla References
