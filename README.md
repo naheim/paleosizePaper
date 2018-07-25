@@ -39,6 +39,13 @@ Plot Decoration:
 ### The geological timescale
 * Cohen, K.M., S. C. Finney, P. L. Gibbard, and J.-X. Fan. 2013. The ICS International Chronostratigraphic Chart. Episodes 36:199-204.
 
+### R
+* base program
+	* R Core Team. 2018. R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+* paleoTS
+	* Hunt, G. 2015. paleoTS: Analyze Paleontological Time-Series. R package version 0.5-1. https://CRAN.R-project.org/package=paleoTS.
+
 
 # Formatting Instructions for *Paleobiology*
 
