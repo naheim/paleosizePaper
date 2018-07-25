@@ -26,6 +26,19 @@ Plot Decoration:
 
 > cex = ?
 
+# Key references
+### Body Size Data:
+* Heim, N. A., M. L. Knope, E. K. Schaal, S. C. Wang, and J. L. Payne. 2015. Cope’s rule in the evolution of marine animals. Science 347:867–870. doi: 10.1126/science.1260065.
+
+### Tiering, Motility & Feeding Data
+* Knope, M. L., N. A. Heim, L. O. Frishkoff, and J. L. Payne. 2015. Limited role of functional differentiation in early diversification of animals. Nature Communications 6:6455. doi: 10.1038/ncomms7455.
+
+### Respiratory Anatomy 
+* These are newly collected data, compiled from the secondary literature. Don't worry about citing this data right now.  Individual citations will be included with the data file we submit to the journal.
+
+### The geological timescale
+* Cohen, K.M., S. C. Finney, P. L. Gibbard, and J.-X. Fan. 2013. The ICS International Chronostratigraphic Chart. Episodes 36:199-204.
+
 
 # Formatting Instructions for *Paleobiology*
 
