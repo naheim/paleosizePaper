@@ -26,6 +26,8 @@ Plot Decoration:
 
 > cex = ?
 
+> Boxplots should have notches (add: notch=TRUE)
+
 # Key references
 ### Body Size Data:
 * Heim, N. A., M. L. Knope, E. K. Schaal, S. C. Wang, and J. L. Payne. 2015. Cope’s rule in the evolution of marine animals. Science 347:867–870. doi: 10.1126/science.1260065.
