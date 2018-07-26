@@ -37,7 +37,7 @@ time.plot(c(0, max(my.tiering)), "Amount of Genera", cex.lab = 2, mar = c(4.5,4.
 for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i], lwd = 3)}
 abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 5)
 mtext(side=3, line=0.5, "The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=2)
-legend(540, 1197, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA)
+legend(540, 1197, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA, cex=1)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
@@ -123,7 +123,7 @@ my.n[i,j] <- length(temp.data)
 }
 par(col="black")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-time.plot(c(0, 8), expression(paste("Biovolume (log  "[10]," mm"^3,")")), mar = c(4, 3.5, 4, 3.5)+0.5, mgp = c(2.5, 0.75, 0))
+time.plot(c(0, 8), expression(paste("Biovolume (log  "[10]," mm"^3,")")), cex.lab = 2, mar = c(4.5,4.5,4.5,4.5)+1, mgp=c(3, 0.75, 0), cex.axis = 1.25)
 
 #plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size", ylim=c(1.2,6.5), main="Mean expression(paste("Biovolume (log"[10]," cm"^3)"))
 
@@ -134,10 +134,10 @@ for(i in 1:6) {
   #par(col=my.mean$color[k]); par(col="deepskyblue3")
   lines(timescale$age_mid, my.mean[, i], col=my.col[i], lwd = 3)
 }
-mtext(side=3, line=0.5, "The Change in Mean Biovolume of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=1.3)
+mtext(side=3, line=0.5, "The Change in the Mean Biovolume of Tiering Levels Over Million Years", col="black", font=4, cex=2)
 par(col="black")
 abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 5)
-legend(540, 7.98, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Level", bg = "white", box.col=NA, cex=0.8)
+legend(540, 7.98, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Level", bg = "white", box.col=NA, cex=1)
 #END
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
