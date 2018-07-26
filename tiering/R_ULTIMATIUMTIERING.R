@@ -31,11 +31,11 @@ par(xaxs = "i", yaxs = "i")
 my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
 
-time.plot(c(0, max(my.tiering)), "Amount of Genera", cex.lab = 2, mar = c(4.5,4.5,4.5,4.5)+0.1, mgp=c(3, 0.75, 0), cex.axis = 1.25)
+time.plot(c(0, max(my.tiering)), "Amount of Genera", cex.lab = 1.2, mar = c(4.5,4.5,4.5,4.5)+0.1, mgp=c(3, 0.75, 0), cex.axis = 1.25)
 
 #plot(1:10,1:10, type="n", xlim=c(541,-5), ylim=range(my.tiering), pch=21, xlab="Geologic Time (Ma)", ylab="Amount of Genera")
 for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i], lwd = 3)}
-abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 5)
+abline(v = c(443.8, 358.9, 251, 200, 65.5), col="black", lty = 5)
 mtext(side=3, line=0.5, "The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=2)
 legend(540, 1197, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA, cex=1)
 
@@ -146,10 +146,12 @@ legend(540, 7.98, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect",
 
 par(col="black")
 my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
-par(mar = c(4, 3.5, 4, 3.5)+0.5)
+par(mar = c(5, 5, 5, 5)+0.1)
 par(mgp = c(2.5, 1.5, 0))
-boxplot(log10(max_vol)~tiering, bodySize, xlab="Tiering Level", ylab=expression(paste("Biovolume (log  "[10]," mm"^3,")")), col=my.col, names=c("Tiering Level 1:\n Pelagic", "Tiering Level 2:\n Erect", "Tiering Level 3:\n Surficial", "Tiering Level 4:\n Semi-infaunal", "Tiering Level 5:\n Shallow infaunal", "Tiering Level 6:\n Deep infaunal"))
-mtext(side=3, line=0.5, "Biovolume vs. Tiering Level", col="black", font=4, cex=2)
+boxplot(log10(max_vol)~tiering, bodySize, col=my.col, names=c("Tiering Level 1:\n Pelagic", "Tiering Level 2:\n Erect", "Tiering Level 3:\n Surficial", "Tiering Level 4:\n Semi-infaunal", "Tiering Level 5:\n Shallow infaunal", "Tiering Level 6:\n Deep infaunal"), notch=TRUE)
+mtext(side=1, line=3.2, "Tiering Level", col="black", font=4, cex=1.2)
+mtext(side=2, line=3.2, expression(paste("Biovolume (log  "[10]," mm"^3,")")), col="black", font=4, cex=1.2)
+mtext(side=3, line=0.5, "Biovolume Box & Whisker Plot Catagorized by Tiering Level", col="black", font=4, cex=2)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
