@@ -3,6 +3,13 @@ Here is a list of references that will be helpful in writing your discussions.
 
 ## General References for Everyone
 
+### R
+* base program
+	* R Core Team. 2018. R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+* *paleoTS*
+	* Hunt, G. 2015. paleoTS: Analyze Paleontological Time-Series. R package version 0.5-1. https://CRAN.R-project.org/package=paleoTS.
+
 ### Body Size Evolution
 * Heim, N. A., Knope, M. L., Schaal, E. K., Wang, S. C., & Payne, J. L. 2015. Cope’s rule in the evolution of marine animals. *Science*, 347:867–870. doi: 10.1126/science.1260065. [Link](http://doi.org/10.1126/science.1260065) [PDF](Heim2015.pdf)
 
