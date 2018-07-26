@@ -1,7 +1,7 @@
 par(col="black")
 
 time.plot(c(1,6), "Mean Size per Feeding Type", mar=c(2.75,2.75,2, 1), cex.axis = 1.25)
-abline(v = c(65, 200, 251.2, 443.8), col="black",lty=5)
+abline(v = c(65, 200,337 251.2, 443.8), col="black",lty=5)
 my.col=c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff"
 )
 #loop per column
