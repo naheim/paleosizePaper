@@ -149,7 +149,7 @@ my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 par(mar = c(4, 3.5, 4, 3.5)+0.5)
 par(mgp = c(2.5, 1.5, 0))
 boxplot(log10(max_vol)~tiering, bodySize, xlab="Tiering Level", ylab=expression(paste("Biovolume (log  "[10]," mm"^3,")")), col=my.col, names=c("Tiering Level 1:\n Pelagic", "Tiering Level 2:\n Erect", "Tiering Level 3:\n Surficial", "Tiering Level 4:\n Semi-infaunal", "Tiering Level 5:\n Shallow infaunal", "Tiering Level 6:\n Deep infaunal"))
-mtext(side=3, line=0.5, "Biovolume vs. Tiering Level", col="black", font=4, cex=1.3)
+mtext(side=3, line=0.5, "Biovolume vs. Tiering Level", col="black", font=4, cex=2)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
