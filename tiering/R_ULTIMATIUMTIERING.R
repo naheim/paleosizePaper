@@ -84,8 +84,8 @@ arrows(-10, 0.222, 0, 0.222, xpd=TRUE)
 mtext(side = 4, "Semi-infaunal", at = c(0.222), cex = 1.5, col = "#ee92ed", xpd = TRUE, line = 1.2)#FOUR
 arrows(-10, 0.11, 0, 0.11, xpd=TRUE)
 mtext(side = 4, "Shallow infaunal", at = c(0.11), cex = 1.5, col = "#ff00ff", xpd = TRUE, line = 1.2)#FIVE
-arrows(-10, 0.02, 0, 0.02, xpd=TRUE)
-mtext(side = 4, "Deep infaunal", at = c(0.02), cex = 1.5, col = "#0000ff", xpd = TRUE, line = 1.2)#SIX
+arrows(-10, 0.014, 0, 0.014, xpd=TRUE)
+mtext(side = 4, "Deep infaunal", at = c(0.014), cex = 1.5, col = "#0000ff", xpd = TRUE, line = 1.2)#SIX
 
 #legend(534, 0.50, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Color Legend", bg = "white", box.col="NA", cex=0.8, text.font = 1)
 
