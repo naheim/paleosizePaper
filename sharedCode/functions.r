@@ -54,7 +54,7 @@ time.plot <- function(y.range, ylab="Time Series Data", main="", x.axis.pct=6, p
 	y.top <- max(y.axis.labs)
 	if(show.plot==TRUE & layout==FALSE & grepl("Windows", Sys.info()['sysname'])) {
 		windows(height=height, width=width)
-	} else if(show.plot==TRUE & layout==FALSE & grepl("Windows", Sys.info()['sysname'])) {
+	} else if(show.plot==TRUE & layout==FALSE) {
 		quartz(height=height, width=width)
 	} else if (show.plot==FALSE & layout==FALSE) {
 		pdf(file=file.name, height=height, width=width)
