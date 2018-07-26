@@ -51,17 +51,13 @@ timescale <- read.delim("timescale.txt")
 sizeData$tiering = factor(sizeData$tiering)
 myProp = matrix(NA, nrow = nrow(timescale), ncol = 6)
 my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
-
 for(i in 1:nrow(timescale)){temp <- subset(sizeData, sizeData$fad_age > timescale$age_top[i] & sizeData$lad_age < timescale$age_bottom[i])
 counts <- table(temp$tiering)
 myProp[i,] <- counts/sum(counts)
 }
-
 par(xaxs = "i", yaxs = "i")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-
 time.plot(c(0,1), "Proportion of Genera", cex.lab = 2, mar = c(4.5,4.5,4.5,10.5)+0.1, mgp=c(3, 0.75, 0), cex.axis = 1.25)
-
 #plot(1:10, type = "n", xlim = c(541,0), ylim = c(0,1), xlab="Geologic Time (Ma)", ylab="Porportion of Genera")
 myX <- c(timescale$age_mid, rev(timescale$age_mid))
 myLast <- c(rep(0, nrow(timescale)), rev(myProp[,6]))
@@ -78,15 +74,15 @@ myFirst <- c(myProp[,6]+myProp[,5]+myProp[,4]+myProp[,3]+myProp[,2], rev(myProp[
 polygon(myX, myFirst, col=my.col[1])
 mtext(side=3, line=0.5, "The Change in the Proportions of Tiering Level Over 541 Million Years", col="black", font=4, cex=2)
 par(xpd=FALSE)
-
 arrows(-10, 0.93, 0, 0.93, xpd=TRUE)
 mtext(side = 4, "Tiering Level 1: Pelagic", at = c(0.93), cex = 1, col = "#ff5640", xpd = TRUE, line = 1.2)
 arrows(-10, 0.839, 0, 0.839, xpd=TRUE)
 mtext(side = 4, "Tiering Level 2: Erect", at = c(0.839), cex = 1, col = "#ffd900", xpd = TRUE, line = 1.2)
 arrows(-10, 0.55, 0, 0.55, xpd=TRUE)
 mtext(side = 4, "Tiering Level 3: Surficial", at = c(0.55), cex = 1, col = "#00ffd7", xpd = TRUE, line = 1.2)
-legend(534, 0.50, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Color Legend", bg = "white", box.col="NA", cex=0.8, text.font = 1)
-
+arrows(-10, 0.222, 0, 0.222, xpd=TRUE)
+mtext(side = 4, "Tiering Level 4: Semi-infaunal", at = c(0.222), cex = 1, col = "#ee92ed", xpd = TRUE, line = 1.2)
+#legend(534, 0.50, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Color Legend", bg = "white", box.col="NA", cex=0.8, text.font = 1)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 
