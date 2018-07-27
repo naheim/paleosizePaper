@@ -59,7 +59,7 @@ myProp[i,] <- counts/sum(counts)
 }
 par(xaxs = "i", yaxs = "i")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-time.plot(c(0,1), "Proportion of Genera", cex.lab = 2, mar = c(4.5,4.5,4.5,10.5)+0.1, mgp=c(3, 0.75, 0), cex.axis = 1.25)
+time.plot(c(0,1), "Proportion of Genera", cex.lab = 1.2, mar = c(4.5,4.5,4.5,10.5)+0.1, mgp=c(3, 0.75, 0), cex.axis = 1.25)
 #plot(1:10, type = "n", xlim = c(541,0), ylim = c(0,1), xlab="Geologic Time (Ma)", ylab="Porportion of Genera")
 myX <- c(timescale$age_mid, rev(timescale$age_mid))
 myLast <- c(rep(0, nrow(timescale)), rev(myProp[,6]))
@@ -123,7 +123,7 @@ my.n[i,j] <- length(temp.data)
 }
 par(col="black")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-time.plot(c(0, 8), expression(paste("Biovolume (log  "[10]," mm"^3,")")), cex.lab = 2, mar = c(4.5,4.5,4.5,4.5)+1, mgp=c(3, 0.75, 0), cex.axis = 1.25)
+time.plot(c(0, 8), expression(paste("Biovolume (log  "[10]," mm"^3,")")), cex.lab = 1.2, mar = c(4.5,4.5,4.5,4.5)+1, mgp=c(3, 0.75, 0), cex.axis = 1.25)
 
 #plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size", ylim=c(1.2,6.5), main="Mean expression(paste("Biovolume (log"[10]," cm"^3)"))
 
@@ -136,7 +136,7 @@ for(i in 1:6) {
 }
 mtext(side=3, line=0.5, "The Change in the Mean Biovolume of Tiering Levels Over Million Years", col="black", font=4, cex=2)
 par(col="black")
-abline(v = c(65, 200, 251.2, 443.8), col="black", lty = 5)
+abline(v = c(443.8, 359.2, 251, 199.5, 65.5), col="black", lty = 5)
 legend(540, 7.98, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Level", bg = "white", box.col=NA, cex=1)
 #END
 
