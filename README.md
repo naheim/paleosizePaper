@@ -1,41 +1,67 @@
-# Marine Animal Body Size Across the Phanerozoic
-This is the repository that the SEIY: Biodiversity Internship program will use for our analyses and writings on body size evolution.
+![Image of Cambrian Ecosystem](http://www.dwmiller.net/pics/ediacara.jpg)
+# *Marine Animal Body Size Across the Phanerozoic*
+This is the repository that the SEYI: Biodiversity Internship program will use for our analyses and writings on body size evolution.
 
-## Figure Formatting Guidelines
+## Sections of Paper:
 
-Color Scheme:
+- ***[Phyla Research](https://github.com/naheim/paleosizePaper/tree/master/phyla)***
 
-````r
-myCol <- c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
-````
+- ***[Tiering Research](https://github.com/naheim/paleosizePaper/tree/master/tiering)***
 
-Aspect:
+- ***[Motility Research](https://github.com/naheim/paleosizePaper/tree/master/motility)***
 
+- ***[Feeding Mode Research](https://github.com/naheim/paleosizePaper/tree/master/feeding)***
+
+- ***[Respiratory Anatomy Research](https://github.com/naheim/paleosizePaper/tree/master/respAnatomy)***
+
+## Utility Folders:
+- ***[Raw Data Files](https://github.com/naheim/paleosizePaper/tree/master/rawDataFiles)***
+
+- ***[Example Code](https://github.com/naheim/paleosizePaper/tree/master/exampleCode)***
+
+- ***[References](https://github.com/naheim/paleosizePaper/tree/master/references)***
+
+## *Figure Formatting Guidelines:*
+
+Color Scheme: c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
+
+### General Standards:
 > timescale = rectangle
 
 > rest = square
 
-> 3.5 on sides, 4 on top and bottom <- not official
+> Code for Rectangular Time.plot: cex.lab = 1.2, mar = c(4.5,4.5,4.5,4.5)+0.1, mgp=c(3, 0.75, 0), cex.axis = 1.25)
 
-Plot Decoration:
+> Code for Nice, Adjustable Title: mtext(side=3, line=0.5, "YOUR TITLE HERE”, col="black", font=4, cex=2)
+
+> Legends are Regular Sized: CEX = 1
+
+> Labels: White background and White Borders
+
+> No Extinction Lines: Box Plots and Proportion Plots
+
+> Exact Dates for Mass Extinctions: 443.8, 358.9, 252.17, 201.3, 66
+
+#### Box Plot Standards:
+>  Boxplots should have notches (add: notch=TRUE)
+
+> For X Labels, Only Name of Catagory (ex. Pelagic, Water-Breathing Closed System, etc.)
+
+#### Plot Decoration Standards:
 > Mass Extinctions --> dashed lines (lty=5)
 
-> Non-Bordered Legends
+> Mass Extinction Lines Color: azure4
 
-> Line Graphs have '3' boldness
+> Line Graphs have "3" boldness
 
-> cex = ?
-
-> Boxplots should have notches (add: notch=TRUE)
-
-# Key references
+# *Key References*
 ### Body Size Data:
 * Heim, N. A., M. L. Knope, E. K. Schaal, S. C. Wang, and J. L. Payne. 2015. Cope’s rule in the evolution of marine animals. Science 347:867–870. doi: 10.1126/science.1260065.
 
 ### Tiering, Motility & Feeding Data
 * Knope, M. L., N. A. Heim, L. O. Frishkoff, and J. L. Payne. 2015. Limited role of functional differentiation in early diversification of animals. Nature Communications 6:6455. doi: 10.1038/ncomms7455.
 
-### Respiratory Anatomy 
+### Respiratory Anatomy
 * These are newly collected data, compiled from the secondary literature. Don't worry about citing this data right now.  Individual citations will be included with the data file we submit to the journal.
 
 ### The geological timescale
@@ -51,7 +77,7 @@ Plot Decoration:
 
 # Formatting Instructions for *Paleobiology*
 
-Our project for this summer is to begin drafting a paper for publication as a 'Reserach Article` in the journal *Paleobiology*, which is the premier journal for quantitiaive studies of the fossil record. 
+Our project for this summer is to begin drafting a paper for publication as a 'Reserach Article` in the journal *Paleobiology*, which is the premier journal for quantitiaive studies of the fossil record.
 
 Below are the journal's instruction to authors on formatting and submission precedures. Please read throught the sections to understand the format and styling you should be using.
 
@@ -177,6 +203,3 @@ Journal articles often list many authors, especially in the sciences. If there a
 * (Bay et al. 2017)
 
 * (Keng et al. 2017)
-
-
-
