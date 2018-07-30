@@ -320,7 +320,7 @@ abline(v=375, lty=5)
 abline(v=251, lty=5)
 abline(v=200, lty=5)
 abline(v=66, lty=5)
-legend(479,0.96, legend=c("Water, Dedicated organ, Closed system", "Water, Dedicated organ, Open system", "Water, Multi-organ, Open system", "Air, Dedicated organ, Closed system"), col=c("#ff5640", "#ffd900", "#00ffd7", "#ee92ed"), lty=1, title="Respiratory System Types", bg="white", cex=0.63, box.col="white")
+legend(479,0.96, legend=c("Water, Dedicated organ, Closed system", "Water, Dedicated organ, Open system", "Water, Multi-function organ, Open system", "Air, Dedicated organ, Closed system"), col=c("#ff5640", "#ffd900", "#00ffd7", "#ee92ed"), lty=1, title="Respiratory System Types", bg="white", cex=0.63, box.col="white")
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -388,7 +388,7 @@ abline(v=375, lty=5)
 abline(v=251, lty=5)
 abline(v=200, lty=5)
 abline(v=66, lty=5)
-legend(520, 11.44, legend=c("Water, Dedicated organ, Closed system", "Water, Dedicated organ, Open system", "Water, Multi-organ, Open system", "Air, Dedicated organ, Closed system"), col=c("#ff5640", "#ffd900", "#00ffd7", "#ee92ed"), lty=1, title="Repiratory System Types", cex=0.8, bg="white", box.col="white") #makes legend for each respiration type
+legend(520, 11.44, legend=c("Water, Dedicated organ, Closed system", "Water, Dedicated organ, Open system", "Water, Multi-function organ, Open system", "Air, Dedicated organ, Closed system"), col=c("#ff5640", "#ffd900", "#00ffd7", "#ee92ed"), lty=1, title="Repiratory System Types", cex=0.8, bg="white", box.col="white") #makes legend for each respiration type
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 
