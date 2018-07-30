@@ -47,9 +47,12 @@ for (i in 1:n.bins) {
   }
 }
 par(col="black")
-time.plot(c(0,6), "Mean Size per Feeding Type")
-plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size (log10mm^3)", ylim=c(1.2,6.5), main="Mean Size per Feeding Type")
-my.col=c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")
+
+#time.plot(c(0, 8), expression(paste("Biovolume (log  "[10]," mm"^3,")")), mar = c(4, 3.5, 4, 3.5)+0.5, mgp = c(2.5, 0.75, 0))
+
+time.plot(c(0,6), expression(paste("Biovolume (log  "[10]," mm"^3,")")), "Mean Size per Feeding Type")
+#plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size (log10mm^3)", ylim=c(1.2,6.5), main="Mean Size per Feeding Type")
+#my.col=c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")
 
 #loop per column
 for(i in 1:6) {
@@ -60,15 +63,14 @@ for(i in 1:6) {
 }
 
 par(col="black")
-legend("topleft", legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = myCol, lty = 1, title="Feeding Color Legend", bg = NA, box.col=NA, title.adj = 0.26, cex=0.47)
+abline(v = c(66, 201.3, 252.17, 358.9, 443.8), col="azure4",lty=5)
+legend(194, 1.3, legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = myCol, lty = 1, title="Feeding Color Legend", bg = "white", box.col=NA, title.adj = 0.26, cex=0.47)
 
 #**************************************Mean Size for Feeding Type WITH 95% Confidence Intervals***********************************
 n.bins <- nrow(timescale)
 
 my.mean <- vector(mode="numeric", length=n.bins)
 my.var <- vector(mode="numeric", length=n.bins)
-#my.var <- subset(my.var, !is.na(feeding) & feeding == 6)
-#my.var <- subset(my.var, !is.na(feeding & feeding == 6))
 my.n <- vector(mode="numeric", length=n.bins)
 my.time <- timescale$age_bottom
 
@@ -78,26 +80,33 @@ names(my.n) <- timescale$interval_name
 names(my.time) <- timescale$interval_name
 
 for (i in 1:n.bins) {
-  temp.data <- log10(bodySize$max_vol[bodySize$fad_age > timescale$age_top[i] & bodySize$lad_age < timescale$age_bottom[i] & bodySize$feeding == 5])
+  temp.data <- log10(bodySize$max_vol[bodySize$fad_age > timescale$age_top[i] & bodySize$lad_age < timescale$age_bottom[i] & bodySize$feeding == 6])
   
   my.mean[i] <- mean(temp.data)
   my.var[i] <- var(temp.data)
   my.n[i] <- length(temp.data)
 }
+time.plot(c(0,7.5), expression(paste("Biovolume (log  "[10]," mm"^3,")")), mar = c(4, 3.5, 4, 3.5)+0.5, mgp = c(2.5, 0.75, 0), cex.lab=1.25, cex.axis=1.25)
+#cex.lab
+#cex.axis
+abline(v = c(66, 201.3, 252.17, 358.9, 443.8), col="azure4",lty=5)
 
 my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my.n[!is.na(my.var)], tt=my.time[!is.na(my.var)], oldest="last")
 
 fit3models(my.ts, method="Joint", pool=FALSE)
 
 par(col="black")
-plot(timescale$age_bottom, my.mean, type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylim=c(0,7.5), ylab="Predatory Feeders Mean Size", main="Predatory Feeders")
+
+#plot(timescale$age_bottom, my.mean, type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylim=c(0,7.5), ylab="Other Feeders Mean Size", main="Other Feeders")
 
 ci <- vector(mode="numeric", length=n.bins)
 for (i in 1:n.bins) {
   ci[i] <- 1.96 * sqrt(my.var[i]) / sqrt(my.n[i])
 }
-polygon(c(timescale$age_mid[!is.na(my.var)], rev(timescale$age_mid[!is.na(my.var)])), c(my.mean[!is.na(my.var)] - ci[!is.na(my.var)], rev(my.mean[!is.na(my.var)] + ci[!is.na(my.var)])), col="lightpink")
-lines(timescale$age_mid, my.mean, col="deeppink1", lwd = 3.0)
+polygon(c(timescale$age_mid[!is.na(my.var)], rev(timescale$age_mid[!is.na(my.var)])), c(my.mean[!is.na(my.var)] - ci[!is.na(my.var)], rev(my.mean[!is.na(my.var)] + ci[!is.na(my.var)])), col="cornflowerblue")
+lines(timescale$age_mid, my.mean, col="#0000ff", lwd = 3.0)
+mtext(side=3, line=0.25, "Mean size for 'Other' Feeders", col="black", font=4, cex=1.3)
+
 
 
 #******************************************Proportional Diversity of Feeding Type***************************************************
@@ -124,21 +133,22 @@ propPurple <- myProp[,6]
 #creating all the polygons - each builds upon previous ones
 myX <- c(timescale$age_mid, rev(timescale$age_mid))
 myOrange <- c(rep(0, nrow(timescale)), rev(propOrange))
-polygon(myX, myOrange, col="blue1")
+polygon(myX, myOrange, col=myCol[1])
 myBlue <- c(propOrange, rev(propOrange + propBlue))
-polygon(myX, myBlue, col="chartreuse2")
+polygon(myX, myBlue, col=myCol[2])
 myPink <- c((propOrange + propBlue), rev(propOrange + propBlue + propPink))
-polygon(myX, myPink, col="orange3")
+polygon(myX, myPink, col=myCol[3])
 myGreen <- c((propOrange + propBlue + propPink), rev(propOrange + propBlue + propPink + propGreen))
-polygon(myX, myGreen, col="darkorchid1")
+polygon(myX, myGreen, col=myCol[4])
 myCyan <- c((propOrange + propBlue + propPink + propGreen), rev(propOrange + propBlue + propPink + propGreen + propCyan))
-polygon(myX, myCyan, col="deeppink1")
+polygon(myX, myCyan, col=myCol[5])
 myPurple <- c((propOrange + propBlue + propPink + propGreen + propCyan), rev(propOrange + propBlue + propPink + propGreen + propCyan + propPurple))
-polygon(myX, myPurple, col="lightskyblue")
+polygon(myX, myPurple, col=myCol[6])
 
 my.col=c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")
+my.col=myCol
 
-legend(535, .23, legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = my.col, lty = 1, title="Feeding Color Legend", bg = "white", box.col=NA, title.adj = 0.26, cex=0.5)
+legend(535, .29, legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = my.col, lty = 1, title="Feeding Color Legend", bg = "white", box.col=NA, title.adj = 0.26, cex=0.64)
 
 #***************************************************Logistic Regression************************************************************
 nBins <- nrow(timescale) # a variable of convenience for when the number of stages is used
