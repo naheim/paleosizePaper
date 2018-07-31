@@ -19,7 +19,7 @@ myCol <- c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 #*************************************************BOXPLOT: Feeding Type vs. Geologic Time***************************************************
 par(col="black")
 
-boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylim=c(-3, 12), ylab="", main="Biovolume vs. Feeding Type", col=myCol, names=c("Suspension", "Dep.", "Mining", "Grazing", "Predatory", "Other"), notch=TRUE)
+boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylab=expression(paste("Biovolume (log "[10]," mm"^3,")")), ylim=c(-3, 12), ylab="", main="Biovolume vs. Feeding Type", col=myCol, names=c("Suspension", "Dep.", "Mining", "Grazing", "Predatory", "Other"), notch=TRUE, mar = c(4, 3.5, 4, 3.5))
 mtext(side=2, line=1.9, expression(paste("Biovolume (log "[10]," mm"^3,")")), col="black", font=4, cex=1.3)
 #***************************graph all body sizes against geologic time (each feeding type is a different color)********************
 
@@ -50,7 +50,7 @@ par(col="black")
 
 #time.plot(c(0, 8), expression(paste("Biovolume (log  "[10]," mm"^3,")")), mar = c(4, 3.5, 4, 3.5)+0.5, mgp = c(2.5, 0.75, 0))
 
-time.plot(c(0,6), expression(paste("Biovolume (log  "[10]," mm"^3,")")), "Mean Size per Feeding Type")
+time.plot(c(0,6), expression(paste("Biovolume (log  "[10]," mm"^3,")")), "Mean Size per Feeding Type", mar = c(4, 3.5, 4, 3.5))
 #plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size (log10mm^3)", ylim=c(1.2,6.5), main="Mean Size per Feeding Type")
 #my.col=c("blue1", "chartreuse2", "orange3", "darkorchid1", "deeppink1", "lightskyblue")
 
@@ -64,8 +64,8 @@ for(i in 1:6) {
 
 par(col="black")
 abline(v = c(66, 201.3, 252.17, 358.9, 443.8), col="azure4",lty=5)
-legend(194, 1.3, legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = myCol, lty = 1, title="Feeding Color Legend", bg = "white", box.col=NA, title.adj = 0.26, cex=0.47)
-
+legend(240, 1.65, legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = myCol, lty = 1, title="Feeding Color Legend", bg = "white", box.col=NA, title.adj = 0.26, cex=0.47)
+#legend(179,2.035, legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit", "Feeding Type 3: Mining", "Feeding Type 4: Grazing", "Feeding Type 5: Predatory", "Feeding Type 6: Other"), col = my.col, lty = 1, title="Feeding Color Legend", title.adj = 0.26, cex=.723594624,box.lwd = 0,box.col = "white",bg = "white")
 #**************************************Mean Size for Feeding Type WITH 95% Confidence Intervals***********************************
 n.bins <- nrow(timescale)
 
