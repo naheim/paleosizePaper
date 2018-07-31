@@ -47,6 +47,8 @@ Here is a list of references that will be helpful in writing your discussions.
 
 * Jablonski, D., & Raup, D. M. (1995). Selectivity of end-Cretaceous marine bivalve extinctions. *Science*, 268(5209), 389–391. [PDF](Jablonski1995.pdf)
 
+* Knoll, A. H., Bambach, R. K., Payne, J. L., Pruss, S. B., & Fischer, W. W. (2007). Paleophysiology and end-Permian mass extinction. Earth and Planetary Science Letters, 256:295–313. [Link](http://doi.org/10.1016/j.epsl.2007.02.018) [PDF](Knoll2007.pdf)
+
 * Sepkoski, J. J., Jr. 1981. A Factor Analytic Description of the Phanerozoic Marine Fossil Record. *Paleobiology*, 7:36–53. doi: 10.1017/S0094837300003778. [Link](http://www.jstor.org/stable/2400639) [PDF](Sepkoski1981.pdf)
 
 * Valentine, J. W., Collins, A. G., & Meyer, C. P. (1994). Morphological Complexity Increase in Metazoans. *Paleobiology*, 20:131–142. [Link](http://doi.org/10.2307/2401015) [PDF](Valentine1994.pdf)
