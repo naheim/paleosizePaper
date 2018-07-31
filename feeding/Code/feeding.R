@@ -80,7 +80,7 @@ names(my.n) <- timescale$interval_name
 names(my.time) <- timescale$interval_name
 
 for (i in 1:n.bins) {
-  temp.data <- log10(bodySize$max_vol[bodySize$fad_age > timescale$age_top[i] & bodySize$lad_age < timescale$age_bottom[i] & bodySize$feeding == 6])
+  temp.data <- log10(bodySize$max_vol[bodySize$fad_age > timescale$age_top[i] & bodySize$lad_age < timescale$age_bottom[i] & bodySize$feeding == 5])
   
   my.mean[i] <- mean(temp.data)
   my.var[i] <- var(temp.data)
@@ -104,10 +104,10 @@ ci <- vector(mode="numeric", length=n.bins)
 for (i in 1:n.bins) {
   ci[i] <- 1.96 * sqrt(my.var[i]) / sqrt(my.n[i])
 }
-#shading vector {,,,,,"cornflowerblue"}
-polygon(c(timescale$age_mid[!is.na(my.var)], rev(timescale$age_mid[!is.na(my.var)])), c(my.mean[!is.na(my.var)] - ci[!is.na(my.var)], rev(my.mean[!is.na(my.var)] + ci[!is.na(my.var)])), col="cornflowerblue")
-lines(timescale$age_mid, my.mean, col="#0000ff", lwd = 3.0)
-mtext(side=3, line=0.25, "Mean size for 'Other' Feeders", col="black", font=4, cex=1.3)
+#shading vector {"coral","palegoldenrod","mediumturquoise","mistyrose",,"cornflowerblue"}
+polygon(c(timescale$age_mid[!is.na(my.var)], rev(timescale$age_mid[!is.na(my.var)])), c(my.mean[!is.na(my.var)] - ci[!is.na(my.var)], rev(my.mean[!is.na(my.var)] + ci[!is.na(my.var)])), col="lightpink")
+lines(timescale$age_mid, my.mean, col="#ff00ff", lwd = 3.0)
+mtext(side=3, line=0.20, "Mean Size for Predatory Feeders", col="black", font=4, cex=1.3)
 
 
 
