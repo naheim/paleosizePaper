@@ -19,8 +19,8 @@ myCol <- c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 #*************************************************Feeding Type vs. Geologic Time***************************************************
 par(col="black")
 
-boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylim=c(-3, 12), ylab="Biovolume (log10mm^3)", main="Biovolume vs. Feeding Type", col=myCol, names=c("Suspension", "Dep.", "Mining", "Grazing", "Predatory", "Other"), notch=TRUE)
-
+boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylim=c(-3, 12), ylab="", main="Biovolume vs. Feeding Type", col=myCol, names=c("Suspension", "Dep.", "Mining", "Grazing", "Predatory", "Other"), notch=TRUE)
+mtext(side=2, line=1.9, expression(paste("Biovolume (log "[10]," mm"^3,")")), col="black", font=4, cex=1.3)
 #***************************graph all body sizes against geologic time (each feeding type is a different color)********************
 
 #*************************************Trends of Mean Size for Feeding Type (using paleoTS analysis)********************************
@@ -86,6 +86,7 @@ for (i in 1:n.bins) {
   my.var[i] <- var(temp.data)
   my.n[i] <- length(temp.data)
 }
+
 time.plot(c(0,7.5), expression(paste("Biovolume (log  "[10]," mm"^3,")")), mar = c(4, 3.5, 4, 3.5)+0.5, mgp = c(2.5, 0.75, 0), cex.lab=1.25, cex.axis=1.25)
 #cex.lab
 #cex.axis
@@ -103,6 +104,7 @@ ci <- vector(mode="numeric", length=n.bins)
 for (i in 1:n.bins) {
   ci[i] <- 1.96 * sqrt(my.var[i]) / sqrt(my.n[i])
 }
+#shading vector {,,,,,"cornflowerblue"}
 polygon(c(timescale$age_mid[!is.na(my.var)], rev(timescale$age_mid[!is.na(my.var)])), c(my.mean[!is.na(my.var)] - ci[!is.na(my.var)], rev(my.mean[!is.na(my.var)] + ci[!is.na(my.var)])), col="cornflowerblue")
 lines(timescale$age_mid, my.mean, col="#0000ff", lwd = 3.0)
 mtext(side=3, line=0.25, "Mean size for 'Other' Feeders", col="black", font=4, cex=1.3)
