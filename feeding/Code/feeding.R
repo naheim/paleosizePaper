@@ -19,7 +19,8 @@ myCol <- c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 #*************************************************Feeding Type vs. Geologic Time***************************************************
 par(col="black")
 
-boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylim=c(-3, 12), ylab="Biovolume (log10mm^3)", main="Biovolume vs. Feeding Type", col=myCol, names=c("Suspension", "Dep.", "Mining", "Grazing", "Predatory", "Other"), notch=TRUE)
+boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylim=c(-3, 12), ylab="", main="Biovolume vs. Feeding Type", col=myCol, names=c("Suspension", "Dep.", "Mining", "Grazing", "Predatory", "Other"), notch=TRUE)
+ mtext(side=2, line=1.9, expression(paste("Biovolume (log "[10]," mm"^3,")")), col="black", font=4, cex=1.3)
 
 #***************************graph all body sizes against geologic time (each feeding type is a different color)********************
 
