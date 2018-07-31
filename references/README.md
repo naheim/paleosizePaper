@@ -40,6 +40,9 @@ Here is a list of references that will be helpful in writing your discussions.
 * Lane, S. J., Shishido, C. M., Moran, A. L., Tobalske, B. W., Arango, C. P., & Woods, H. A. 2017. Upper limits to body size imposed by respiratory–structural trade-offs in Antarctic pycnogonids. *Proceedings of the Royal Society B: Biological Sciences*, 284:20171779. doi: 10.1098/rspb.2017.1779. [Link](http://doi.org/10.1098/rspb.2017.1779) [PDF](Lane2017.pdf)
 
 ## Phyla References
+
+* Bambach, R. K., Knoll, A. H., & Sepkoski, J. J., Jr. 2002. Anatomical and ecological constraints on Phanerozoic animal diversity in the marine realm. *Proceedings of the National Academy of Sciences of the United States of America*, 99:6854–6859. doi: 10.1073/pnas.092150999. [Link](http://doi.org/10.1073/pnas.092150999) [PDF](Bambach2002.pdf)
+
 * McShea, D. W. 1996. Metazoan complexity and evolution: Is there a trend? *Evolution*, 50:477–492. [PDF](McShea1996.pdf)
 
 * Jablonski, D., & Raup, D. M. (1995). Selectivity of end-Cretaceous marine bivalve extinctions. *Science*, 268(5209), 389–391. [PDF](Jablonski1995.pdf)
