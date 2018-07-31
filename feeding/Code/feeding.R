@@ -16,7 +16,7 @@ otherFeeding <- subset(bodySize, feeding == 6)
 
 myCol <- c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 
-#*************************************************Feeding Type vs. Geologic Time***************************************************
+#*************************************************BOXPLOT: Feeding Type vs. Geologic Time***************************************************
 par(col="black")
 
 boxplot(log10(max_vol)~feeding, bodySize, xlab="Feeding Type", ylim=c(-3, 12), ylab="", main="Biovolume vs. Feeding Type", col=myCol, names=c("Suspension", "Dep.", "Mining", "Grazing", "Predatory", "Other"), notch=TRUE)
