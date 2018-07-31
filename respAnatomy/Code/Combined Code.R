@@ -1,11 +1,11 @@
 # Akaike Weights
 
 library(paleoTS) # setting up paleoTS functions
-setwd("/Users/seyib/Desktop") #setting directory
 sizeData<-read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt') #reading in data set
 sizeData$log10_volume<-log10(sizeData$max_vol) #adding column to dataset to make log volume of data
 sizeData$combined_resp<-paste(sizeData$fluid, sizeData$respOrgan, sizeData$circ) #combining resp mode
-sizeData <- subset(sizeData, combined_resp != "" & combined_resp != "water multi closed") #taking out data that has small sample size
+sizeData <- subset(sizeData, is.element(combined_resp, c("air dedicated closed","water dedicated closed","water dedicated open","water multi open")))
+sizeData$combined_resp <- factor(sizeData$combined_resp) #taking out data that has small sample size
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt')
 nBins <- nrow(timescale)
 myMean <- vector(mode="numeric", length=nBins)
@@ -73,7 +73,8 @@ for(i in 1:nBins) {
 myTS3 <- as.paleoTS(mm=myMean3[!is.na(myVar3)], vv=myVar3[!is.na(myVar3)], nn=myN3[!is.na(myVar3)], tt=myTime[!is.na(myVar3)], oldest="last")
 fit3models(myTS3, method="Joint", pool=FALSE)
 
-#-----------------------------------------------------------------------------------------------------------------------------------------
+#
+#
 
 # Extinction Selectivity
 
@@ -81,12 +82,11 @@ fit3models(myTS3, method="Joint", pool=FALSE)
 # 	Combined Graph
 
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-setwd("/Users/seyib/Desktop") #set working directory
 sizeData<-read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt') #read in data set
 sizeData$log10_volume<-log10(sizeData$max_vol) #add colummn to data set to take log of max volume of all species
 sizeData$combined_resp<-paste(sizeData$fluid, sizeData$respOrgan, sizeData$circ) #adding a combined column to dataset to sort out respiration types
-sizeData <- subset(sizeData, combined_resp != "" & combined_resp != "water multi closed") #taking out data that isn't sorted into any category and taking out organisms that have respiration systems: water, multi organ, closed, because there aren't enough examples to make definite conclusions
-	# table(sizeData$combined_resp) shows how many different variations there are with how many values in each category
+sizeData$combined_resp <- factor(sizeData$combined_resp)
+sizeData <- subset(sizeData, is.element(combined_resp, c("air dedicated closed","water dedicated closed","water dedicated open","water multi open")))
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt') #reading in timescale
 
 #making subsets of different types of usable respiration combinations
@@ -95,7 +95,6 @@ WaDeOp<-sizeData[which(sizeData[,"fluid"]=="water" & sizeData[,"respOrgan"]=="de
 WaMuOp<-sizeData[which(sizeData[,"fluid"]=="water" & sizeData[,"respOrgan"]=="multi" & sizeData[,"circ"]=="open"),]
 AiDeCl<-sizeData[which(sizeData[,"fluid"]=="air" & sizeData[,"respOrgan"]=="dedicated" & sizeData[,"circ"]=="closed"),]
 
-quartz() #makes a new plot window to not overwrite a quartz window
 time.plot(c(-2,1), "Slope of Regression Coeffecient for Extinction Estimated by Volume", main="Time Series of Extinction Selectivity as Estimated by Body Size", x.axis.pct=18, mar=c(3,2.75,2,1))
 	#plot(1:10,1:10, type="n", xlim=c(550,0), ylim=c(-2,1), xlab="Geological time (Ma)", ylab="Slope of Regression Coeffecient for Extinction Estimated by Volume", main="Time Series of Extinction Selectivity as Estimated by Body Size") #setting up graph plot
 
@@ -156,18 +155,18 @@ for(i in 1:nrow(timescale)) {
 	myPropADC[i] <- sum(temp3$extinct)/nrow(temp3)
 }
 lines(timescale$age_mid, myRegADC, col="#ee92ed", lwd=2)
-legend(520, -1.38, legend=c("Water, Dedicated organ, Closed system", "Water, Dedicated organ, Open system", "Water, Multi-organ, Open system", "Air, Dedicated organ, Closed system"), col=c("#ff5640", "#ffd900", "#00ffd7", "#ee92ed"), lty=1, title="Repiratory System Types", cex=0.8) #makes legend for each respiration type
+legend(520, -1.38, legend=c("Water, Dedicated organ, Closed system", "Water, Dedicated organ, Open system", "Water, Multi-organ, Open system", "Air, Dedicated organ, Closed system"), fill=c("#ff5640", "#ffd900", "#00ffd7", "#ee92ed"), title="Repiratory System Types", cex=0.8) #makes legend for each respiration type
 
 #	Separate Graphs
 
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-setwd("/Users/seyib/Desktop")
 sizeData <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt')
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt')
 nBins <- nrow(timescale)
 sizeData$log10_volume<-log10(sizeData$max_vol)
 sizeData$combined_resp<-paste(sizeData$fluid, sizeData$respOrgan, sizeData$circ)
-sizeData <- subset(sizeData, combined_resp != "" & combined_resp != "water multi closed")
+sizeData <- subset(sizeData, is.element(combined_resp, c("air dedicated closed","water dedicated closed","water dedicated open","water multi open")))
+sizeData$combined_resp <- factor(sizeData$combined_resp)
 
 WaDeCl<-sizeData[which(sizeData[,"fluid"]=="water" & sizeData[,"respOrgan"]=="dedicated" & sizeData[,"circ"]=="closed"),]
 WaDeOp<-sizeData[which(sizeData[,"fluid"]=="water" & sizeData[,"respOrgan"]=="dedicated" & sizeData[,"circ"]=="open"),]
@@ -189,12 +188,11 @@ for(i in 1:nBins) {
 		}
 	}
 }
-quartz()
 time.plot(c(-2,2), "Log-odds of extinction", main="Time Series of Extinction Selectivity as Estimated by Body Size")
 abline(h=0, lty=2)
 points(timescale$age_mid, wdcExtSel$coef, pch=16, cex=1.25, col="black")
 segments(timescale$age_mid,wdcExtSel$ci.minus,timescale$age_mid,wdcExtSel$ci.plus, col="#ff5640")
-legend(250, 1.84, legend=c("Water, Dedicated organ, Closed system"), col=c("#ff5640"), lty=1, title="Repiratory System Type", cex=0.7)
+legend(250, 1.84, legend=c("Water, Dedicated organ, Closed system"), fill=c("#ff5640"), title="Repiratory System Type", cex=0.7)
 
 wdoExtSel <- data.frame(matrix(NA, nrow=nBins, ncol=3, dimnames=list(timescale$interval_name, c('coef','ci.minus','ci.plus'))))
 for(i in 1:nBins) {
@@ -211,12 +209,11 @@ for(i in 1:nBins) {
 		}
 	}
 }
-quartz()
 time.plot(c(-2,2), "Log-odds of extinction", main="Time Series of Extinction Selectivity as Estimated by Body Size")
 abline(h=0, lty=2)
 points(timescale$age_mid, wdoExtSel$coef, pch=16, cex=1.25, col="black")
 segments(timescale$age_mid,wdoExtSel$ci.minus,timescale$age_mid,wdoExtSel$ci.plus, col="#ffd900")
-legend(520, 1.84, legend=c("Water, Dedicated organ, Open system"), col=c("#ffd900"), lty=1, title="Repiratory System Type", cex=0.7)
+legend(520, 1.84, legend=c("Water, Dedicated organ, Open system"), fill=c("#ffd900"), title="Repiratory System Type", cex=0.7)
 
 wmoExtSel <- data.frame(matrix(NA, nrow=nBins, ncol=3, dimnames=list(timescale$interval_name, c('coef','ci.minus','ci.plus'))))
 for(i in 1:nBins) {
@@ -233,12 +230,11 @@ for(i in 1:nBins) {
 		}
 	}
 }
-quartz()
 time.plot(c(-2,2), "Log-odds of extinction", main="Time Series of Extinction Selectivity as Estimated by Body Size")
 abline(h=0, lty=2)
 points(timescale$age_mid, wmoExtSel$coef, pch=16, cex=1.25, col="black")
 segments(timescale$age_mid,wmoExtSel$ci.minus,timescale$age_mid,wmoExtSel$ci.plus, col="#00ffd7")
-legend(520, 1.84, legend=c("Water, Multi-organ, Open system"), col=c("#00ffd7"), lty=1, title="Repiratory System Type", cex=0.7)
+legend(520, 1.84, legend=c("Water, Multi-organ, Open system"), fill=c("#00ffd7"), title="Repiratory System Type", cex=0.7)
 
 adcExtSel <- data.frame(matrix(NA, nrow=nBins, ncol=3, dimnames=list(timescale$interval_name, c('coef','ci.minus','ci.plus'))))
 for(i in 1:nBins) {
@@ -255,12 +251,11 @@ for(i in 1:nBins) {
 		}
 	}
 }
-quartz()
 time.plot(c(-2,2), "Log-odds of extinction", main="Time Series of Extinction Selectivity as Estimated by Body Size")
 abline(h=0, lty=2)
 points(timescale$age_mid, adcExtSel$coef, pch=16, cex=1.25, col="black")
 segments(timescale$age_mid,adcExtSel$ci.minus,timescale$age_mid,adcExtSel$ci.plus, col="#ee92ed")
-legend(520, 1.84, legend=c("Air, Dedicated organ, Closed system"), col=c("#ee92ed"), lty=1, title="Repiratory System Type", cex=0.7)
+legend(520, 1.84, legend=c("Air, Dedicated organ, Closed system"), fill=c("#ee92ed"), title="Repiratory System Type", cex=0.7)
 
 #	Extinction Rate
 
@@ -274,12 +269,12 @@ lines(timescale$age_mid, myPropWMO, col="#00ffd7", lwd=2)
 plot(1:10, type="n", ylab="Extinction Rate", main="Air, Dedicated organ, Closed System", xlim=c(541,0), xlab="", ylim=c(0,1), xaxt="n")
 lines(timescale$age_mid, myPropADC, col="#ee92ed", lwd=2)
 
-#-----------------------------------------------------------------------------------------------------------------------------------------
+#
+#
 
 # Proportion Graph
 
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-setwd("/Users/seyib/Desktop")
 sizeData <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt')
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt')
 nBins <- nrow(timescale)
@@ -308,33 +303,32 @@ yPoly3 <- c(sysProp[,"water.dedicated.closed"] + sysProp[,"water.dedicated.open"
 yPoly4 <- c(sysProp[,"water.dedicated.closed"] + sysProp[,"water.dedicated.open"] + sysProp[,"water.multi.open"], rev(sysProp[,"air.dedicated.closed"] + sysProp[,"water.dedicated.closed"] + sysProp[,"water.dedicated.open"] + sysProp[,"water.multi.open"]))
 
 classCols <- c("#ff5640","#ffd900","#00ffd7","#ee92ed")
-quartz()
 time.plot(c(0,1), "Proportion of Genera", main="Time Series of Proportion of Respiratory Classes", mar=c(3.5,3.5,4,4))
 
 polygon(xPoly,yPoly1, col=classCols[1])
 polygon(xPoly,yPoly2, col=classCols[2])
 polygon(xPoly,yPoly3, col=classCols[3])
 polygon(xPoly,yPoly4, col=classCols[4])
-abline(v=444, lty=5)
-abline(v=375, lty=5)
-abline(v=251, lty=5)
-abline(v=200, lty=5)
-abline(v=66, lty=5)
-legend(479,0.96, legend=c("Water, Dedicated organ, Closed system", "Water, Dedicated organ, Open system", "Water, Multi-function organ, Open system", "Air, Dedicated organ, Closed system"), col=c("#ff5640", "#ffd900", "#00ffd7", "#ee92ed"), lty=1, title="Respiratory System Types", bg="white", cex=0.63, box.col="white")
+abline(v=443.8, lty=5, col="azure4")
+abline(v=358.9, lty=5, col="azure4")
+abline(v=252.17, lty=5, col="azure4")
+abline(v=201.3, lty=5, col="azure4")
+abline(v=66, lty=5, col="azure4")
+legend(479,0.96, legend=c("Water, Dedicated organ, Closed system", "Water, Dedicated organ, Open system", "Water, Multi-organ, Open system", "Air, Dedicated organ, Closed system"), fill=c("#ff5640", "#ffd900", "#00ffd7", "#ee92ed"), title="Respiratory System Types", bg="white", cex=0.63, box.col="white")
 
-#-----------------------------------------------------------------------------------------------------------------------------------------
+#
+#
 
 # Stratigraphic Mean Plot
 
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-setwd("/Users/seyib/Desktop") #setting directory
 sizeData<-read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt') #reading in data set
 sizeData$log10_volume<-log10(sizeData$max_vol) #adding column to dataset to make log volume of data
 sizeData$combined_resp<-paste(sizeData$fluid, sizeData$respOrgan, sizeData$circ) #adding a combined column to dataset to sort out respiration types
-sizeData <- subset(sizeData, combined_resp != "" & combined_resp != "water multi closed") #taking out data that isn't sorted into any category and taking out organisms that have respiration systems: water, multi organ, closed, because there aren't enough examples to make definite conclusions
+sizeData <- subset(sizeData, is.element(combined_resp, c("air dedicated closed","water dedicated closed","water dedicated open","water multi open")))
+sizeData$combined_resp <- factor(sizeData$combined_resp) #taking out data that isn't sorted into any category and taking out organisms that have respiration systems: water, multi organ, closed, because there aren't enough examples to make definite conclusions
 # table(sizeData$combined_resp) shows how many different variations there are with how many values in each category
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt') #reading in timescale
-quartz() #makes a new plot window to not overwrite a quartz window
 time.plot(c(-2,12), "", main="Body Size Evolution as Divided by Respiratory Types", mar=c(3.5,3.5,4,4))
 #plot(1:10,1:10, type="n", xlim=c(550,0), ylim=c(-2,12), xlab="Geological time (Ma)", ylab="", main="Body Size Evolution as Divided by Respiratory Types") #setting up graph plot
 
@@ -360,42 +354,42 @@ for(i in 1:nrow(timescale)) {
 	temp<-WaDeCl[WaDeCl$fad_age > timescale$age_top[i] & WaDeCl$lad_age < timescale$age_bottom[i], ] #makes temporary subset of data for each time interval
 	myMeanWDC[i]<-mean(temp$log10_volume) #adds calculated mean for each time interval progressively to empty vector
 }
-lines(timescale$age_mid, myMeanWDC, col="#ff5640", lwd=3) #adds line of mean sizes at each time interval
+lines(timescale$age_mid, myMeanWDC, col="#ff5640", lwd=4) #adds line of mean sizes at each time interval
 
 myMeanWDO <- vector(mode="numeric", length=nrow(timescale)) #loop as indicated above has to be repeated for each category of respiration
 for(i in 1:nrow(timescale)) {
 	temp1<-WaDeOp[WaDeOp$fad_age > timescale$age_top[i] & WaDeOp$lad_age < timescale$age_bottom[i], ]
 	myMeanWDO[i]<-mean(temp1$log10_volume)
 }
-lines(timescale$age_mid, myMeanWDO, col="#ffd900", lwd=3)
+lines(timescale$age_mid, myMeanWDO, col="#ffd900", lwd=4)
 
 myMeanWMO <- vector(mode="numeric", length=nrow(timescale))
 for(i in 1:nrow(timescale)) {
 	temp2<-WaMuOp[WaMuOp$fad_age > timescale$age_top[i] & WaMuOp$lad_age < timescale$age_bottom[i], ]
 	myMeanWMO[i]<-mean(temp2$log10_volume)
 }
-lines(timescale$age_mid, myMeanWMO, col="#00ffd7", lwd=3)
+lines(timescale$age_mid, myMeanWMO, col="#00ffd7", lwd=4)
 
 myMeanADC <- vector(mode="numeric", length=nrow(timescale))
 for(i in 1:nrow(timescale)) {
 	temp3<-AiDeCl[AiDeCl$fad_age > timescale$age_top[i] & AiDeCl$lad_age < timescale$age_bottom[i], ]
 	myMeanADC[i]<-mean(temp3$log10_volume)
 }
-lines(timescale$age_mid, myMeanADC, col="#ee92ed", lwd=3)
+lines(timescale$age_mid, myMeanADC, col="#ee92ed", lwd=4)
 
-abline(v=444, lty=5)
-abline(v=375, lty=5)
-abline(v=251, lty=5)
-abline(v=200, lty=5)
-abline(v=66, lty=5)
-legend(520, 11.44, legend=c("Water, Dedicated organ, Closed system", "Water, Dedicated organ, Open system", "Water, Multi-function organ, Open system", "Air, Dedicated organ, Closed system"), col=c("#ff5640", "#ffd900", "#00ffd7", "#ee92ed"), lty=1, title="Repiratory System Types", cex=0.8, bg="white", box.col="white") #makes legend for each respiration type
+abline(v=443.8, lty=5, col="azure4")
+abline(v=358.9, lty=5, col="azure4")
+abline(v=252.17, lty=5, col="azure4")
+abline(v=201.3, lty=5, col="azure4")
+abline(v=66, lty=5, col="azure4")
+legend(520, 11.44, legend=c("Water, Dedicated organ, Closed system", "Water, Dedicated organ, Open system", "Water, Multi-organ, Open system", "Air, Dedicated organ, Closed system"), fill=c("#ff5640", "#ffd900", "#00ffd7", "#ee92ed"), title="Repiratory System Types", cex=0.8, bg="white", box.col="white") #makes legend for each respiration type
 
-#-----------------------------------------------------------------------------------------------------------------------------------------
+#
+#
 
 # Boxplot
 
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
-setwd("/Users/seyib/Desktop")
 sizeData <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt')
 timescale <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt')
 nBins <- nrow(timescale)
@@ -411,3 +405,6 @@ mtext(side=1, line=2.8, at=2, text="Water, Dedicated, Closed")
 mtext(side=1, line=0.8, at=3, text="Water, Dedicated, Open")
 mtext(side=1, line=2.8, at=4, text="Air, Multi-function, Closed")
 title(ylab=expression(paste("Biovolume (log"[10]," mm"^3,")")), line=2.2)
+
+#
+#
