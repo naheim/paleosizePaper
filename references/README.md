@@ -42,7 +42,7 @@ Here is a list of references that will be helpful in writing your discussions.
 ## Phyla References
 * McShea, D. W. 1996. Metazoan complexity and evolution: Is there a trend? *Evolution*, 50:477–492. [PDF](McShea1996.pdf)
 
-* Sepkoski, J. J., Jr. 1981. A Factor Analytic Description of the Phanerozoic Marine Fossil Record. *Paleobiology*, 7:36–53. doi: 10.1017/S0094837300003778. [Link](http://www.jstor.org/stable/2400639) [PDF](Sepkoski Jr1981-1.pdf)
+* Sepkoski, J. J., Jr. 1981. A Factor Analytic Description of the Phanerozoic Marine Fossil Record. *Paleobiology*, 7:36–53. doi: 10.1017/S0094837300003778. [Link](http://www.jstor.org/stable/2400639) [PDF](Sepkoski1981.pdf)
 
 ## Tiering References
 * Ausich, W. I., & Bottjer, D. J. 1982. Tiering in suspension-feeding communities on soft substrata throughout the Phanerozoic. *Science*, 216:173–174. [PDF](Ausich1982.pdf)
