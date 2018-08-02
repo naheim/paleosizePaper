@@ -3,11 +3,7 @@
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 #1: # of Genera in Each Tiering Lvl Over Time:
 
-#The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years
-
-
-
-#WORKS: 
+#CHANGE DIRECTORIES!
 
 sizeData <- read.delim("bodySizes.txt") 
 timescale <- read.delim("timescale.txt") 
@@ -36,12 +32,9 @@ mtext(side=3, line=0.5, "The Change in Amount of Genera Categorized by Tiering L
 legend(540, 1197, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA, cex=1)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
-
 #2: Proportion of Each Tiering Lvl Over Time:
 
 #CHANGE DIRECTORIES!
-
-#WORKS:
 
 sizeData <- read.delim("bodySizes.txt") 
 sizeData <- subset(sizeData, !is.na(tiering) & tiering > 0)
@@ -86,7 +79,6 @@ arrows(-10, 0.011, 0, 0.011, xpd=TRUE)
 mtext(side = 4, "Deep infaunal", at = c(0.011), cex = 1.5, col = "#0000ff", xpd = TRUE, line = 1.2)#SIX
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
-
 #3: Mean Biovolume of Each Tiering Lvl Over Time
 
 #CHANGE DIRECTORY!
@@ -94,22 +86,16 @@ mtext(side = 4, "Deep infaunal", at = c(0.011), cex = 1.5, col = "#0000ff", xpd 
 bodySize <- read.delim(file="bodySizes.txt")
 timescale <- read.delim("timescale.txt") 
 bodySize <- subset(bodySize, !is.na(tiering) & tiering != 0)
-
 library(paleoTS)
-
 n.bins <- nrow(timescale)
-
 my.mean <- matrix(NA, nrow=n.bins, ncol=6)
 my.var <- matrix(NA, nrow=n.bins, ncol=6)
 my.n <- matrix(NA, nrow=n.bins, ncol=6)
 my.time <- timescale$age_bottom
-
-
 names(my.mean) <- timescale$interval_name
 names(my.var) <- timescale$interval_name
 names(my.n) <- timescale$interval_name
 names(my.time) <- timescale$interval_name
-
 for (i in 1:n.bins) {for (j in 1:6) {
 temp.data <- log10(bodySize$max_vol[bodySize$fad_age > timescale$age_top[i] & bodySize$lad_age < timescale$age_bottom[i] & bodySize$tiering == j])
 my.mean[i,j] <- mean(temp.data)
@@ -120,9 +106,6 @@ my.n[i,j] <- length(temp.data)
 par(col="black")
 source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
 time.plot(c(0, 8), expression(paste("Biovolume (log  "[10]," mm"^3,")")), cex.lab = 1.2, mar = c(4.5,4.5,4.5,4.5)+1, mgp=c(3, 0.75, 0), cex.axis = 1.25)
-
-#plot(timescale$age_bottom, my.mean[,3], type="n", pch=16, xlab="Geologic Time (Ma)", xlim=c(541, 0), ylab="Mean Size", ylim=c(1.2,6.5), main="Mean expression(paste("Biovolume (log"[10]," cm"^3)"))
-
 my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 for(i in 1:6) {
   my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var[,i]), i], vv=my.var[!is.na(my.var[,i]), i], nn=my.n[!is.na(my.var[,i]), i], tt=my.time[!is.na(my.var[,i])], oldest="last")
@@ -130,16 +113,19 @@ for(i in 1:6) {
   #par(col=my.mean$color[k]); par(col="deepskyblue3")
   lines(timescale$age_mid, my.mean[, i], col=my.col[i], lwd = 3)
 }
-mtext(side=3, line=0.5, "The Change in the Mean Biovolume of Tiering Levels Over Million Years", col="black", font=4, cex=2)
+mtext(side=3, line=0.5, "The Change in the Mean Biovolume of Tiering Levels Over the Phanerozoic", col="black", font=4, cex=2)
 par(col="black")
 abline(v = c(443.8, 359.2, 251, 199.5, 65.5), col="azure4", lty = 5)
 legend(540, 7.98, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Level", bg = "white", box.col=NA, cex=1)
-#END
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
-
 #4: Body Size Box Plot for Each Tier/Biovolume vs. Tiering Level
 
+#CHANGE DIRECTORIES!
+
+sizeData <- read.delim("bodySizes.txt") 
+timescale <- read.delim("timescale.txt") 
+sizeData = subset(sizeData, !is.na(tiering) & tiering != 0)
 par(col="black")
 my.col = c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
 par(mar = c(5, 5, 5, 5)+0.1)
