@@ -9,6 +9,10 @@
 
 - ***[Previous Plots and Graphs](https://github.com/naheim/paleosizePaper/tree/master/tiering/Previous%20Plots)***
 
+- ***[Writing for Our Scientific Paper](https://docs.google.com/document/d/1fCiZDIerAgTGdYfLPIEb54zWClS5-4SXvD4vE0TEs2c/edit?usp=sharing)***
+
+- ***[Our Final Presentation](https://docs.google.com/presentation/d/1wWQ35BXQeDuY7GyJG9iN-WKIc-oKPRFOr0GTpFSb1G4/edit?usp=sharing)***
+
 ## ***Welcome!***
 
   Welcome to Christopher Peter Noll and Stephanie Chen's Tiering Research Station! Feel free to check out our old plots, new plots, and code galore; additionally, feel free to use code or plot ideas from us! Scientific understanding grows through collaboration and mutual understanding! Everything at this station would not be possible without the help and assistance of Dr. Noel Heim. Please follow him and his efforts [here](https://github.com/naheim)!
