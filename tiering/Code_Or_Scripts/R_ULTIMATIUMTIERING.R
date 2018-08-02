@@ -1,8 +1,4 @@
-#TOTAL GRAPH SINGLE DOC:
-
-#title.adj
-#mtext(side=3, line=0.5, "The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=2)
-#legend(534, 0.50, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Color Legend", bg = "white", box.col="NA", cex=0.8, text.font = 1)
+#TOTAL GRAPH SINGLE SCRIPT W/O EXTRA GRAPHS:
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 #1: # of Genera in Each Tiering Lvl Over Time:
@@ -10,7 +6,7 @@
 #The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years
 
 
-#COLOR YAY: http://projects.susielu.com/viz-palette?colors=[%22#ff5640%22,%22#ffd900%22,%22#00ffd7%22,%22#ee92ed%22,%22#ff00ff%22,%22#0000ff%22]&backgroundColor=%22white%22&fontColor=%22black%22
+
 #WORKS: 
 
 sizeData <- read.delim("bodySizes.txt") 
