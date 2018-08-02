@@ -136,8 +136,9 @@ mtext(side=2, line=3.2, expression(paste("Biovolume (log  "[10]," mm"^3,")")), c
 mtext(side=3, line=0.5, "Biovolume Box & Whisker Plot Catagorized by Tiering Level", col="black", font=4, cex=2)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+#5: Noel's Chart for Tiering Levels
 
-#5: Stephanie's Reuse of Noel's Chart for Tiering Levels with Wrong Colors
+#CHANGE DIRECTORIES!
 
 sizeData <- read.delim(file='https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt')
 sizeData <- subset(sizeData, !is.na(tiering) & tiering > 0)
@@ -156,7 +157,7 @@ segments(sizeData$fad_age, sizeData$log10_volume, sizeData$lad_age, sizeData$log
 #legend("topleft", lty = 1, title = "Tiering Levels:",legend = c("Tiering Level 1:\n Pelagic", "Tiering Level 2:\n Erect", "Tiering Level 3:\n Surficial", "Tiering Level 4:\n Semi-infaunal", "Tiering Level 5:\n Shallow infaunal", "Tiering Level 6:\n Deep infaunal"), col = myCols)
 , cex = 1)
 legend(542, 15, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = myCols, lty = 1, title="Tiering Levels:", bg = "white", box.col="Black")
-mtext(side=3, line=0.5, "Body Size Evolution Catagorized by Tiering Level Over 541 Million Years", col="black", font=4, cex=1.3)
+mtext(side=3, line=0.5, "Body Size Evolution Catagorized by Tiering Level Over the Phanerozoic", col="black", font=4, cex=1.3)
 Num1<-sizeData[which(sizeData$tiering == 1),]
 Num2<-sizeData[which(sizeData$tiering == 2),]
 Num3<-sizeData[which(sizeData$tiering == 3),]
