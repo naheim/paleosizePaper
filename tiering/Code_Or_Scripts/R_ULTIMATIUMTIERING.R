@@ -214,7 +214,6 @@ my.mean <- vector(mode="numeric", length=n.bins)
 my.var <- vector(mode="numeric", length=n.bins)
 my.n <- vector(mode="numeric", length=n.bins)
 my.time <- timescale$age_bottom
-
 names(my.mean) <- timescale$interval_name
 names(my.var) <- timescale$interval_name
 names(my.n) <- timescale$interval_name
@@ -228,7 +227,6 @@ for(i in 1:n.bins) {
 	my.var[i] <- var(temp.data)  
 	my.n[i] <- length(temp.data)  
 }
-
 my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my.n[!is.na(my.var)], tt=my.time[!is.na(my.var)], oldest="last") 
 fit3models(my.ts, method="Joint", pool=FALSE)
 
@@ -240,7 +238,6 @@ for(i in 1:n.bins) {
 	my.var[i] <- var(temp.data)  
 	my.n[i] <- length(temp.data)  
 }
-
 my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my.n[!is.na(my.var)], tt=my.time[!is.na(my.var)], oldest="last") 
 fit3models(my.ts, method="Joint", pool=FALSE)
 
@@ -265,7 +262,6 @@ for(i in 1:n.bins) {
 	my.var[i] <- var(temp.data)  
 	my.n[i] <- length(temp.data)  
 }
-
 my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my.n[!is.na(my.var)], tt=my.time[!is.na(my.var)], oldest="last") 
 fit3models(my.ts, method="Joint", pool=FALSE)
 
@@ -277,7 +273,6 @@ for(i in 1:n.bins) {
 	my.var[i] <- var(temp.data)  
 	my.n[i] <- length(temp.data)  
 }
-
 my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my.n[!is.na(my.var)], tt=my.time[!is.na(my.var)], oldest="last") 
 fit3models(my.ts, method="Joint", pool=FALSE)
 
@@ -289,7 +284,6 @@ for(i in 1:n.bins) {
 	my.var[i] <- var(temp.data)  
 	my.n[i] <- length(temp.data)  
 }
-
 my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my.n[!is.na(my.var)], tt=my.time[!is.na(my.var)], oldest="last") 
 fit3models(my.ts, method="Joint", pool=FALSE)
 
