@@ -4,3 +4,5 @@ This directory contains the R code, figures, and text associated with the text o
 Our writing can be found here: https://docs.google.com/document/d/1sXK0NQ-jy6yN-nzLORWxCeURHO4ei8jZRODUBCvq_rA/edit?usp=sharing
 
 Our figures can be found here: https://drive.google.com/drive/folders/1bYEtfU3akTfWhyRL6IQhAw7jmL_xBErU?usp=sharing
+
+Our final presentation can be found here: https://docs.google.com/presentation/d/192wKf9kAeyPkEMESo8QKP2dKpZI0s2Qg4f5hdQvcCeU/edit?usp=sharing
