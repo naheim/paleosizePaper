@@ -75,6 +75,8 @@ Here is a list of references that will be helpful in writing your discussions.
 
 * Whalen, C. D., & Briggs, D. E. G. 2018. The Palaeozoic colonization of the water column and the rise of global nekton. *Proceedings of the Royal Society B: Biological Sciences*, 285:20180883. doi: 10.1098/rspb.2018.0883. [Link](http://doi.org/10.1098/rspb.2018.0883) [PDF](Whalen2018.pdf)
 
+* Dietl, G. P., & Kelley, P. H. 2002. The Fossil Record of Predator-Prey Arms Races: Coevolution and Escalation Hypotheses. *The Paleontological Society Papers*, 8:353–374. [PDF](Dietl2002.pdf)
+
 ## Feeding References
 * Bambach, R. K. (1999). Energetics in the global marine fauna: a connection between terrestrial diversification and change in the marine biosphere. *Géobios*, 32:131–144. doi: 10.1016/S0016-6995(99)80025-4 [Link](http://doi.org/10.1016/S0016-6995(99)80025-4) [PDF](Bambach1999.pdf)
 
