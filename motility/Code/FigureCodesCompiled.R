@@ -87,6 +87,7 @@ segments(motility2$fad_age,motility2$log10max_vol,motility2$lad_age,motility2$lo
 meanVector <- vector(mode='numeric', length=nrow(timescale))
 for(i in 1:nrow(timescale)) { 
   	meanVector[i] <- mean(motile$log10max_vol[motile$fad_age > timescale$age_top[i] & motile$lad_age < timescale$age_bottom[i]]) }
+  lines(x=timescale$age_mid,y=meanVector, col="white", lwd=3)
  lines(x=timescale$age_mid,y=meanVector, col="black", lwd=2.5)
 
 plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log"[10]," mm"^3*")")))
@@ -100,6 +101,7 @@ segments(motility6$fad_age,motility6$log10max_vol,motility6$lad_age,motility6$lo
  meanVector <- vector(mode='numeric', length=nrow(timescale))
 for(i in 1:nrow(timescale)) { 
   	meanVector[i] <- mean(nonmotile$log10max_vol[nonmotile$fad_age > timescale$age_top[i] & nonmotile$lad_age < timescale$age_bottom[i]]) }
+  	  lines(x=timescale$age_mid,y=meanVector, col="white", lwd=4)
  lines(x=timescale$age_mid,y=meanVector, col="black", lwd=2.5)
  
  #FIGURE: Body Size vs Motility Boxplots
