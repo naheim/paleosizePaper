@@ -10,6 +10,9 @@ Here is a list of references that will be helpful in writing your discussions.
 * *paleoTS*
 	* Hunt, G. 2015. paleoTS: Analyze Paleontological Time-Series. R package version 0.5-1. https://CRAN.R-project.org/package=paleoTS.
 
+### The geological timescale
+* Cohen, K.M., S. C. Finney, P. L. Gibbard, and J.-X. Fan. 2013. The ICS International Chronostratigraphic Chart. Episodes 36:199-204. [Link](http://www.stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf) [PDF](Cohen2013.pdf)
+
 ### Body Size Evolution
 * Heim, N. A., Knope, M. L., Schaal, E. K., Wang, S. C., & Payne, J. L. 2015. Cope’s rule in the evolution of marine animals. *Science*, 347:867–870. doi: 10.1126/science.1260065. [Link](http://doi.org/10.1126/science.1260065) [PDF](Heim2015.pdf)
 
@@ -37,9 +40,20 @@ Here is a list of references that will be helpful in writing your discussions.
 * Lane, S. J., Shishido, C. M., Moran, A. L., Tobalske, B. W., Arango, C. P., & Woods, H. A. 2017. Upper limits to body size imposed by respiratory–structural trade-offs in Antarctic pycnogonids. *Proceedings of the Royal Society B: Biological Sciences*, 284:20171779. doi: 10.1098/rspb.2017.1779. [Link](http://doi.org/10.1098/rspb.2017.1779) [PDF](Lane2017.pdf)
 
 ## Phyla References
+
+* Bambach, R. K., Knoll, A. H., & Sepkoski, J. J., Jr. 2002. Anatomical and ecological constraints on Phanerozoic animal diversity in the marine realm. *Proceedings of the National Academy of Sciences of the United States of America*, 99:6854–6859. doi: 10.1073/pnas.092150999. [Link](http://doi.org/10.1073/pnas.092150999) [PDF](Bambach2002.pdf)
+
 * McShea, D. W. 1996. Metazoan complexity and evolution: Is there a trend? *Evolution*, 50:477–492. [PDF](McShea1996.pdf)
 
-* Sepkoski, J. J., Jr. 1981. A Factor Analytic Description of the Phanerozoic Marine Fossil Record. *Paleobiology*, 7:36–53. doi: 10.1017/S0094837300003778. [Link](http://www.jstor.org/stable/2400639) [PDF](Sepkoski Jr1981-1.pdf)
+* Jablonski, D., & Raup, D. M. (1995). Selectivity of end-Cretaceous marine bivalve extinctions. *Science*, 268(5209), 389–391. [PDF](Jablonski1995.pdf)
+
+* Knoll, A. H., Bambach, R. K., Payne, J. L., Pruss, S. B., & Fischer, W. W. (2007). Paleophysiology and end-Permian mass extinction. Earth and Planetary Science Letters, 256:295–313. [Link](http://doi.org/10.1016/j.epsl.2007.02.018) [PDF](Knoll2007.pdf)
+
+* Sepkoski, J. J., Jr. 1981. A Factor Analytic Description of the Phanerozoic Marine Fossil Record. *Paleobiology*, 7:36–53. doi: 10.1017/S0094837300003778. [Link](http://www.jstor.org/stable/2400639) [PDF](Sepkoski1981.pdf)
+
+* Valentine, J. W., Collins, A. G., & Meyer, C. P. (1994). Morphological Complexity Increase in Metazoans. *Paleobiology*, 20:131–142. [Link](http://doi.org/10.2307/2401015) [PDF](Valentine1994.pdf)
+
+
 
 ## Tiering References
 * Ausich, W. I., & Bottjer, D. J. 1982. Tiering in suspension-feeding communities on soft substrata throughout the Phanerozoic. *Science*, 216:173–174. [PDF](Ausich1982.pdf)

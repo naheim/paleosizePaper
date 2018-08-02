@@ -35,8 +35,8 @@ time.plot(c(0, max(my.tiering)), "Amount of Genera", cex.lab = 1.2, mar = c(4.5,
 
 #plot(1:10,1:10, type="n", xlim=c(541,-5), ylim=range(my.tiering), pch=21, xlab="Geologic Time (Ma)", ylab="Amount of Genera")
 for(i in 1:1:6){lines(timescale$age_bottom, my.tiering[,i], col=my.col[i], lwd = 3)}
-abline(v = c(443.8, 358.9, 251, 200, 65.5), col="black", lty = 5)
-mtext(side=3, line=0.5, "The Change in the Amount of Genera Categorized by Tiering Level Over Million-Years", col="black", font=4, cex=2)
+abline(v = c(443.8, 358.9, 251, 200, 65.5), col="azure4", lty = 5)
+mtext(side=3, line=0.5, "The Change in Amount of Genera Categorized by Tiering Level Over 541 Million Years", col="black", font=4, cex=2)
 legend(540, 1197, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Levels:", bg = "white", box.col=NA, cex=1)
 
 **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
@@ -95,7 +95,7 @@ mtext(side = 4, "Deep infaunal", at = c(0.011), cex = 1.5, col = "#0000ff", xpd 
 
 #CHANGE DIRECTORY!
 
-bodySize <- read.delim("bodySizes.txt") 
+bodySize <- read.delim(file="bodySizes.txt")
 timescale <- read.delim("timescale.txt") 
 bodySize <- subset(bodySize, !is.na(tiering) & tiering != 0)
 
@@ -136,7 +136,7 @@ for(i in 1:6) {
 }
 mtext(side=3, line=0.5, "The Change in the Mean Biovolume of Tiering Levels Over Million Years", col="black", font=4, cex=2)
 par(col="black")
-abline(v = c(443.8, 359.2, 251, 199.5, 65.5), col="black", lty = 5)
+abline(v = c(443.8, 359.2, 251, 199.5, 65.5), col="azure4", lty = 5)
 legend(540, 7.98, legend=c("Tiering Level 1: Pelagic", "Tiering Level 2: Erect", "Tiering Level 3: Surficial", "Tiering Level 4: Semi-infaunal", "Tiering Level 5: Shallow infaunal", "Tiering Level 6: Deep infaunal"), col = my.col, lty = 1, title="Tiering Level", bg = "white", box.col=NA, cex=1)
 #END
 
