@@ -252,3 +252,31 @@ lines(x=timescale$age_mid,y=extRate[,6],col=feedColors[6], lwd=1.0)
 
 mtext(side=3, line=0.3, "Extinction Rate per Feeding Type", col="black", cex=0.9)
 legend("topright", legend=(feedingType), fill=(feedColors), bg="white", title="Feeding Type", cex=0.75)
+
+#********************Breakdown of Suspension Feeders into Motile & Nonmotile Biovolume - Stratigraphic****************************
+bodySize$log10max_vol <- log10(bodySize$max_vol)
+suspension <- subset(bodySize, !is.na(feeding) & feeding == 1)
+motile <- subset(suspension, !is.na(motility) & motility != 0)
+nmotile <- subset(suspension, is.na(motility) | motility == 0)
+
+time.plot.mult(nrow=1, ncol=1,las=1, top.mar=2.5)
+par(las=1)
+
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log"[10]," mm"^3*")")), font = 3)
+abline(v = c(65, 200, 251.2, 443.8), col="black",lty=5)
+
+segments(suspension$fad_age,suspension$log10max_vol,suspension$lad_age,suspension$log10max_vol, col="#ff5640")
+meanVector <- vector(mode='numeric', length=nrow(timescale))
+#Motile
+for(i in 1:nrow(timescale)) { 
+  meanVector[i] <- mean(motile$log10max_vol[motile$fad_age > timescale$age_top[i] & motile$lad_age < timescale$age_bottom[i]])
+}
+lines(x=timescale$age_mid,y=meanVector, col="black",lwd=2.5)
+mtext(side=3, line=0.25, "Breakdown of Suspension Feeders into Motile and Nonmotile", col="black", font=4, cex=1.3)
+#Non Motile
+for(i in 1:nrow(timescale)) { 
+  meanVector[i] <- mean(nmotile$log10max_vol[nmotile$fad_age > timescale$age_top[i] & nmotile$lad_age < timescale$age_bottom[i]])
+}
+lines(x=timescale$age_mid,y=meanVector,col= "blue", lwd=2.5)
+
+legend("topright", legend=c("Motile", "Nonmotile"), fill=c("black", "blue"), bg="white", title="Motility")
