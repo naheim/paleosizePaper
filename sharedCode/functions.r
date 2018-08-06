@@ -252,7 +252,7 @@ time.plot.mult <- function(nrow, ncol=1, plot.height=6.22, plot.width=7, time.he
 		quartz(height=total.height, width=total.width, bg=bg)
 	}
 	layout(my.layout, widths=width.prop, heights=height.prop)
-	layout.show(length(my.layout))
+	#layout.show(length(my.layout))
 	par(mar=c(bottom.mar, left.mar, 0, right.mar), mgp=mgp, xaxs=xaxs, yaxs="i", cex=cex, cex.axis=cex.axis, cex.lab=cex.lab)
 	
 	#plot time scale
