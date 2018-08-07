@@ -9,9 +9,9 @@
 
 - ***[Previous Plots and Graphs](https://github.com/naheim/paleosizePaper/tree/master/tiering/Previous%20Plots)***
 
-- ***[Writing for Our Scientific Paper](https://docs.google.com/document/d/1fCiZDIerAgTGdYfLPIEb54zWClS5-4SXvD4vE0TEs2c/edit?usp=sharing)***
+- ***[Writing for Our Scientific Paper (Opens in Google Docs)](https://docs.google.com/document/d/1fCiZDIerAgTGdYfLPIEb54zWClS5-4SXvD4vE0TEs2c/edit?usp=sharing)***
 
-- ***[Our Final Presentation](https://docs.google.com/presentation/d/1wWQ35BXQeDuY7GyJG9iN-WKIc-oKPRFOr0GTpFSb1G4/edit?usp=sharing)***
+- ***[Our Final Presentation (Opens in Google Slides)](https://docs.google.com/presentation/d/1wWQ35BXQeDuY7GyJG9iN-WKIc-oKPRFOr0GTpFSb1G4/edit?usp=sharing)***
 
 ## ***Welcome!***
 
