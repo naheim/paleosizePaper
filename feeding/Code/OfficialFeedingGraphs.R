@@ -178,3 +178,76 @@ for(i in 1:nrow(timescale)) {
 lines(x=timescale$age_mid,y=meanVector,col= "blue", lwd=2.5)
 
 legend("topright", legend=c("Motile", "Nonmotile"), fill=c("black", "blue"), bg="white", title="Motility")
+
+#***************************************Stratigraphic Ranges per Feeding Type*****************************************************
+bodySize$log10max_vol <- log10(bodySize$max_vol)
+feeding1 <- bodySize[bodySize[,"feeding"]==1 & !is.na(bodySize$feeding),]
+feeding2 <- bodySize[bodySize[,"feeding"]==2 & !is.na(bodySize$feeding),]  
+feeding3 <- bodySize[bodySize[,"feeding"]==3 & !is.na(bodySize$feeding),]  
+feeding4 <- bodySize[bodySize[,"feeding"]==4 & !is.na(bodySize$feeding),]  
+feeding5 <- bodySize[bodySize[,"feeding"]==5& !is.na(bodySize$feeding),]  
+feeding6 <- bodySize[bodySize[,"feeding"]==6& !is.na(bodySize$feeding),]  
+myCol <- c("#ff5640","#ffd900","#00ffd7","#ee92ed","#ff00ff","#0000ff")
+
+#FIGURE: Body Size Over Time - Color Coded
+time.plot.mult(nrow=2, ncol=3,las=1, top.mar=2.5)
+par(las=1)
+
+# For each feeding level, draw segment (stratigraphic ranges) & mean line
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log"[10]," mm"^3*")")))
+abline(v = c(65, 200, 358, 251.2, 443.8), col="black",lty=5)
+segments(feeding1$fad_age,feeding1$log10max_vol,feeding1$lad_age,feeding1$log10max_vol, col="#ff5640")
+title(main="Suspension Feeder")
+meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) {
+  meanVector[i] <- mean(feeding1$log10max_vol[feeding1$fad_age > timescale$age_top[i] & feeding1$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=2.5)
+
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log"[10]," mm"^3*")")))
+segments(feeding2$fad_age,feeding2$log10max_vol,feeding2$lad_age,feeding2$log10max_vol, col="#ffd900")
+abline(v = c(65, 200, 358, 251.2, 443.8), col="black",lty=5)
+meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) {
+  meanVector[i] <- mean(feeding2$log10max_vol[feeding2$fad_age > timescale$age_top[i] & feeding2$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=2.5)
+title(main="Surface Deposit")
+
+
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log"[10]," mm"^3*")")))
+segments(feeding3$fad_age,feeding3$log10max_vol,feeding3$lad_age,feeding3$log10max_vol, col="#00ffd7")
+title(main="Mining")
+abline(v = c(65, 200, 358, 251.2, 443.8), col="black",lty=5)
+meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) {
+  meanVector[i] <- mean(feeding3$log10max_vol[feeding3$fad_age > timescale$age_top[i] & feeding3$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=2.5)
+
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log"[10]," mm"^3*")")))
+segments(feeding4$fad_age,feeding4$log10max_vol,feeding4$lad_age,feeding4$log10max_vol, col="#ee92ed")
+abline(v = c(65, 200, 358,  251.2, 443.8), col="black",lty=5)
+title(main="Grazing")
+meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) {
+  meanVector[i] <- mean(feeding4$log10max_vol[feeding4$fad_age > timescale$age_top[i] & feeding4$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=2.5)
+
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log"[10]," mm"^3*")")))
+segments(feeding5$fad_age,feeding5$log10max_vol,feeding5$lad_age,feeding5$log10max_vol, col="#ff00ff")
+abline(v = c(65, 200, 358, 251.2, 443.8), col="black",lty=5)
+title(main="Predatory")
+meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) {
+  meanVector[i] <- mean(feeding5$log10max_vol[feeding5$fad_age > timescale$age_top[i] & feeding5$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=2.5)
+
+plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log"[10]," mm"^3*")")))
+segments(feeding6$fad_age,feeding6$log10max_vol,feeding6$lad_age,feeding6$log10max_vol, col="#0000ff")
+abline(v = c(65, 200, 358, 251.2, 443.8), col="black",lty=5)
+title(main="Other")
+meanVector <- vector(mode='numeric', length=nrow(timescale))
+for(i in 1:nrow(timescale)) {
+  meanVector[i] <- mean(feeding6$log10max_vol[feeding6$fad_age > timescale$age_top[i] & feeding6$lad_age < timescale$age_bottom[i]]) }
+lines(x=timescale$age_mid,y=meanVector, col="black", lwd=2.5)
+
+
+
