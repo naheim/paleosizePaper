@@ -1,5 +1,5 @@
 ![Image of Cambrian Ecosystem](http://www.dwmiller.net/pics/ediacara.jpg)
-# *Marine Animal Body Size Across the Phanerozoic*
+# *The Ecophysiological Influences on the Body Size of Marine Animal Genera through the Phanerozoic*
 This is the repository that the SEYI: Biodiversity Internship program will use for our analyses and writings on body size evolution.
 
 ## Sections of Paper:
