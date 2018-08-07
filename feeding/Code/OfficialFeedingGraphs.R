@@ -152,6 +152,8 @@ legend(535, .29, legend=c("Feeding Type 1: Suspension", "Feeding Type 2: Deposit
 
 
 #********************Breakdown of Suspension Feeders into Motile & Nonmotile Biovolume - Stratigraphic****************************
+nBins <- nrow(timescale) # a variable of convenience for when the number of stages is used
+
 bodySize$log10max_vol <- log10(bodySize$max_vol)
 suspension <- subset(bodySize, !is.na(feeding) & feeding == 1)
 motile <- subset(suspension, !is.na(motility) & motility != 0)
@@ -161,7 +163,7 @@ time.plot.mult(nrow=1, ncol=1,las=1, top.mar=2.5)
 par(las=1)
 
 plot(1:10,type='n',xlim=c(541,0),xaxt='n',xlab='',ylim=c(-2,12),ylab=expression(paste("Biovolume (log"[10]," mm"^3*")")), font = 3)
-abline(v = c(65, 200, 251.2, 443.8), col="black",lty=5)
+abline(v = c(65, 200, 358, 251.2, 443.8), col="black",lty=5)
 
 segments(suspension$fad_age,suspension$log10max_vol,suspension$lad_age,suspension$log10max_vol, col="#ff5640")
 meanVector <- vector(mode='numeric', length=nrow(timescale))
