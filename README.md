@@ -3,6 +3,7 @@
 This is the repository that the SEYI: Biodiversity Internship program will use for our analyses and writings on body size evolution.
 
 ## Sections of Paper:
+- ***[Abstract](https://docs.google.com/document/d/1MDUCv2TA2581vGZcRmPJDk0expJSdexeuWW4dmC9sd0/edit?usp=sharing)*** (opens in Google Docs)
 
 - ***[Phyla Research](https://github.com/naheim/paleosizePaper/tree/master/phyla)***
 
