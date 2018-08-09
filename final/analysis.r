@@ -12,6 +12,7 @@ setwd(paste(my.root,"/Box Sync/git/paleosizePaper/final",sep=""))
 source("../sharedCode/functions.r")
 
 library(paleoTS)
+library(lme4)
 library(MuMIn)
 
 timescale <- read.delim(file="../rawDataFiles/timescale.txt")
@@ -131,7 +132,7 @@ for(i in 1:nBins) {
 	closedCirc$max[i] <- max(log10(temp$max_vol[!is.na(temp$fluid) & temp$fluid != 'air']))
 	
 	tempData <- subset(sizeData, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i] & !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air))
-	myGlm <- glm(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator, data=tempData, na.action='na.fail')
+	myGlm <- lmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail')
 	modelComb <- dredge(myGlm)
 	avgMod <- model.avg(modelComb, fit=TRUE)
 	ci <- confint(avgMod, full=TRUE)
@@ -178,7 +179,8 @@ lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)
 
 tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) 
 tempData$duration <- tempData$fad_age - tempData$lad_age
-myGlm <- glm(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator, data=tempData, na.action='na.fail')
+myGlm <- lmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail')
+
 modelComb <- dredge(myGlm)
 
 # average across all models, to use only those with, e.g., delta.aicc < 4, add: subset = delta < 4
@@ -206,7 +208,7 @@ segments(1:length(x), y[,1], 1:length(x), y[,2])
 myCol <- rainbow(5)
 time.plot.mult(1, plot.height=5, plot.width=8.5)
 par(pch=16)
-plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")
+plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus), na.rm=TRUE), xaxt="n", xlab="", ylab="coefficient")
 abline(h=0, lty=2)
 for(i in 1:5) {
 	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])
