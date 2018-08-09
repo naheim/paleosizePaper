@@ -1,0 +1,234 @@
+x <- read.delim(file="bodySizes.txt")
+nrow(x)
+head(x)
+source("../sharedCode/functions.r")
+time.plot.mult(1)
+plot(1:10, type="n", xlab="",ylab=epxression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), axat="n", xlim=c(541,0), ylim=c(-2,12))
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), axat="n", xlim=c(541,0), ylim=c(-2,12))
+time.plot.mult(1, pdf.name="allSizes.pdf")
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))
+segments(x$fad_age, log10(x$max_vol), x$lad_age, log105(x$max_vol), col='gray')
+segments(x$fad_age, log10(x$max_vol), x$lad_age, log10(x$max_vol), col='gray')
+dev.off()
+getwd()
+head(x)
+x <- read.delim(file="/Users/noelheim/Box Sync/git/paleosizePaper/rawDataFiles/bodySizes.txt")#
+taxa <- subset(x, fad_age > lad_age & log10(max_vol) >= -2)#
+#
+source("/Users/noelheim/Box Sync/git/paleosizePaper/sharedCode/functions.r")#
+#
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf")#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col='gray')#
+dev.off()
+dev.off()
+x <- read.delim(file="/Users/noelheim/Box Sync/git/paleosizePaper/rawDataFiles/bodySizes.txt")#
+taxa <- subset(x, fad_age > lad_age & log10(max_vol) >= -2)#
+#
+source("/Users/noelheim/Box Sync/git/paleosizePaper/sharedCode/functions.r")#
+#
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf")#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col='gray')#
+dev.off()
+x <- read.delim(file="/Users/noelheim/Box Sync/git/paleosizePaper/rawDataFiles/bodySizes.txt")#
+taxa <- subset(x, fad_age > lad_age & log10(max_vol) >= -2)#
+#
+source("/Users/noelheim/Box Sync/git/paleosizePaper/sharedCode/functions.r")#
+#
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf")#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col='gray')#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", )#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.4,0.4,0.4,0.4))#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", )#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+dev.off()
+timescale <- read.delim(file="/Users/noelheim/Box Sync/git/paleosizePaper/rawDataFiles/timescale.txt")
+nBins <- nrow(timescale)
+source("/Users/noelheim/Box Sync/git/paleosizePaper/sharedCode/functions.r")#
+#
+x <- read.delim(file="/Users/noelheim/Box Sync/git/paleosizePaper/rawDataFiles/bodySizes.txt")#
+timescale <- read.delim(file="/Users/noelheim/Box Sync/git/paleosizePaper/rawDataFiles/timescale.txt")#
+nBins <- nrow(timescale)#
+xPoly <- c(timescale$age_mid, rev(timescale$age_mid))#
+#
+taxa <- subset(x, fad_age > lad_age & log10(max_vol) >= -2)#
+#
+meanSize <- data.fram(matrix(NA, nrow=nBins, ncol=3, dimnames=list(timescale$interval_name, c('mean','ciPlus','ciMinus'))))#
+for(i in 1:nBins) {#
+	temp <- subset(taxa, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	meanSize$mean[i] <- mean(log10(temp$max_vol))#
+	meanSize$ciPlus[i] <- mean(log10(temp$max_vol)) + 1.96*sd(log10(temp$max_vol))#
+	meanSize$ciMinus[i] <- mean(log10(temp$max_vol)) - 1.96*sd(log10(temp$max_vol))#
+}#
+#
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", )#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2))#
+ploygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+lines(timescale$age_mid, meanSize$mean, lwd=2, lty="o")#
+dev.off()
+meanSize <- data.frame(matrix(NA, nrow=nBins, ncol=3, dimnames=list(timescale$interval_name, c('mean','ciPlus','ciMinus'))))#
+for(i in 1:nBins) {#
+	temp <- subset(taxa, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	meanSize$mean[i] <- mean(log10(temp$max_vol))#
+	meanSize$ciPlus[i] <- mean(log10(temp$max_vol)) + 1.96*sd(log10(temp$max_vol))#
+	meanSize$ciMinus[i] <- mean(log10(temp$max_vol)) - 1.96*sd(log10(temp$max_vol))#
+}#
+#
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", )#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2))#
+ploygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+lines(timescale$age_mid, meanSize$mean, lwd=2, lty="o")#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", )#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2))#
+polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+lines(timescale$age_mid, meanSize$mean, lwd=2, lty="o")#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", )#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2))#
+polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+lines(timescale$age_mid, meanSize$mean, lwd=2, type="o")#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", )#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=2, type="o")#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", )#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=2, type="o")#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", )#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=2, type="o")#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", )#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=2, type="o", cex=0.75)#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", plot.width=9)#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=2, type="o", cex=0.75)#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", plot.width=9)#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+axis(side=4, at=seq(-2,12,2), labels=FALSE, cex=1.25)#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=2, type="o", cex=0.75)#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", plot.width=9)#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+axis(side=4, at=seq(-2,12,2), labels=FALSE)#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=2, type="o", cex=0.75)#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", plot.width=9)#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+axis(side=4, at=seq(-2,12,2), labels=FALSE)#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=2.5, type="o", cex=1)#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", plot.width=9)#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+axis(side=4, at=seq(-2,12,2), labels=FALSE)#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=3, type="o", cex=0.75)#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", plot.width=9)#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+axis(side=4, at=seq(-2,12,2), labels=FALSE)#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=3, type="o", cex=0.75, col="#ffa6ec")#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", plot.width=9)#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+axis(side=4, at=seq(-2,12,2), labels=FALSE)#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=4, type="o", cex=1)#
+dev.off()
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", plot.width=9)#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+axis(side=4, at=seq(-2,12,2), labels=FALSE)#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=4, type="o", cex=0.8)#
+dev.off()
+source("/Users/noelheim/Box Sync/git/paleosizePaper/sharedCode/functions.r")#
+#
+x <- read.delim(file="/Users/noelheim/Box Sync/git/paleosizePaper/rawDataFiles/bodySizes.txt")#
+timescale <- read.delim(file="/Users/noelheim/Box Sync/git/paleosizePaper/rawDataFiles/timescale.txt")#
+nBins <- nrow(timescale)#
+xPoly <- c(timescale$age_mid, rev(timescale$age_mid))#
+#
+taxa <- subset(x, fad_age > lad_age & log10(max_vol) >= -2)#
+#
+meanSize <- data.frame(matrix(NA, nrow=nBins, ncol=5, dimnames=list(timescale$interval_name, c('mean','ciPlus','ciMinus','pct05','pct95'))))
+?quantile
+quantile(i)
+i
+temp <- subset(taxa, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])
+quantile(log10(temp$max_vol), 0.05)
+meanSize <- data.frame(matrix(NA, nrow=nBins, ncol=5, dimnames=list(timescale$interval_name, c('mean','ciPlus','ciMinus','pct05','pct95'))))#
+for(i in 1:nBins) {#
+	temp <- subset(taxa, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	meanSize$mean[i] <- mean(log10(temp$max_vol))#
+	meanSize$ciPlus[i] <- mean(log10(temp$max_vol)) + 1.96*sd(log10(temp$max_vol))#
+	meanSize$ciMinus[i] <- mean(log10(temp$max_vol)) - 1.96*sd(log10(temp$max_vol))#
+	meanSize$pct05[i] <- quantile(log10(temp$max_vol), 0.05)#
+	meanSize$pct95[i] <- quantile(log10(temp$max_vol), 0.95)#
+}#
+#
+time.plot.mult(1, pdf.name="/Users/noelheim/Box Sync/Internships/2018/allSizes.pdf", plot.width=12, plot.height=8)#
+par(las=1, pch=16)#
+plot(1:10, type="n", xlab="",ylab=expression(paste("Biovolume (log"[10]," mm"^3,")",sep="")), xaxt="n", xlim=c(541,0), ylim=c(-2,12))#
+axis(side=4, at=seq(-2,12,2), labels=FALSE)#
+#polygon(xPoly, c(meanSize$ciMinus, rev(meanSize$ciPlus)), col="#ffa6ec")#
+segments(taxa$fad_age, log10(taxa$max_vol), taxa$lad_age, log10(taxa$max_vol), col=rgb(0.2,0.2,0.2,0.2))#
+lines(timescale$age_mid, meanSize$mean, lwd=4, type="o", cex=0.8)#
+lines(timescale$age_mid, meanSize$pct05, lwd=2)#
+lines(timescale$age_mid, meanSize$pct95, lwd=2)#
+dev.off()
+q()

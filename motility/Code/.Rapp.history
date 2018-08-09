@@ -1,0 +1,280 @@
+sizeData <- read.delim(file="https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt")#
+timescale <- read.delim(file="https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt")
+n.bins <- nrow(timescale)
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom
+names(my.var) <- timescale$interval_name#
+names(my.n) <- timescale$interval_name#
+names(my.time) <- timescale$interval_name
+motile <- sizeData[(sizeData[,"motility"]==1 | sizeData[,"motility"]==2) & !is.na(sizeData$motility),]
+for(i in 1:n.bins) {#
+temp.data <- log10(motile$max_vol[motile$fad_age > timescale$age_top[i] & motile$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+library(paleoTS)
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+nonmotile <- sizeData[(sizeData[,"motility"]!=1 | sizeData[,"motility"]!=2) & !is.na(sizeData$motility),]#
+#
+for(i in 1:n.bins) {#
+temp.data <- log10(nonmotile$max_vol[motility1$fad_age > timescale$age_top[i] & nonmotile$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+nonmotile <- sizeData[(sizeData[,"motility"]!=1 | sizeData[,"motility"]!=2) & !is.na(sizeData$motility),]#
+#
+for(i in 1:n.bins) {#
+temp.data <- log10(nonmotile$max_vol[nonmotile$fad_age > timescale$age_top[i] & nonmotile$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+library(paleoTS)
+sizeData <- read.delim(file="https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt")#
+timescale <- read.delim(file="https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt")
+n.bins <- nrow(timescale)
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom
+names(my.var) <- timescale$interval_name#
+names(my.n) <- timescale$interval_name#
+names(my.time) <- timescale$interval_name
+motile <- sizeData[(sizeData[,"motility"]==1 | sizeData[,"motility"]==2) & !is.na(sizeData$motility),]
+for(i in 1:n.bins) {#
+temp.data <- log10(motile$max_vol[motile$fad_age > timescale$age_top[i] & motile$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+nonmotile <- sizeData[(sizeData[,"motility"]!=1 | sizeData[,"motility"]!=2) & !is.na(sizeData$motility),]#
+#
+for(i in 1:n.bins) {#
+temp.data <- log10(nonmotile$max_vol[nonmotile$fad_age > timescale$age_top[i] & nonmotile$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+motility1 <- sizeData[sizeData[,"motility"]==1 & !is.na(sizeData$motility),]
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom
+n.bins <- nrow(timescale)
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom
+names(my.var) <- timescale$interval_name#
+names(my.n) <- timescale$interval_name#
+names(my.time) <- timescale$interval_name
+nonmotile <- sizeData[(sizeData[,"motility"]!=1 | sizeData[,"motility"]!=2) & !is.na(sizeData$motility),]
+temp.data <- log10(nonmotile$max_vol[nonmotile$fad_age > timescale$age_top[i] & nonmotile$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+for(i in 1:n.bins) {#
+temp.data <- log10(nonmotile$max_vol[nonmotile$fad_age > timescale$age_top[i] & nonmotile$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+n.bins <- nrow(timescale)#
+#
+#creating empty vectors#
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom
+names(my.var) <- timescale$interval_name#
+names(my.n) <- timescale$interval_name#
+names(my.time) <- timescale$interval_name
+motility1 <- sizeData[sizeData[,"motility"]==1 & !is.na(sizeData$motility),]
+for(i in 1:n.bins) {#
+temp.data <- log10(motility1$max_vol[motility1$fad_age > timescale$age_top[i] & motility1$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+motility2 <- sizeData[sizeData[,"motility"]==2 & !is.na(sizeData$motility),]
+n.bins <- nrow(timescale)#
+#
+#creating empty vectors#
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom #
+#
+names(my.var) <- timescale$interval_name#
+names(my.n) <- timescale$interval_name#
+names(my.time) <- timescale$interval_name
+for(i in 1:n.bins) {#
+temp.data <- log10(motility2$max_vol[motility2$fad_age > timescale$age_top[i] & motility2$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+n.bins <- nrow(timescale)#
+#
+#creating empty vectors#
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom
+names(my.var) <- timescale$interval_name#
+names(my.n) <- timescale$interval_name#
+names(my.time) <- timescale$interval_name
+motility3 <- sizeData[sizeData[,"motility"]==3 & !is.na(sizeData$motility),]
+# for each interval, calculate mean body size for genera with motility level 1#
+for(i in 1:n.bins) {#
+temp.data <- log10(motility3$max_vol[motility3$fad_age > timescale$age_top[i] & motility3$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+n.bins <- nrow(timescale)#
+#
+#creating empty vectors#
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom #
+#
+names(my.var) <- timescale$interval_name#
+names(my.n) <- timescale$interval_name#
+names(my.time) <- timescale$interval_name
+motility4 <- sizeData[sizeData[,"motility"]==4 & !is.na(sizeData$motility),]
+for(i in 1:n.bins) {#
+temp.data <- log10(motility4$max_vol[motility4$fad_age > timescale$age_top[i] & motility4$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}#
+#
+# outputs statistics for 3 models#
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+n.bins <- nrow(timescale)#
+#
+#creating empty vectors#
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom #
+#
+names(my.var) <- timescale$interval_name#
+names(my.n) <- timescale$interval_name#
+names(my.time) <- timescale$interval_name
+motility5 <- sizeData[sizeData[,"motility"]==5 & !is.na(sizeData$motility),]
+for(i in 1:n.bins) {#
+temp.data <- log10(motility5$max_vol[motility5$fad_age > timescale$age_top[i] & motility5$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.mean)], vv=my.var[!is.na(my.mean)], nn=my.n[!is.na(my.mean)], tt=my.time[!is.na(my.mean)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my.n[!is.na(my.var)], tt=my.time[!is.na(my.var)], oldest="last") # check my.ts for NA values and change mean --> var accordingly
+fit3models(my.ts, method="Joint", pool=FALSE)
+motility6 <- sizeData[sizeData[,"motility"]==6 & !is.na(sizeData$motility),]
+for(i in 1:n.bins) {#
+temp.data <- log10(motility6$max_vol[motility6$fad_age > timescale$age_top[i] & motility6$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+n.bins <- nrow(timescale)#
+#
+#creating empty vectors#
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom #
+#
+names(my.var) <- timescale$interval_name#
+names(my.n) <- timescale$interval_name#
+names(my.time) <- timescale$interval_name
+motility6 <- sizeData[sizeData[,"motility"]==6 & !is.na(sizeData$motility),]
+for(i in 1:n.bins) {#
+temp.data <- log10(motility6$max_vol[motility6$fad_age > timescale$age_top[i] & motility6$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my.n[!is.na(my.var)], tt=my.time[!is.na(my.var)], oldest="last") # check my.ts for NA values and change mean --> var accordingly#
+fit3models(my.ts, method="Joint", pool=FALSE)
+n.bins <- nrow(timescale)#
+#
+#creating empty vectors#
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom #
+#
+names(my.var) <- timescale$interval_name#
+names(my.n) <- timescale$interval_name#
+names(my.time) <- timescale$interval_name
+motile <- sizeData[(sizeData[,"motility"]==1 | sizeData[,"motility"]==2) & !is.na(sizeData$motility),]
+for(i in 1:n.bins) {#
+temp.data <- log10(motile$max_vol[motile$fad_age > timescale$age_top[i] & motile$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my.n[!is.na(my.var)], tt=my.time[!is.na(my.var)], oldest="last") # check my.ts for NA values and change mean --> var accordingly
+fit3models(my.ts, method="Joint", pool=FALSE)
+nonmotile <- sizeData[(sizeData[,"motility"]!=1 | sizeData[,"motility"]!=2) & !is.na(sizeData$motility),]
+n.bins <- nrow(timescale)#
+#
+#creating empty vectors#
+my.mean <- vector(mode="numeric", length=n.bins)#
+my.var <- vector(mode="numeric", length=n.bins)#
+my.n <- vector(mode="numeric", length=n.bins)#
+my.time <- timescale$age_bottom #
+#
+names(my.var) <- timescale$interval_name#
+names(my.n) <- timescale$interval_name#
+names(my.time) <- timescale$interval_name
+nonmotile <- sizeData[(sizeData[,"motility"]!=1 | sizeData[,"motility"]!=2) & !is.na(sizeData$motility),]
+for(i in 1:n.bins) {#
+temp.data <- log10(nonmotile$max_vol[nonmotile$fad_age > timescale$age_top[i] & nonmotile$lad_age < timescale$age_bottom[i]])#
+my.mean[i] <- mean(temp.data)#
+my.var[i] <- var(temp.data)#
+my.n[i] <- length(temp.data)#
+}
+my.ts <- as.paleoTS(mm=my.mean[!is.na(my.var)], vv=my.var[!is.na(my.var)], nn=my.n[!is.na(my.var)], tt=my.time[!is.na(my.var)], oldest="last") # check my.ts for NA values and change mean --> var accordingly
+fit3models(my.ts, method="Joint", pool=FALSE)
+sizeData <- read.delim(file="https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt")#
+timescale <- read.delim(file="https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt")
+sizeDataMod <- sizeData[sizeData[,"motility"]!=0 & !is.na(sizeData$motility),]
+sizeDataMod$motile <- 0 #non-motile#
+sizeDataMod$motile[(sizeDataMod[,"motility"]==1 | sizeDataMod[,"motility"]==2) & !is.na(sizeDataMod$motility)] <- 1 #motile#
+sizeDataMod$motile <- factor(sizeDataMod$motile, levels=c(1,0))
+boxplot(log10(sizeDataMod$max_vol)~sizeDataMod$motile,data=sizeDataMod,main = "Body Size vs Motility Boxplot", xlab="Motility Level", ylab="", col=c("blue","red"), names=c("Motile","Nonmotile"),notch=TRUE)#
+title(ylab=expression(paste("Biovolume log"[10],"mm"^3)), line=2.2)
+boxplot(log10(sizeDataMod$max_vol)~sizeDataMod$motility,data=sizeDataMod,main = "Body Size vs Motility Level Boxplot", xlab="Motility Level", ylab="", col=c("darkorange", "dodgerblue","yellow", "forestgreen", "red", "purple"),notch=TRUE)#
+title(ylab=expression(paste("Biovolume log"[10],"mm"^3)), line=2.2)

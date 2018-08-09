@@ -14,10 +14,10 @@ source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions
 library(paleoTS)
 library(MuMIn)
 
-timescale <- read.delim(file="https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/timescale.txt")
+timescale <- read.delim(file="../rawDataFiles/timescale.txt")
 nBins <- nrow(timescale)
 
-sizeData <- read.delim(file="https://raw.githubusercontent.com/naheim/paleosizePaper/master/rawDataFiles/bodySizes.txt")
+sizeData <- read.delim(file="../rawDataFiles/bodySizes.txt")
 sizeData$tiering[sizeData$tiering == 0] <- NA
 sizeData$motility[sizeData$motility == 0] <- NA
 sizeData$feeding[sizeData$feeding == 0] <- NA
