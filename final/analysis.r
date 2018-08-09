@@ -9,7 +9,7 @@ Sys.setenv(TZ="America/Los_Angeles")
 t0 <- Sys.time()
 setwd(paste(my.root,"/Box Sync/git/paleosizePaper/final",sep=""))
 
-source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")
+source("../sharedCode/functions.r")
 
 library(paleoTS)
 library(MuMIn)
@@ -59,7 +59,7 @@ sizeData$ecoMode[grepl('NA', sizeData$ecoMode)] <- NA
 sizeData$ecoMode <- factor(sizeData$ecoMode)
 table(sizeData$ecoMode)
 
-open000 <- data.frame(matrix(NA, nrow=nBins, ncol=4, dimnames=list(timescale$interval_name, c('n','mean','ciMinus','ciPlus','max'))))
+open000 <- data.frame(matrix(NA, nrow=nBins, ncol=5, dimnames=list(timescale$interval_name, c('n','mean','ciMinus','ciPlus','max'))))
 closed111 <- open000
 otherPhysio <- open000
 eco000 <- open000
@@ -67,6 +67,11 @@ eco111 <- open000
 otherEco <- open000
 openCirc <- open000
 closedCirc <- open000
+
+regCoef <- data.frame(matrix(NA, nrow=nBins, ncol=5, dimnames=list(timescale$interval_name, c('air','closedCirc','motile','pelagic','predator'))))
+regCiMinus <- regCoef
+regCiPlus <- regCoef
+
 overallMean <- vector(mode="numeric", length=nBins)
 for(i in 1:nBins) {
 	temp <- subset(sizeData, !is.na(fluid) & fluid != 'air' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])
@@ -124,6 +129,15 @@ for(i in 1:nBins) {
 	closedCirc$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))
 	closedCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))
 	closedCirc$max[i] <- max(log10(temp$max_vol[!is.na(temp$fluid) & temp$fluid != 'air']))
+	
+	tempData <- subset(sizeData, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i] & !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air))
+	myGlm <- glm(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator, data=tempData, na.action='na.fail')
+	modelComb <- dredge(myGlm)
+	avgMod <- model.avg(modelComb, fit=TRUE)
+	ci <- confint(avgMod, full=TRUE)
+	regCoef[i,] <- avgMod$coefficients[1,match(colnames(regCoef), names(avgMod$coefficients[1,]))]
+	regCiMinus[i,] <- ci[match(colnames(regCiMinus), names(avgMod$coefficients[1,])),1]
+	regCiPlus[i,] <- ci[match(colnames(regCiPlus), names(avgMod$coefficients[1,])),2]
 }
 
 
@@ -163,7 +177,8 @@ lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)
 
 
 tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) 
-myGlm <- glm(log10(max_vol) ~ closedCirc + motile + predator + pelagic + air, data=tempData, na.action='na.fail')
+tempData$duration <- tempData$fad_age - tempData$lad_age
+myGlm <- glm(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator, data=tempData, na.action='na.fail')
 modelComb <- dredge(myGlm)
 
 # average across all models, to use only those with, e.g., delta.aicc < 4, add: subset = delta < 4
@@ -188,9 +203,16 @@ segments(1:length(x), y[,1], 1:length(x), y[,2])
 
 
 
-
-
-
+myCol <- rainbow(5)
+time.plot.mult(1, plot.height=5, plot.width=8.5)
+par(pch=16)
+plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")
+abline(h=0, lty=2)
+for(i in 1:5) {
+	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])
+	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCol[i])
+}
+legend("topleft", legend=colnames(regCoef), lty=1, col=myCol, bty="n", pch=16)
 
 
 
