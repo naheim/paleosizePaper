@@ -1,4 +1,3 @@
-# set root base for proper file direction#
 init.dir <- getwd()#
 if(is.element(Sys.info()["nodename"], c("es-naheim.local","sr12-cf96e71ca1.stanford.edu"))) {#
 	my.root <- "/Volumes/Blastoid/noelheim_data"#
@@ -6,688 +5,548 @@ if(is.element(Sys.info()["nodename"], c("es-naheim.local","sr12-cf96e71ca1.stanf
 	my.root <- "/Users/noelheim"#
 }#
 Sys.setenv(TZ="America/Los_Angeles")#
-t0 <- Sys.time()#
-setwd(paste(my.root,"/Box Sync/git/paleosizePaper/final",sep=""))#
+source(paste(my.root,"/Box Sync/Includes/myFunctions.r", sep=""));#
 #
-source("https://github.com/naheim/paleosizePaper/raw/master/sharedCode/functions.r")#
+setwd(paste(my.root,"/Box Sync/Size Collection/Odonata", sep=""));#
 #
-library(paleoTS)#
-library(MuMIn)#
+library(openxlsx)#
+library(jsonlite)#
 #
-timescale <- read.delim(file="../rawDataFiles/timescale.txt")#
-nBins <- nrow(timescale)#
-#
-sizeData <- read.delim(file="../rawDataFiles/bodySizes.txt")#
-sizeData$tiering[sizeData$tiering == 0] <- NA#
-sizeData$motility[sizeData$motility == 0] <- NA#
-sizeData$feeding[sizeData$feeding == 0] <- NA#
-#
-# binary motile#
-sizeData$motile <- NA#
-sizeData$motile[!is.na(sizeData$motility) & sizeData$motility <= 2] <- 1#
-sizeData$motile[!is.na(sizeData$motility) & sizeData$motility > 2] <- 0#
-#
-# binary pelagic#
-sizeData$pelagic <- NA#
-sizeData$pelagic[!is.na(sizeData$tiering) & sizeData$tiering == 1] <- 1#
-sizeData$pelagic[!is.na(sizeData$tiering) & sizeData$tiering > 1] <- 0#
-#
-# binary predator#
-sizeData$predator <- NA#
-sizeData$predator[!is.na(sizeData$feeding) & sizeData$feeding == 5] <- 1#
-sizeData$predator[!is.na(sizeData$feeding) & sizeData$feeding != 5] <- 0#
-#
-# binary circulation#
-sizeData$closedCirc <- NA#
-sizeData$closedCirc[!is.na(sizeData$circ) & sizeData$circ == 'open'] <- 0#
-sizeData$closedCirc[!is.na(sizeData$circ) & sizeData$circ == 'closed'] <- 1#
-#
-# binary air#
-sizeData$air <- NA#
-sizeData$air[!is.na(sizeData$fluid) & sizeData$fluid == 'water'] <- 0#
-sizeData$air[!is.na(sizeData$fluid) & sizeData$fluid == 'air'] <- 1#
-sizeData$physioMode <- paste(sizeData$circ, sizeData$motile, sizeData$pelagic, sizeData$predator, sep="")#
-sizeData$physioMode[grepl('NA', sizeData$physioMode)] <- NA#
-sizeData$physioMode[!is.na(sizeData$physioMode) & !grepl('open', sizeData$physioMode) & !grepl('closed', sizeData$physioMode)] <- NA#
-sizeData$physioMode <- factor(sizeData$physioMode)#
-table(sizeData$physioMode)#
-#
-sizeData$ecoMode <- paste(sizeData$motile, sizeData$pelagic, sizeData$predator, sep="")#
-sizeData$ecoMode[grepl('NA', sizeData$ecoMode)] <- NA#
-sizeData$ecoMode <- factor(sizeData$ecoMode)#
-table(sizeData$ecoMode)#
-#
-open000 <- data.frame(matrix(NA, nrow=nBins, ncol=4, dimnames=list(timescale$interval_name, c('n','mean','ciMinus','ciPlus','max'))))#
-closed111 <- open000#
-otherPhysio <- open000#
-eco000 <- open000#
-eco111 <- open000#
-otherEco <- open000#
-openCirc <- open000#
-closedCirc <- open000#
-overallMean <- vector(mode="numeric", length=nBins)#
-for(i in 1:nBins) {#
-	temp <- subset(sizeData, !is.na(fluid) & fluid != 'air' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	overallMean[i] <- mean(log10(temp$max_vol))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode == 'open000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	open000$n <- nrow(temp)#
-	open000$mean[i] <- mean(log10(temp$max_vol))#
-	open000$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	open000$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode == 'closed111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	closed111$n <- nrow(temp)#
-	closed111$mean[i] <- mean(log10(temp$max_vol))#
-	closed111$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	closed111$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode != 'closed111' & physioMode != 'open000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	otherPhysio$n <- nrow(temp)#
-	otherPhysio$mean[i] <- mean(log10(temp$max_vol))#
-	otherPhysio$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	otherPhysio$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode == '000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	eco000$n <- nrow(temp)#
-	eco000$mean[i] <- mean(log10(temp$max_vol))#
-	eco000$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	eco000$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode == '111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	eco111$n <- nrow(temp)#
-	eco111$mean[i] <- mean(log10(temp$max_vol))#
-	eco111$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	eco111$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode != '000' & ecoMode != '111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	otherEco$n <- nrow(temp)#
-	otherEco$mean[i] <- mean(log10(temp$max_vol))#
-	otherEco$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	otherEco$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(circ) & circ == 'open' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	openCirc$n <- nrow(temp)#
-	openCirc$mean[i] <- mean(log10(temp$max_vol))#
-	openCirc$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	openCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(circ) & circ == 'closed' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	closedCirc$n <- nrow(temp)#
-	closedCirc$mean[i] <- mean(log10(temp$max_vol))#
-	closedCirc$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	closedCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	closedCirc$max[i] <- max(log10(temp$max_vol[!is.na(temp$fluid) & temp$fluid != 'air']))#
-}#
-quartz(height=5, width=16)#
-par(pch=16, mfrow=c(1,3))#
-plot(1:10, type="n", xlim=c(541,0), ylim=c(1,8))#
-lines(timescale$age_mid, eco000$mean, type="o", col='blue', lwd=2)#
-lines(timescale$age_mid, eco111$mean, type="o", col='red', lwd=2)#
-lines(timescale$age_mid, otherEco$mean, type="o", col='black', lwd=2)#
-#
-plot(1:10, type="n", xlim=c(541,0), ylim=c(1,8))#
-lines(timescale$age_mid, open000$mean, type="o", col='blue', lwd=2)#
-lines(timescale$age_mid, closed111$mean, type="o", col='red', lwd=2)#
-lines(timescale$age_mid, otherPhysio$mean, type="o", col='black', lwd=2)#
-#
-plot(1:10, type="n", xlim=c(541,0), ylim=c(1,8))#
-lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
-lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)#
-lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)#
-quartz(height=5, width=16)#
-par(pch=16, mfrow=c(1,2))#
-plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
-temp <- subset(sizeData, !is.na(fluid) & fluid != 'air')#
-segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
-lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)#
-lines(timescale$age_mid, closedCirc$max, type="o", col='red', lwd=2)#
-#
-plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
-#lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
-temp <- subset(sizeData, !is.na(circ) & circ == 'closed')#
-segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
-lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)#
-tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) #
-myGlm <- glm(log10(max_vol) ~ closedCirc + motile + predator + pelagic + air + fad_age, data=tempData, na.action='na.fail')#
-modelComb <- dredge(myGlm)#
-#
-# average across all models, to use only those with, e.g., delta.aicc < 4, add: subset = delta < 4#
-# in output, full is averaging across all models for all coefficients, subset is the avg for each parameter where the value is > 0#
-avgMod <- model.avg(modelComb, fit=TRUE)#
-#
-avgMod#
-#
-# get the confidence intervals on coefficients#
-ci <- confint(avgMod, full=TRUE)#
-#
-x <- avgMod$coefficients[1,-1]#
-y <- ci[-1,]#
-#
-quartz()#
-par(pch=16, las=1)#
-plot(x, ylim=range(y), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:length(x), labels=rownames(y))#
-abline(h=0, lty=2)#
-segments(1:length(x), y[,1], 1:length(x), y[,2])
-source("../sharedCode/functions.r")
-# set root base for proper file direction#
-init.dir <- getwd()#
-if(is.element(Sys.info()["nodename"], c("es-naheim.local","sr12-cf96e71ca1.stanford.edu"))) {#
-	my.root <- "/Volumes/Blastoid/noelheim_data"#
-} else {#
-	my.root <- "/Users/noelheim"#
-}#
-Sys.setenv(TZ="America/Los_Angeles")#
-t0 <- Sys.time()#
-setwd(paste(my.root,"/Box Sync/git/paleosizePaper/final",sep=""))#
-#
-source("../sharedCode/functions.r")#
-#
-library(paleoTS)#
-library(MuMIn)#
-#
-timescale <- read.delim(file="../rawDataFiles/timescale.txt")#
-nBins <- nrow(timescale)#
-#
-sizeData <- read.delim(file="../rawDataFiles/bodySizes.txt")#
-sizeData$tiering[sizeData$tiering == 0] <- NA#
-sizeData$motility[sizeData$motility == 0] <- NA#
-sizeData$feeding[sizeData$feeding == 0] <- NA#
-#
-# binary motile#
-sizeData$motile <- NA#
-sizeData$motile[!is.na(sizeData$motility) & sizeData$motility <= 2] <- 1#
-sizeData$motile[!is.na(sizeData$motility) & sizeData$motility > 2] <- 0#
-#
-# binary pelagic#
-sizeData$pelagic <- NA#
-sizeData$pelagic[!is.na(sizeData$tiering) & sizeData$tiering == 1] <- 1#
-sizeData$pelagic[!is.na(sizeData$tiering) & sizeData$tiering > 1] <- 0#
-#
-# binary predator#
-sizeData$predator <- NA#
-sizeData$predator[!is.na(sizeData$feeding) & sizeData$feeding == 5] <- 1#
-sizeData$predator[!is.na(sizeData$feeding) & sizeData$feeding != 5] <- 0#
-#
-# binary circulation#
-sizeData$closedCirc <- NA#
-sizeData$closedCirc[!is.na(sizeData$circ) & sizeData$circ == 'open'] <- 0#
-sizeData$closedCirc[!is.na(sizeData$circ) & sizeData$circ == 'closed'] <- 1#
-#
-# binary air#
-sizeData$air <- NA#
-sizeData$air[!is.na(sizeData$fluid) & sizeData$fluid == 'water'] <- 0#
-sizeData$air[!is.na(sizeData$fluid) & sizeData$fluid == 'air'] <- 1#
-sizeData$physioMode <- paste(sizeData$circ, sizeData$motile, sizeData$pelagic, sizeData$predator, sep="")#
-sizeData$physioMode[grepl('NA', sizeData$physioMode)] <- NA#
-sizeData$physioMode[!is.na(sizeData$physioMode) & !grepl('open', sizeData$physioMode) & !grepl('closed', sizeData$physioMode)] <- NA#
-sizeData$physioMode <- factor(sizeData$physioMode)#
-table(sizeData$physioMode)#
-#
-sizeData$ecoMode <- paste(sizeData$motile, sizeData$pelagic, sizeData$predator, sep="")#
-sizeData$ecoMode[grepl('NA', sizeData$ecoMode)] <- NA#
-sizeData$ecoMode <- factor(sizeData$ecoMode)#
-table(sizeData$ecoMode)#
-#
-open000 <- data.frame(matrix(NA, nrow=nBins, ncol=5, dimnames=list(timescale$interval_name, c('n','mean','ciMinus','ciPlus','max'))))#
-closed111 <- open000#
-otherPhysio <- open000#
-eco000 <- open000#
-eco111 <- open000#
-otherEco <- open000#
-openCirc <- open000#
-closedCirc <- open000#
-overallMean <- vector(mode="numeric", length=nBins)#
-for(i in 1:nBins) {#
-	temp <- subset(sizeData, !is.na(fluid) & fluid != 'air' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	overallMean[i] <- mean(log10(temp$max_vol))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode == 'open000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	open000$n <- nrow(temp)#
-	open000$mean[i] <- mean(log10(temp$max_vol))#
-	open000$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	open000$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode == 'closed111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	closed111$n <- nrow(temp)#
-	closed111$mean[i] <- mean(log10(temp$max_vol))#
-	closed111$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	closed111$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode != 'closed111' & physioMode != 'open000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	otherPhysio$n <- nrow(temp)#
-	otherPhysio$mean[i] <- mean(log10(temp$max_vol))#
-	otherPhysio$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	otherPhysio$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode == '000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	eco000$n <- nrow(temp)#
-	eco000$mean[i] <- mean(log10(temp$max_vol))#
-	eco000$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	eco000$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode == '111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	eco111$n <- nrow(temp)#
-	eco111$mean[i] <- mean(log10(temp$max_vol))#
-	eco111$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	eco111$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode != '000' & ecoMode != '111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	otherEco$n <- nrow(temp)#
-	otherEco$mean[i] <- mean(log10(temp$max_vol))#
-	otherEco$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	otherEco$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(circ) & circ == 'open' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	openCirc$n <- nrow(temp)#
-	openCirc$mean[i] <- mean(log10(temp$max_vol))#
-	openCirc$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	openCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(circ) & circ == 'closed' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	closedCirc$n <- nrow(temp)#
-	closedCirc$mean[i] <- mean(log10(temp$max_vol))#
-	closedCirc$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	closedCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	closedCirc$max[i] <- max(log10(temp$max_vol[!is.na(temp$fluid) & temp$fluid != 'air']))#
-}#
-quartz(height=5, width=16)#
-par(pch=16, mfrow=c(1,3))#
-plot(1:10, type="n", xlim=c(541,0), ylim=c(1,8))#
-lines(timescale$age_mid, eco000$mean, type="o", col='blue', lwd=2)#
-lines(timescale$age_mid, eco111$mean, type="o", col='red', lwd=2)#
-lines(timescale$age_mid, otherEco$mean, type="o", col='black', lwd=2)#
-#
-plot(1:10, type="n", xlim=c(541,0), ylim=c(1,8))#
-lines(timescale$age_mid, open000$mean, type="o", col='blue', lwd=2)#
-lines(timescale$age_mid, closed111$mean, type="o", col='red', lwd=2)#
-lines(timescale$age_mid, otherPhysio$mean, type="o", col='black', lwd=2)#
-#
-plot(1:10, type="n", xlim=c(541,0), ylim=c(1,8))#
-lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
-lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)#
-lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)#
-quartz(height=5, width=16)#
-par(pch=16, mfrow=c(1,2))#
-plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
-temp <- subset(sizeData, !is.na(fluid) & fluid != 'air')#
-segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
-lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)#
-lines(timescale$age_mid, closedCirc$max, type="o", col='red', lwd=2)#
-#
-plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
-#lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
-temp <- subset(sizeData, !is.na(circ) & circ == 'closed')#
-segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
-lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)#
-tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) #
-myGlm <- glm(log10(max_vol) ~ closedCirc + motile + predator + pelagic + air + fad_age, data=tempData, na.action='na.fail')#
-modelComb <- dredge(myGlm)#
-#
-# average across all models, to use only those with, e.g., delta.aicc < 4, add: subset = delta < 4#
-# in output, full is averaging across all models for all coefficients, subset is the avg for each parameter where the value is > 0#
-avgMod <- model.avg(modelComb, fit=TRUE)#
-#
-avgMod#
-#
-# get the confidence intervals on coefficients#
-ci <- confint(avgMod, full=TRUE)#
-#
-x <- avgMod$coefficients[1,-1]#
-y <- ci[-1,]#
-#
-quartz()#
-par(pch=16, las=1)#
-plot(x, ylim=range(y), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:length(x), labels=rownames(y))#
-abline(h=0, lty=2)#
-segments(1:length(x), y[,1], 1:length(x), y[,2])
-quartz()#
-par(pch=16, las=1)#
-plot(x, ylim=range(y), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:length(x), labels=rownames(y))#
-abline(h=0, lty=2)#
-segments(1:length(x), y[,1], 1:length(x), y[,2])
-tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) #
-myGlm <- glm(log10(max_vol) ~ closedCirc + motile + predator + pelagic + air, data=tempData, na.action='na.fail')#
-modelComb <- dredge(myGlm)#
-#
-# average across all models, to use only those with, e.g., delta.aicc < 4, add: subset = delta < 4#
-# in output, full is averaging across all models for all coefficients, subset is the avg for each parameter where the value is > 0#
-avgMod <- model.avg(modelComb, fit=TRUE)#
-#
-avgMod#
-#
-# get the confidence intervals on coefficients#
-ci <- confint(avgMod, full=TRUE)#
-#
-x <- avgMod$coefficients[1,-1]#
-y <- ci[-1,]#
-#
-quartz()#
-par(pch=16, las=1)#
-plot(x, ylim=range(y), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:length(x), labels=rownames(y))#
-abline(h=0, lty=2)#
-segments(1:length(x), y[,1], 1:length(x), y[,2])
-tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) #
-myGlm <- glm(log10(max_vol) ~ closedCirc + motile + predator + pelagic + air + fad_age-lad_age, data=tempData, na.action='na.fail')#
-modelComb <- dredge(myGlm)#
-#
-# average across all models, to use only those with, e.g., delta.aicc < 4, add: subset = delta < 4#
-# in output, full is averaging across all models for all coefficients, subset is the avg for each parameter where the value is > 0#
-avgMod <- model.avg(modelComb, fit=TRUE)#
-#
-avgMod#
-#
-# get the confidence intervals on coefficients#
-ci <- confint(avgMod, full=TRUE)#
-#
-x <- avgMod$coefficients[1,-1]#
-y <- ci[-1,]#
-#
-quartz()#
-par(pch=16, las=1)#
-plot(x, ylim=range(y), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:length(x), labels=rownames(y))#
-abline(h=0, lty=2)#
-segments(1:length(x), y[,1], 1:length(x), y[,2])
-tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) #
-tempData$duration <- tempDuration$fad_age - tempDuration$lad_age#
-myGlm <- glm(log10(max_vol) ~ closedCirc + motile + predator + pelagic + air + duration, data=tempData, na.action='na.fail')#
-modelComb <- dredge(myGlm)#
-#
-# average across all models, to use only those with, e.g., delta.aicc < 4, add: subset = delta < 4#
-# in output, full is averaging across all models for all coefficients, subset is the avg for each parameter where the value is > 0#
-avgMod <- model.avg(modelComb, fit=TRUE)#
-#
-avgMod#
-#
-# get the confidence intervals on coefficients#
-ci <- confint(avgMod, full=TRUE)#
-#
-x <- avgMod$coefficients[1,-1]#
-y <- ci[-1,]#
-#
-quartz()#
-par(pch=16, las=1)#
-plot(x, ylim=range(y), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:length(x), labels=rownames(y))#
-abline(h=0, lty=2)#
-segments(1:length(x), y[,1], 1:length(x), y[,2])
-tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) #
-tempData$duration <- tempDuration$fad_age - tempDuration$lad_age
-tempData$duration <- tempData$fad_age - tempData$lad_age
-tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) #
-tempData$duration <- tempData$fad_age - tempData$lad_age#
-myGlm <- glm(log10(max_vol) ~ closedCirc + motile + predator + pelagic + air + duration, data=tempData, na.action='na.fail')#
-modelComb <- dredge(myGlm)#
-#
-# average across all models, to use only those with, e.g., delta.aicc < 4, add: subset = delta < 4#
-# in output, full is averaging across all models for all coefficients, subset is the avg for each parameter where the value is > 0#
-avgMod <- model.avg(modelComb, fit=TRUE)#
-#
-avgMod#
-#
-# get the confidence intervals on coefficients#
-ci <- confint(avgMod, full=TRUE)#
-#
-x <- avgMod$coefficients[1,-1]#
-y <- ci[-1,]#
-#
-quartz()#
-par(pch=16, las=1)#
-plot(x, ylim=range(y), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:length(x), labels=rownames(y))#
-abline(h=0, lty=2)#
-segments(1:length(x), y[,1], 1:length(x), y[,2])
-myGlm
-x
-regCoef <- data.frame(matrix(NA, nrow=nBins, ncol=5, dimnames=list(timescale$interval_name, c('air','closedCirc','motile','pelagic','predator'))))#
-regCiMinus <- regCoef#
-regCiPlus <- regCoef#
-#
-overallMean <- vector(mode="numeric", length=nBins)#
-for(i in 1:nBins) {#
-	temp <- subset(sizeData, !is.na(fluid) & fluid != 'air' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	overallMean[i] <- mean(log10(temp$max_vol))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode == 'open000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	open000$n <- nrow(temp)#
-	open000$mean[i] <- mean(log10(temp$max_vol))#
-	open000$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	open000$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode == 'closed111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	closed111$n <- nrow(temp)#
-	closed111$mean[i] <- mean(log10(temp$max_vol))#
-	closed111$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	closed111$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode != 'closed111' & physioMode != 'open000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	otherPhysio$n <- nrow(temp)#
-	otherPhysio$mean[i] <- mean(log10(temp$max_vol))#
-	otherPhysio$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	otherPhysio$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode == '000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	eco000$n <- nrow(temp)#
-	eco000$mean[i] <- mean(log10(temp$max_vol))#
-	eco000$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	eco000$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode == '111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	eco111$n <- nrow(temp)#
-	eco111$mean[i] <- mean(log10(temp$max_vol))#
-	eco111$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	eco111$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode != '000' & ecoMode != '111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	otherEco$n <- nrow(temp)#
-	otherEco$mean[i] <- mean(log10(temp$max_vol))#
-	otherEco$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	otherEco$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(circ) & circ == 'open' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	openCirc$n <- nrow(temp)#
-	openCirc$mean[i] <- mean(log10(temp$max_vol))#
-	openCirc$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	openCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(circ) & circ == 'closed' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	closedCirc$n <- nrow(temp)#
-	closedCirc$mean[i] <- mean(log10(temp$max_vol))#
-	closedCirc$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	closedCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	closedCirc$max[i] <- max(log10(temp$max_vol[!is.na(temp$fluid) & temp$fluid != 'air']))#
-	tempData <- subset(sizeData, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i] & !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air))#
-	myGlm <- glm(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator, data=tempData, na.action='na.fail')#
-	modelComb <- dredge(myGlm)#
-	avgMod <- model.avg(modelComb, fit=TRUE)#
-	ci <- confint(avgMod, full=TRUE)#
-	regCoef[i,] <- avgMod$coefficients[1,-1]#
-	regCiMinus[i,] <- ci[-1,1]#
-	regCiPlus[i,] <- ci[-1,2]#
+firstup <- function(x) {#
+   substr(x, 1, 1) <- toupper(substr(x, 1, 1))#
+	x#
 }
-regCoef
-regPlus
-regCiPlus
-avgMod
-avgMod$coefficients[1,-1]
-avgMod$coefficients[1,]
-colnames(avgMod$coefficients[1,])
-names(avgMod$coefficients[1,])
-names(avgMod$coefficients[1,match(names(avgMod$coefficients[1,]), colnames(regCoef))])
-names(avgMod$coefficients[1,match(colnames(regCoef), names(avgMod$coefficients[1,]))])
-avgMod$coefficients[1,match(colnames(regCoef), names(avgMod$coefficients[1,]))]
-ci[match(colnames(regCoef), names(avgMod$coefficients[1,])),1]
-regCoef <- data.frame(matrix(NA, nrow=nBins, ncol=5, dimnames=list(timescale$interval_name, c('air','closedCirc','motile','pelagic','predator'))))#
-regCiMinus <- regCoef#
-regCiPlus <- regCoef#
-#
-overallMean <- vector(mode="numeric", length=nBins)#
-for(i in 1:nBins) {#
-	temp <- subset(sizeData, !is.na(fluid) & fluid != 'air' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	overallMean[i] <- mean(log10(temp$max_vol))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode == 'open000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	open000$n <- nrow(temp)#
-	open000$mean[i] <- mean(log10(temp$max_vol))#
-	open000$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	open000$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode == 'closed111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	closed111$n <- nrow(temp)#
-	closed111$mean[i] <- mean(log10(temp$max_vol))#
-	closed111$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	closed111$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(physioMode) & physioMode != 'closed111' & physioMode != 'open000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	otherPhysio$n <- nrow(temp)#
-	otherPhysio$mean[i] <- mean(log10(temp$max_vol))#
-	otherPhysio$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	otherPhysio$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode == '000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	eco000$n <- nrow(temp)#
-	eco000$mean[i] <- mean(log10(temp$max_vol))#
-	eco000$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	eco000$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode == '111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	eco111$n <- nrow(temp)#
-	eco111$mean[i] <- mean(log10(temp$max_vol))#
-	eco111$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	eco111$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode != '000' & ecoMode != '111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	otherEco$n <- nrow(temp)#
-	otherEco$mean[i] <- mean(log10(temp$max_vol))#
-	otherEco$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	otherEco$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(circ) & circ == 'open' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	openCirc$n <- nrow(temp)#
-	openCirc$mean[i] <- mean(log10(temp$max_vol))#
-	openCirc$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	openCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	temp <- subset(sizeData, !is.na(circ) & circ == 'closed' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
-	closedCirc$n <- nrow(temp)#
-	closedCirc$mean[i] <- mean(log10(temp$max_vol))#
-	closedCirc$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
-	closedCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
-	closedCirc$max[i] <- max(log10(temp$max_vol[!is.na(temp$fluid) & temp$fluid != 'air']))#
-	tempData <- subset(sizeData, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i] & !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air))#
-	myGlm <- glm(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator, data=tempData, na.action='na.fail')#
-	modelComb <- dredge(myGlm)#
-	avgMod <- model.avg(modelComb, fit=TRUE)#
-	ci <- confint(avgMod, full=TRUE)#
-	regCoef[i,] <- avgMod$coefficients[1,match(colnames(regCoef), names(avgMod$coefficients[1,]))]#
-	regCiMinus[i,] <- ci[match(colnames(regCiMinus), names(avgMod$coefficients[1,])),1]#
-	regCiPlus[i,] <- ci[match(colnames(regCiPlus), names(avgMod$coefficients[1,])),2]#
-}
-range(rbind(regCiMinus,regCiPlus))
-regCoef
-quartz(height=7, width=10)#
-par(pch=16)#
-myCol <- rainbow(5)#
-plot(1:5, type="n", ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:5, labels=colnames(regCoef))#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(1:5,  regCoef[,i], type="o", col=myCOls[i])#
-	segments(1:5, regCiMinus[,i], 1:5, regCiPlus[,i], col=myCOls[i])#
-}#
-legend("top;eft", legend=colnames(regCoef), lty=1, col=myCols, bty="n")
-quartz(height=7, width=10)#
-par(pch=16)#
-myCol <- rainbow(5)#
-plot(1:5, type="n", ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:5, labels=colnames(regCoef))#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(timescale$age_mid,  regCoef[,i], type="o", col=myCOls[i])#
-	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCOls[i])#
-}#
-legend("top;eft", legend=colnames(regCoef), lty=1, col=myCols, bty="n")
-quartz(height=7, width=10)#
-par(pch=16)#
-myCol <- rainbow(5)#
-plot(1:5, type="n", ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:5, labels=colnames(regCoef))#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])#
-	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCol[i])#
-}#
-legend("top;eft", legend=colnames(regCoef), lty=1, col=myCols, bty="n")
-quartz(height=7, width=10)#
-par(pch=16)#
-myCol <- rainbow(5)#
-plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:5, labels=colnames(regCoef))#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])#
-	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCol[i])#
-}#
-legend("top;eft", legend=colnames(regCoef), lty=1, col=myCols, bty="n")
-quartz(height=7, width=10)#
-par(pch=16)#
-myCol <- rainbow(5)#
-plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:5, labels=colnames(regCoef))#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])#
-	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCol[i])#
-}#
-legend("topleft", legend=colnames(regCoef), lty=1, col=myCols, bty="n")
-quartz(height=7, width=10)#
-par(pch=16)#
-myCol <- rainbow(5)#
-plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:5, labels=colnames(regCoef))#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])#
-	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCol[i])#
-}#
-legend("topleft", legend=colnames(regCoef), lty=1, col=myCol, bty="n")
-myCol <- rainbow(5)#
-time.plot.mult(1, plot.height=6, plot.width=8)#
-par(pch=16)#
-plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:5, labels=colnames(regCoef))#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])#
-	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCol[i])#
-}#
-legend("topleft", legend=colnames(regCoef), lty=1, col=myCol, bty="n")
-myCol <- rainbow(5)#
-time.plot.mult(1, plot.height=5, plot.width=8.5)#
-par(pch=16)#
-plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:5, labels=colnames(regCoef))#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])#
-	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCol[i])#
-}#
-legend("topleft", legend=colnames(regCoef), lty=1, col=myCol, bty="n")
-myCol <- rainbow(5)#
-time.plot.mult(1, plot.height=5, plot.width=8.5)#
-par(pch=16)#
-plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])#
-	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCol[i])#
-}#
-legend("topleft", legend=colnames(regCoef), lty=1, col=myCol, bty="n")
+threats <- read.delim(file="../Niza/threatsIUCN.txt")
 getwd()
-myCol <- rainbow(5)#
-time.plot.mult(1, plot.height=5, plot.width=8.5)#
-par(pch=16)#
-plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])#
-	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCol[i])#
+threats <- read.delim(file="Niza/threatsIUCN.txt")
+head(threats)
+levels(threats$criteria)
+init.dir <- getwd()#
+if(is.element(Sys.info()["nodename"], c("es-naheim.local","sr12-cf96e71ca1.stanford.edu"))) {#
+	my.root <- "/Volumes/Blastoid/noelheim_data"#
+} else {#
+	my.root <- "/Users/noelheim"#
 }#
-legend("topleft", legend=colnames(regCoef), lty=1, col=myCol, bty="n", pch=16)
-head(sizeData)
-tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) #
-tempData$duration <- tempData$fad_age - tempData$lad_age#
-myGlm <- glmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail')#
-#complete <- glmer(threatStatus ~ numHabs + log.geo + logit + log.maxHw + (1 | family_name), data=iucnScale, family = "binomial", control=glmerControl(optimizer="bobyqa"), na.action = na.fail)
-library(lme4)
-tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) #
-tempData$duration <- tempData$fad_age - tempData$lad_age#
-myGlm <- glmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail')#
-#complete <- glmer(threatStatus ~ numHabs + log.geo + logit + log.maxHw + (1 | family_name), data=iucnScale, family = "binomial", control=glmerControl(optimizer="bobyqa"), na.action = na.fail)
-myGlm <- glmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail', family = "gausian")
-myGlm <- glmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail', family = "gaussian")
-myGlm <- lmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail', family = "gaussian")
-?lmer
-myGlm <- lmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail', family = "gaussian", control=lmerControl(optimizer="bobyqa"))
-myGlm <- lmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail', family = "gaussian", control=glmerControl(optimizer="bobyqa"))
-?lmer
-myGlm <- lmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail')
-myGlm
-myGlm <- lmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | phylum), data=tempData, na.action='na.fail')
-myGlm
+Sys.setenv(TZ="America/Los_Angeles")#
+source(paste(my.root,"/Box Sync/Includes/myFunctions.r", sep=""));#
+#
+setwd(paste(my.root,"/Box Sync/Size Collection/Odonata", sep=""));#
+#
+library(openxlsx)#
+library(jsonlite)#
+#
+firstup <- function(x) {#
+   substr(x, 1, 1) <- toupper(substr(x, 1, 1))#
+	x#
+}#
+#
+zygopteraFamilies <- c('Hemiphlebiidae','Coenagrionidae','Isostictidae','Platycnemididae','Platystictidae','Protoneuridae','Pseudostigmatidae','Lestidae','Lestoideidae','Megapodagrionidae','Perilestidae','Synlestidae','Amphipterygidae','Calopterygidae','Chlorocyphidae','Dicteriadidae','Euphaeidae','Polythoridae','Zacallitidae')#
+anisopteraFamilies <- c('Epiophlebiidae','Aeshnidae','Gomphidae','Petaluridae','Chlorogomphidae','Cordulegastridae','Neopetaliidae','Corduliidae','Libellulidae','Macromiidae','Synthemistidae','Austropetaliidae')#
+allFamilies <- c(zygopteraFamilies, anisopteraFamilies)#
+#
+sheetNames <- c("Andrea","Johannah","Noel","Niza")#
+#
+colNames <- c("bookTitle","dataCollector","suborder","infraoder","superfamily","family","genus","subgenus","species","subspecies","authority","authorityYear",#
+	"typeSpecimen","typeSpecies","maleFemale","figureNumber","figurePart","magnification","scaleBar","scaleBarUnits","scaleBarMeasured_mm",#
+	"bodyLength_mm","abdomenLength_mm","forewingLength_mm","hindwingLength_mm","headWidth_mm","notes") ##
+#
+# get data from files#
+x <- data.frame()#
+for(i in 1:length(sheetNames)) {#
+	temp <- read.xlsx(xlsxFile=paste(my.root,"/Box Sync/Size Collection/Odonata/Niza/Excel Spreadsheets/masterOdonata.xlsx", sep=""), sheet=sheetNames[i], na.strings="n/a")#
+	temp <- temp[, match(colNames, colnames(temp))]#
+	temp <- temp[, 1:length(colNames)]#
+	temp <- subset(temp, !is.na(genus) & !is.na(species)) #!is.na(temp$hindwingLength_mm) &#
+	x <- rbind(x, temp)#
+}#
+odonata <- x#
+# fix male/female codes#
+odonata$maleFemale <- trim(odonata$maleFemale)#
+odonata$maleFemale[is.element(odonata$maleFemale, c("F","f", "Female"))] <- "female"#
+odonata$maleFemale[is.element(odonata$maleFemale, c("M","m", "Male", "Male "))] <- "male"#
+#
+# get final magnifications--default#
+odonata$finalMag <- as.numeric(odonata$magnification)#
+#
+# if units are cm#
+odonata$finalMag[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "cm" | is.na(odonata$scaleBarUnits))] <- #
+	odonata$scaleBarMeasured_mm[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "cm" | is.na(odonata$scaleBarUnits))] / #
+	(odonata$scaleBar[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "cm" | is.na(odonata$scaleBarUnits))]*10)#
+#
+# if units are mm#
+odonata$finalMag[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "mm" | is.na(odonata$scaleBarUnits))] <- #
+	odonata$scaleBarMeasured_mm[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "mm" | is.na(odonata$scaleBarUnits))] / #
+	(odonata$scaleBar[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "mm" | is.na(odonata$scaleBarUnits))])#
+# assume missing magnifications are 1#
+odonata$magnification[is.na(odonata$magnification) & (!is.na(odonata$bodyLength_mm) | !is.na(odonata$abdomenLength_mm)  | !is.na(odonata$forewingLength_mm) | !is.na(odonata$hindwingLength_mm) | !is.na(odonata$headWidth_mm))] <- 1#
+# calculate true body sizes#
+odonata$fw <- odonata$forewingLength_mm / odonata$finalMag#
+odonata$hw <- odonata$hindwingLength_mm / odonata$finalMag#
+odonata$bl <- odonata$bodyLength_mm / odonata$finalMag#
+odonata$al <- odonata$abdomenLength_mm / odonata$finalMag#
+#odonata$headW <- odonata$headWidth_mm / odonata$finalMag#
+#
+# check capitalization and make full scientific names#
+odonata$suborder <- sapply(tolower(trim(odonata$suborder)), firstup)#
+odonata$infraoder <- sapply(tolower(trim(odonata$infraoder)), firstup)#
+odonata$superfamily <- sapply(tolower(trim(odonata$superfamily)), firstup)#
+odonata$family <- sapply(tolower(trim(odonata$family)), firstup)#
+odonata$genus <- sapply(tolower(trim(odonata$genus)), firstup)#
+odonata$subgenus <- sapply(tolower(trim(odonata$subgenus)), firstup)#
+odonata$species <- tolower(trim(odonata$species))#
+odonata$subspecies <- tolower(trim(odonata$subspecies))#
+#
+odonata$speciesName <- as.factor(paste(odonata$genus, tolower(trim(odonata$species))))#
+odonata$subSpeciesName <- trim(paste(odonata$genus, tolower(trim(odonata$species)), tolower(trim(odonata$subspecies))))#
+odonata$subSpeciesName[is.na(odonata$subspecies)] <- ""#
+odonata$subSpeciesName <- as.factor(odonata$subSpeciesName)#
+# read in IUCN status#
+iucn <- read.delim(file=paste(my.root,"/Box Sync/Papers/butterflies/data/fullRedList.txt", sep=""), sep="\t", strip.white=TRUE, stringsAsFactors=FALSE)#
+iucn <- subset(iucn, order_name == 'ODONATA')#
+iucn$category <- as.character(iucn$category)#
+iucn$category[is.element(iucn$category, c('LR/lc'))] <- 'LC'#
+iucn$category[is.element(iucn$category, c('LR/nt'))] <- 'NT'#
+iucn$category <- factor(iucn$category, levels=c("DD","LC","NT","VU","EN","CR","EW","EX"))#
+iucn$scientific_name[iucn$infra_rank != ""] <- paste(iucn$genus_name[iucn$infra_rank != ""], iucn$species_name[iucn$infra_rank != ""], sep=" ")#
+#
+colnames(iucn)[colnames(iucn) == 'species_name'] <- "species"#
+colnames(iucn)[colnames(iucn) == 'scientific_name'] <- "speciesName"#
+iucn$family_name <- sapply(trim(iucn$family_name), tolower)#
+iucn$family_name <- sapply(trim(iucn$family_name), simpleCap)#
+iucn$measured <- 0#
+iucn$dragonfly <- 0#
+iucn$dragonfly[is.element(iucn$family_name, anisopteraFamilies)] <- 1#
+#
+iucnReduced <- unique(iucn[, !is.element(colnames(iucn), c("infra_rank","infra_name","population","speciesName","measured","category","taxonid"))])#
+iucnReduced$speciesName <- paste(iucnReduced$genus_name, iucnReduced$species, sep=" ")#
+iucnReduced$nSubSpec <- NA#
+iucnReduced$minStatus <- NA#
+iucnReduced$maxStatus <- NA#
+iucnReduced$ddStatus <- NA#
+iucnReduced$threats <- NA
+head(odonata)
+nrow(odonata)
+nrow(threats)
+nrow(iucn)
+head(iucn)
+head(threats)
+subset(iucn, !is.element(taxonid, threats$taxonid))
+head(iucn)
+as.character(1:10)
+head(threats)
+paste('a', collapse=',')
+getwd()
+<- read.delim(file="Niza/odonataRedList.txt")
+x <- read.delim(file="Niza/odonataRedList.txt")
+head(x)
+nrow(x)
+plot(x$minYearAssessed, x$maxYearAssessed)
+table(x$criteria)
+head(x)
+subset(x, grepl('NA; ', criteria))
+x[43,]
+i <- 43
+init.dir <- getwd()#
+if(is.element(Sys.info()["nodename"], c("es-naheim.local","sr12-cf96e71ca1.stanford.edu"))) {#
+	my.root <- "/Volumes/Blastoid/noelheim_data"#
+} else {#
+	my.root <- "/Users/noelheim"#
+}#
+Sys.setenv(TZ="America/Los_Angeles")#
+t0 <- Sys.time()#
+print(t0)#
+#
+source(paste(my.root,"/Box Sync/Includes/myFunctions.r", sep=""));#
+setwd(paste(my.root,"/Box Sync/Size Collection/Odonata", sep=""));#
+#
+library(openxlsx)#
+library(jsonlite)#
+#
+token <- "bb43cf930037ff4afbd9d2300700452c826505040617c31afdf60c3ad1fcb6af"#
+#
+firstup <- function(x) {#
+   substr(x, 1, 1) <- toupper(substr(x, 1, 1))#
+	x#
+}#
+#
+zygopteraFamilies <- c('Hemiphlebiidae','Coenagrionidae','Isostictidae','Platycnemididae','Platystictidae','Protoneuridae','Pseudostigmatidae','Lestidae','Lestoideidae','Megapodagrionidae','Perilestidae','Synlestidae','Amphipterygidae','Calopterygidae','Chlorocyphidae','Dicteriadidae','Euphaeidae','Polythoridae','Zacallitidae')#
+anisopteraFamilies <- c('Epiophlebiidae','Aeshnidae','Gomphidae','Petaluridae','Chlorogomphidae','Cordulegastridae','Neopetaliidae','Corduliidae','Libellulidae','Macromiidae','Synthemistidae','Austropetaliidae')#
+allFamilies <- c(zygopteraFamilies, anisopteraFamilies)#
+#
+sheetNames <- c("Andrea","Johannah","Noel","Niza")#
+#
+colNames <- c("bookTitle","dataCollector","suborder","infraoder","superfamily","family","genus","subgenus","species","subspecies","authority","authorityYear",#
+	"typeSpecimen","typeSpecies","maleFemale","figureNumber","figurePart","magnification","scaleBar","scaleBarUnits","scaleBarMeasured_mm",#
+	"bodyLength_mm","abdomenLength_mm","forewingLength_mm","hindwingLength_mm","headWidth_mm","notes") ##
+#
+# get data from files#
+x <- data.frame()#
+for(i in 1:length(sheetNames)) {#
+	temp <- read.xlsx(xlsxFile=paste(my.root,"/Box Sync/Size Collection/Odonata/Niza/Excel Spreadsheets/masterOdonata.xlsx", sep=""), sheet=sheetNames[i], na.strings="n/a")#
+	temp <- temp[, match(colNames, colnames(temp))]#
+	temp <- temp[, 1:length(colNames)]#
+	temp <- subset(temp, !is.na(genus) & !is.na(species)) #!is.na(temp$hindwingLength_mm) &#
+	x <- rbind(x, temp)#
+}#
+odonata <- x#
+# fix male/female codes#
+odonata$maleFemale <- trim(odonata$maleFemale)#
+odonata$maleFemale[is.element(odonata$maleFemale, c("F","f", "Female"))] <- "female"#
+odonata$maleFemale[is.element(odonata$maleFemale, c("M","m", "Male", "Male "))] <- "male"#
+#
+# get final magnifications--default#
+odonata$finalMag <- as.numeric(odonata$magnification)#
+#
+# if units are cm#
+odonata$finalMag[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "cm" | is.na(odonata$scaleBarUnits))] <- #
+	odonata$scaleBarMeasured_mm[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "cm" | is.na(odonata$scaleBarUnits))] / #
+	(odonata$scaleBar[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "cm" | is.na(odonata$scaleBarUnits))]*10)#
+#
+# if units are mm#
+odonata$finalMag[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "mm" | is.na(odonata$scaleBarUnits))] <- #
+	odonata$scaleBarMeasured_mm[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "mm" | is.na(odonata$scaleBarUnits))] / #
+	(odonata$scaleBar[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "mm" | is.na(odonata$scaleBarUnits))])#
+# assume missing magnifications are 1#
+odonata$magnification[is.na(odonata$magnification) & (!is.na(odonata$bodyLength_mm) | !is.na(odonata$abdomenLength_mm)  | !is.na(odonata$forewingLength_mm) | !is.na(odonata$hindwingLength_mm) | !is.na(odonata$headWidth_mm))] <- 1#
+# calculate true body sizes#
+odonata$fw <- odonata$forewingLength_mm / odonata$finalMag#
+odonata$hw <- odonata$hindwingLength_mm / odonata$finalMag#
+odonata$bl <- odonata$bodyLength_mm / odonata$finalMag#
+odonata$al <- odonata$abdomenLength_mm / odonata$finalMag#
+#odonata$headW <- odonata$headWidth_mm / odonata$finalMag#
+#
+# check capitalization and make full scientific names#
+odonata$suborder <- sapply(tolower(trim(odonata$suborder)), firstup)#
+odonata$infraoder <- sapply(tolower(trim(odonata$infraoder)), firstup)#
+odonata$superfamily <- sapply(tolower(trim(odonata$superfamily)), firstup)#
+odonata$family <- sapply(tolower(trim(odonata$family)), firstup)#
+odonata$genus <- sapply(tolower(trim(odonata$genus)), firstup)#
+odonata$subgenus <- sapply(tolower(trim(odonata$subgenus)), firstup)#
+odonata$species <- tolower(trim(odonata$species))#
+odonata$subspecies <- tolower(trim(odonata$subspecies))#
+#
+odonata$speciesName <- as.factor(paste(odonata$genus, tolower(trim(odonata$species))))#
+odonata$subSpeciesName <- trim(paste(odonata$genus, tolower(trim(odonata$species)), tolower(trim(odonata$subspecies))))#
+odonata$subSpeciesName[is.na(odonata$subspecies)] <- ""#
+odonata$subSpeciesName <- as.factor(odonata$subSpeciesName)#
+# read in IUCN status#
+iucn <- read.delim(file=paste(my.root,"/Box Sync/Papers/butterflies/data/fullRedList.txt", sep=""), sep="\t", strip.white=TRUE, stringsAsFactors=FALSE)#
+iucn <- subset(iucn, order_name == 'ODONATA')#
+iucn$category <- as.character(iucn$category)#
+iucn$category[is.element(iucn$category, c('LR/lc'))] <- 'LC'#
+iucn$category[is.element(iucn$category, c('LR/nt'))] <- 'NT'#
+iucn$category <- factor(iucn$category, levels=c("DD","LC","NT","VU","EN","CR","EW","EX"))#
+iucn$scientific_name[iucn$infra_rank != ""] <- paste(iucn$genus_name[iucn$infra_rank != ""], iucn$species_name[iucn$infra_rank != ""], sep=" ")#
+#
+colnames(iucn)[colnames(iucn) == 'species_name'] <- "species"#
+colnames(iucn)[colnames(iucn) == 'scientific_name'] <- "speciesName"#
+iucn$family_name <- sapply(trim(iucn$family_name), tolower)#
+iucn$family_name <- sapply(trim(iucn$family_name), simpleCap)#
+iucn$measured <- 0#
+iucn$dragonfly <- 0#
+iucn$dragonfly[is.element(iucn$family_name, anisopteraFamilies)] <- 1#
+iucn$criteria <- NA#
+iucn$yearAssessed <- NA#
+#
+for(i in 1:nrow(iucn)) {#
+	# get iucn threat causes#
+	threat <- fromJSON(URLencode(paste("http://apiv3.iucnredlist.org/api/v3/species/id/",iucn$taxonid[i],"?token=",token, sep="")))#
+	if(class(threat$result) == "data.frame") {#
+		temp <- threat$result#
+		iucn$criteria[i] <- temp$criteria#
+		iucn$yearAssessed[i] <- temp$published_year#
+	}#
+	if(i %% 100 == 0) {#
+		print(i)#
+		t1 <- Sys.time()#
+		print(t1-t0)#
+	}#
+}#
+t1 <- Sys.time()#
+print(t1-t0)#
+#
+iucnReduced <- unique(iucn[, !is.element(colnames(iucn), c("infra_rank","infra_name","population","speciesName","measured","category","taxonid"))])#
+iucnReduced$speciesName <- paste(iucnReduced$genus_name, iucnReduced$species, sep=" ")#
+iucnReduced$nSubSpec <- NA#
+iucnReduced$minStatus <- NA#
+iucnReduced$maxStatus <- NA#
+iucnReduced$ddStatus <- NA#
+iucnReduced$criteria <- NA#
+iucnReduced$minYearAssessed <- NA#
+iucnReduced$maxYearAssessed <- NA
+head(threat)
+init.dir <- getwd()#
+if(is.element(Sys.info()["nodename"], c("es-naheim.local","sr12-cf96e71ca1.stanford.edu"))) {#
+	my.root <- "/Volumes/Blastoid/noelheim_data"#
+} else {#
+	my.root <- "/Users/noelheim"#
+}#
+Sys.setenv(TZ="America/Los_Angeles")#
+t0 <- Sys.time()#
+print(t0)#
+#
+source(paste(my.root,"/Box Sync/Includes/myFunctions.r", sep=""));#
+setwd(paste(my.root,"/Box Sync/Size Collection/Odonata", sep=""));#
+#
+library(openxlsx)#
+library(jsonlite)#
+#
+token <- "bb43cf930037ff4afbd9d2300700452c826505040617c31afdf60c3ad1fcb6af"#
+#
+firstup <- function(x) {#
+   substr(x, 1, 1) <- toupper(substr(x, 1, 1))#
+	x#
+}#
+#
+zygopteraFamilies <- c('Hemiphlebiidae','Coenagrionidae','Isostictidae','Platycnemididae','Platystictidae','Protoneuridae','Pseudostigmatidae','Lestidae','Lestoideidae','Megapodagrionidae','Perilestidae','Synlestidae','Amphipterygidae','Calopterygidae','Chlorocyphidae','Dicteriadidae','Euphaeidae','Polythoridae','Zacallitidae')#
+anisopteraFamilies <- c('Epiophlebiidae','Aeshnidae','Gomphidae','Petaluridae','Chlorogomphidae','Cordulegastridae','Neopetaliidae','Corduliidae','Libellulidae','Macromiidae','Synthemistidae','Austropetaliidae')#
+allFamilies <- c(zygopteraFamilies, anisopteraFamilies)#
+#
+sheetNames <- c("Andrea","Johannah","Noel","Niza")#
+#
+colNames <- c("bookTitle","dataCollector","suborder","infraoder","superfamily","family","genus","subgenus","species","subspecies","authority","authorityYear",#
+	"typeSpecimen","typeSpecies","maleFemale","figureNumber","figurePart","magnification","scaleBar","scaleBarUnits","scaleBarMeasured_mm",#
+	"bodyLength_mm","abdomenLength_mm","forewingLength_mm","hindwingLength_mm","headWidth_mm","notes") ##
+#
+# get data from files#
+x <- data.frame()#
+for(i in 1:length(sheetNames)) {#
+	temp <- read.xlsx(xlsxFile=paste(my.root,"/Box Sync/Size Collection/Odonata/Niza/Excel Spreadsheets/masterOdonata.xlsx", sep=""), sheet=sheetNames[i], na.strings="n/a")#
+	temp <- temp[, match(colNames, colnames(temp))]#
+	temp <- temp[, 1:length(colNames)]#
+	temp <- subset(temp, !is.na(genus) & !is.na(species)) #!is.na(temp$hindwingLength_mm) &#
+	x <- rbind(x, temp)#
+}#
+odonata <- x#
+# fix male/female codes#
+odonata$maleFemale <- trim(odonata$maleFemale)#
+odonata$maleFemale[is.element(odonata$maleFemale, c("F","f", "Female"))] <- "female"#
+odonata$maleFemale[is.element(odonata$maleFemale, c("M","m", "Male", "Male "))] <- "male"#
+#
+# get final magnifications--default#
+odonata$finalMag <- as.numeric(odonata$magnification)#
+#
+# if units are cm#
+odonata$finalMag[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "cm" | is.na(odonata$scaleBarUnits))] <- #
+	odonata$scaleBarMeasured_mm[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "cm" | is.na(odonata$scaleBarUnits))] / #
+	(odonata$scaleBar[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "cm" | is.na(odonata$scaleBarUnits))]*10)#
+#
+# if units are mm#
+odonata$finalMag[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "mm" | is.na(odonata$scaleBarUnits))] <- #
+	odonata$scaleBarMeasured_mm[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "mm" | is.na(odonata$scaleBarUnits))] / #
+	(odonata$scaleBar[is.na(odonata$magnification) & !is.na(odonata$scaleBarMeasured_mm) & !is.na(odonata$scaleBar) & (odonata$scaleBarUnits == "mm" | is.na(odonata$scaleBarUnits))])#
+# assume missing magnifications are 1#
+odonata$magnification[is.na(odonata$magnification) & (!is.na(odonata$bodyLength_mm) | !is.na(odonata$abdomenLength_mm)  | !is.na(odonata$forewingLength_mm) | !is.na(odonata$hindwingLength_mm) | !is.na(odonata$headWidth_mm))] <- 1#
+# calculate true body sizes#
+odonata$fw <- odonata$forewingLength_mm / odonata$finalMag#
+odonata$hw <- odonata$hindwingLength_mm / odonata$finalMag#
+odonata$bl <- odonata$bodyLength_mm / odonata$finalMag#
+odonata$al <- odonata$abdomenLength_mm / odonata$finalMag#
+#odonata$headW <- odonata$headWidth_mm / odonata$finalMag#
+#
+# check capitalization and make full scientific names#
+odonata$suborder <- sapply(tolower(trim(odonata$suborder)), firstup)#
+odonata$infraoder <- sapply(tolower(trim(odonata$infraoder)), firstup)#
+odonata$superfamily <- sapply(tolower(trim(odonata$superfamily)), firstup)#
+odonata$family <- sapply(tolower(trim(odonata$family)), firstup)#
+odonata$genus <- sapply(tolower(trim(odonata$genus)), firstup)#
+odonata$subgenus <- sapply(tolower(trim(odonata$subgenus)), firstup)#
+odonata$species <- tolower(trim(odonata$species))#
+odonata$subspecies <- tolower(trim(odonata$subspecies))#
+#
+odonata$speciesName <- as.factor(paste(odonata$genus, tolower(trim(odonata$species))))#
+odonata$subSpeciesName <- trim(paste(odonata$genus, tolower(trim(odonata$species)), tolower(trim(odonata$subspecies))))#
+odonata$subSpeciesName[is.na(odonata$subspecies)] <- ""#
+odonata$subSpeciesName <- as.factor(odonata$subSpeciesName)#
+# read in IUCN status#
+iucn <- read.delim(file=paste(my.root,"/Box Sync/Papers/butterflies/data/fullRedList.txt", sep=""), sep="\t", strip.white=TRUE, stringsAsFactors=FALSE)#
+iucn <- subset(iucn, order_name == 'ODONATA')#
+iucn$category <- as.character(iucn$category)#
+iucn$category[is.element(iucn$category, c('LR/lc'))] <- 'LC'#
+iucn$category[is.element(iucn$category, c('LR/nt'))] <- 'NT'#
+iucn$category <- factor(iucn$category, levels=c("DD","LC","NT","VU","EN","CR","EW","EX"))#
+iucn$scientific_name[iucn$infra_rank != ""] <- paste(iucn$genus_name[iucn$infra_rank != ""], iucn$species_name[iucn$infra_rank != ""], sep=" ")#
+#
+colnames(iucn)[colnames(iucn) == 'species_name'] <- "species"#
+colnames(iucn)[colnames(iucn) == 'scientific_name'] <- "speciesName"#
+iucn$family_name <- sapply(trim(iucn$family_name), tolower)#
+iucn$family_name <- sapply(trim(iucn$family_name), simpleCap)#
+iucn$measured <- 0#
+iucn$dragonfly <- 0#
+iucn$dragonfly[is.element(iucn$family_name, anisopteraFamilies)] <- 1#
+iucn$criteria <- NA#
+iucn$yearAssessed <- NA#
+#
+for(i in 1:100) {#
+#for(i in 1:nrow(iucn)) {#
+	# get iucn threat causes#
+	threat <- fromJSON(URLencode(paste("http://apiv3.iucnredlist.org/api/v3/species/id/",iucn$taxonid[i],"?token=",token, sep="")))#
+	if(class(threat$result) == "data.frame") {#
+		temp <- threat$result#
+		iucn$criteria[i] <- temp$criteria#
+		iucn$yearAssessed[i] <- temp$published_year#
+	}#
+	if(i %% 100 == 0) {#
+		print(i)#
+		t1 <- Sys.time()#
+		print(t1-t0)#
+	}#
+}#
+t1 <- Sys.time()#
+print(t1-t0)
+i <- 43
+iucnReduced <- unique(iucn[, !is.element(colnames(iucn), c("infra_rank","infra_name","population","speciesName","measured","category","taxonid"))])#
+iucnReduced$speciesName <- paste(iucnReduced$genus_name, iucnReduced$species, sep=" ")#
+iucnReduced$nSubSpec <- NA#
+iucnReduced$minStatus <- NA#
+iucnReduced$maxStatus <- NA#
+iucnReduced$ddStatus <- NA#
+iucnReduced$criteria <- NA#
+iucnReduced$minYearAssessed <- NA#
+iucnReduced$maxYearAssessed <- NA
+realCats <- levels(iucn$category)[-1]#
+for(i in 1:nrow(iucnReduced)) {#
+	temp <- subset(iucn, speciesName == iucnReduced$speciesName[i])#
+	iucnReduced$nSubSpec[i] <- nrow(temp)#
+	if(is.element("DD", as.character(temp$category))) iucnReduced$ddStatus[i] <- as.character(temp$category)#
+#
+	if(nrow(temp) <= 1) {#
+		iucnReduced$minStatus[i] <- as.character(temp$category[1])#
+		iucnReduced$maxStatus[i] <- as.character(temp$category[1])#
+		iucnReduced$criteria[i] <- as.character(temp$criteria[1])#
+		iucnReduced$minYearAssessed[i] <- as.character(temp$yearAssessed[1])#
+		iucnReduced$maxYearAssessed[i] <- as.character(temp$yearAssessed[1])	#
+	} else if (nrow(temp) > 1) {#
+		for(j in 1:length(realCats)) {#
+			if(is.element(realCats[j], as.character(temp$category))) iucnReduced$maxStatus[i] <- realCats[j]#
+		}#
+		for(j in length(realCats):1) {#
+			if(is.element(realCats[j], as.character(temp$category))) iucnReduced$minStatus[i] <- realCats[j]#
+		}#
+		tempCriteria <- unique(as.character(temp$criteria[temp$criteria != ""]))#
+		if(lengthiucnReduced$criteria[i] <- paste(, collapse="; ")#
+		iucnReduced$minYearAssessed[i] <- min(temp$yearAssessed, na.rm=TRUE)#
+		iucnReduced$maxYearAssessed[i] <- max(temp$yearAssessed, na.rm=TRUE)	#
+	}#
+}
+i
+iucn[i,]
+subset(iucn, speciesName == 'Epigomphus paulsoni')
+realCats <- levels(iucn$category)[-1]#
+for(i in 1:nrow(iucnReduced)) {#
+	temp <- subset(iucn, speciesName == iucnReduced$speciesName[i])#
+	iucnReduced$nSubSpec[i] <- nrow(temp)#
+	if(is.element("DD", as.character(temp$category))) iucnReduced$ddStatus[i] <- as.character(temp$category)#
+#
+	if(nrow(temp) <= 1) {#
+		iucnReduced$minStatus[i] <- as.character(temp$category[1])#
+		iucnReduced$maxStatus[i] <- as.character(temp$category[1])#
+		iucnReduced$criteria[i] <- as.character(temp$criteria[1])#
+		iucnReduced$minYearAssessed[i] <- as.character(temp$yearAssessed[1])#
+		iucnReduced$maxYearAssessed[i] <- as.character(temp$yearAssessed[1])	#
+	} else if (nrow(temp) > 1) {#
+		for(j in 1:length(realCats)) {#
+			if(is.element(realCats[j], as.character(temp$category))) iucnReduced$maxStatus[i] <- realCats[j]#
+		}#
+		for(j in length(realCats):1) {#
+			if(is.element(realCats[j], as.character(temp$category))) iucnReduced$minStatus[i] <- realCats[j]#
+		}#
+		tempCriteria <- unique(as.character(temp$criteria[temp$criteria != ""]))#
+		if(length(tempCriteria) > 0) iucnReduced$criteria[i] <- paste(, collapse="; ")#
+		iucnReduced$minYearAssessed[i] <- min(temp$yearAssessed, na.rm=TRUE)#
+		iucnReduced$maxYearAssessed[i] <- max(temp$yearAssessed, na.rm=TRUE)	#
+	}#
+}
+realCats <- levels(iucn$category)[-1]#
+for(i in 1:nrow(iucnReduced)) {#
+	temp <- subset(iucn, speciesName == iucnReduced$speciesName[i])#
+	iucnReduced$nSubSpec[i] <- nrow(temp)#
+	if(is.element("DD", as.character(temp$category))) iucnReduced$ddStatus[i] <- as.character(temp$category)#
+#
+	if(nrow(temp) <= 1) {#
+		iucnReduced$minStatus[i] <- as.character(temp$category[1])#
+		iucnReduced$maxStatus[i] <- as.character(temp$category[1])#
+		iucnReduced$criteria[i] <- as.character(temp$criteria[1])#
+		iucnReduced$minYearAssessed[i] <- as.character(temp$yearAssessed[1])#
+		iucnReduced$maxYearAssessed[i] <- as.character(temp$yearAssessed[1])	#
+	} else if (nrow(temp) > 1) {#
+		for(j in 1:length(realCats)) {#
+			if(is.element(realCats[j], as.character(temp$category))) iucnReduced$maxStatus[i] <- realCats[j]#
+		}#
+		for(j in length(realCats):1) {#
+			if(is.element(realCats[j], as.character(temp$category))) iucnReduced$minStatus[i] <- realCats[j]#
+		}#
+		tempCriteria <- unique(as.character(temp$criteria[temp$criteria != ""]))#
+		if(length(tempCriteria) > 0) iucnReduced$criteria[i] <- paste(tempCriteria, collapse="; ")#
+		iucnReduced$minYearAssessed[i] <- min(temp$yearAssessed, na.rm=TRUE)#
+		iucnReduced$maxYearAssessed[i] <- max(temp$yearAssessed, na.rm=TRUE)	#
+	}#
+}
+warnings()
+i
+iucnReduced[43,]
+subset(iucn, speciesName == 'Erpetogomphus lampropeltis')
+realCats <- levels(iucn$category)[-1]#
+for(i in 1:nrow(iucnReduced)) {#
+	temp <- subset(iucn, speciesName == iucnReduced$speciesName[i])#
+	iucnReduced$nSubSpec[i] <- nrow(temp)#
+	if(is.element("DD", as.character(temp$category))) iucnReduced$ddStatus[i] <- as.character(temp$category)#
+#
+	if(nrow(temp) <= 1) {#
+		iucnReduced$minStatus[i] <- as.character(temp$category[1])#
+		iucnReduced$maxStatus[i] <- as.character(temp$category[1])#
+		iucnReduced$criteria[i] <- as.character(temp$criteria[1])#
+		iucnReduced$minYearAssessed[i] <- as.character(temp$yearAssessed[1])#
+		iucnReduced$maxYearAssessed[i] <- as.character(temp$yearAssessed[1])	#
+	} else if (nrow(temp) > 1) {#
+		for(j in 1:length(realCats)) {#
+			if(is.element(realCats[j], as.character(temp$category))) iucnReduced$maxStatus[i] <- realCats[j]#
+		}#
+		for(j in length(realCats):1) {#
+			if(is.element(realCats[j], as.character(temp$category))) iucnReduced$minStatus[i] <- realCats[j]#
+		}#
+		tempCriteria <- unique(as.character(temp$criteria[temp$criteria != "" & !is.na(temp$criteria)]))#
+		if(length(tempCriteria) > 0) iucnReduced$criteria[i] <- paste(tempCriteria, collapse="; ")#
+		iucnReduced$minYearAssessed[i] <- min(temp$yearAssessed, na.rm=TRUE)#
+		iucnReduced$maxYearAssessed[i] <- max(temp$yearAssessed, na.rm=TRUE)	#
+	}#
+}
+iucnReduced[43,]
+warnings()
+head(iucnReduced)
+head(iucnReduced,40)
+head(iucnReduced,100)
+nrow(iucnReduced)
+head(iucnReduced,120)
+subset(iucn, speciesName == 'Planaeschna risi')
+realCats <- levels(iucn$category)[-1]#
+for(i in 1:nrow(iucnReduced)) {#
+	temp <- subset(iucn, speciesName == iucnReduced$speciesName[i])#
+	iucnReduced$nSubSpec[i] <- nrow(temp)#
+	if(is.element("DD", as.character(temp$category))) iucnReduced$ddStatus[i] <- as.character(temp$category)#
+#
+	if(nrow(temp) <= 1) {#
+		iucnReduced$minStatus[i] <- as.character(temp$category[1])#
+		iucnReduced$maxStatus[i] <- as.character(temp$category[1])#
+		iucnReduced$criteria[i] <- as.character(temp$criteria[1])#
+		iucnReduced$minYearAssessed[i] <- as.character(temp$yearAssessed[1])#
+		iucnReduced$maxYearAssessed[i] <- as.character(temp$yearAssessed[1])	#
+	} else if (nrow(temp) > 1) {#
+		for(j in 1:length(realCats)) {#
+			if(is.element(realCats[j], as.character(temp$category))) iucnReduced$maxStatus[i] <- realCats[j]#
+		}#
+		for(j in length(realCats):1) {#
+			if(is.element(realCats[j], as.character(temp$category))) iucnReduced$minStatus[i] <- realCats[j]#
+		}#
+		tempCriteria <- unique(as.character(temp$criteria[temp$criteria != "" & !is.na(temp$criteria)]))#
+		if(length(tempCriteria) > 0) iucnReduced$criteria[i] <- paste(tempCriteria, collapse="; ")#
+		tempYear <- temp$yearAssessed[!is.na(temp$yearAssessed)]#
+		if(length(tempYear) > 0) {#
+			iucnReduced$minYearAssessed[i] <- min(tempYear)#
+			iucnReduced$maxYearAssessed[i] <- max(tempYear)#
+		}#
+	}#
+}
 # set root base for proper file direction#
 init.dir <- getwd()#
 if(is.element(Sys.info()["nodename"], c("es-naheim.local","sr12-cf96e71ca1.stanford.edu"))) {#
@@ -843,56 +702,227 @@ plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
 #lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
 temp <- subset(sizeData, !is.na(circ) & circ == 'closed')#
 segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)
+timescale <- read.delim(file="../rawDataFiles/timescale.txt")#
+nBins <- nrow(timescale)#
+#
+sizeData <- read.delim(file="../rawDataFiles/bodySizes.txt")#
+sizeData$tiering[sizeData$tiering == 0] <- NA#
+sizeData$motility[sizeData$motility == 0] <- NA#
+sizeData$feeding[sizeData$feeding == 0] <- NA#
+#
+# binary motile#
+sizeData$motile <- NA#
+sizeData$motile[!is.na(sizeData$motility) & sizeData$motility <= 2] <- 1#
+sizeData$motile[!is.na(sizeData$motility) & sizeData$motility > 2] <- 0#
+#
+# binary pelagic#
+sizeData$pelagic <- NA#
+sizeData$pelagic[!is.na(sizeData$tiering) & sizeData$tiering == 1] <- 1#
+sizeData$pelagic[!is.na(sizeData$tiering) & sizeData$tiering > 1] <- 0#
+#
+# binary predator#
+sizeData$predator <- NA#
+sizeData$predator[!is.na(sizeData$feeding) & sizeData$feeding == 5] <- 1#
+sizeData$predator[!is.na(sizeData$feeding) & sizeData$feeding != 5] <- 0#
+#
+# binary circulation#
+sizeData$closedCirc <- NA#
+sizeData$closedCirc[!is.na(sizeData$circ) & sizeData$circ == 'open'] <- 0#
+sizeData$closedCirc[!is.na(sizeData$circ) & sizeData$circ == 'closed'] <- 1#
+#
+# binary air#
+sizeData$air <- NA#
+sizeData$air[!is.na(sizeData$fluid) & sizeData$fluid == 'water'] <- 0#
+sizeData$air[!is.na(sizeData$fluid) & sizeData$fluid == 'air'] <- 1#
+sizeData$physioMode <- paste(sizeData$circ, sizeData$motile, sizeData$pelagic, sizeData$predator, sep="")#
+sizeData$physioMode[grepl('NA', sizeData$physioMode)] <- NA#
+sizeData$physioMode[!is.na(sizeData$physioMode) & !grepl('open', sizeData$physioMode) & !grepl('closed', sizeData$physioMode)] <- NA#
+sizeData$physioMode <- factor(sizeData$physioMode)#
+table(sizeData$physioMode)#
+#
+sizeData$ecoMode <- paste(sizeData$motile, sizeData$pelagic, sizeData$predator, sep="")#
+sizeData$ecoMode[grepl('NA', sizeData$ecoMode)] <- NA#
+sizeData$ecoMode <- factor(sizeData$ecoMode)#
+table(sizeData$ecoMode)#
+#
+open000 <- data.frame(matrix(NA, nrow=nBins, ncol=5, dimnames=list(timescale$interval_name, c('n','mean','ciMinus','ciPlus','max'))))#
+closed111 <- open000#
+otherPhysio <- open000#
+eco000 <- open000#
+eco111 <- open000#
+otherEco <- open000#
+openCirc <- open000#
+closedCirc <- open000#
+#
+regCoef <- data.frame(matrix(NA, nrow=nBins, ncol=5, dimnames=list(timescale$interval_name, c('air','closedCirc','motile','pelagic','predator'))))#
+regCiMinus <- regCoef#
+regCiPlus <- regCoef#
+#
+overallMean <- vector(mode="numeric", length=nBins)#
+for(i in 1:nBins) {#
+	temp <- subset(sizeData, !is.na(fluid) & fluid != 'air' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	overallMean[i] <- mean(log10(temp$max_vol))#
+	temp <- subset(sizeData, !is.na(physioMode) & physioMode == 'open000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	open000$n <- nrow(temp)#
+	open000$mean[i] <- mean(log10(temp$max_vol))#
+	open000$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
+	open000$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
+	temp <- subset(sizeData, !is.na(physioMode) & physioMode == 'closed111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	closed111$n <- nrow(temp)#
+	closed111$mean[i] <- mean(log10(temp$max_vol))#
+	closed111$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
+	closed111$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
+	temp <- subset(sizeData, !is.na(physioMode) & physioMode != 'closed111' & physioMode != 'open000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	otherPhysio$n <- nrow(temp)#
+	otherPhysio$mean[i] <- mean(log10(temp$max_vol))#
+	otherPhysio$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
+	otherPhysio$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
+	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode == '000' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	eco000$n <- nrow(temp)#
+	eco000$mean[i] <- mean(log10(temp$max_vol))#
+	eco000$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
+	eco000$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
+	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode == '111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	eco111$n <- nrow(temp)#
+	eco111$mean[i] <- mean(log10(temp$max_vol))#
+	eco111$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
+	eco111$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
+	temp <- subset(sizeData, !is.na(ecoMode) & ecoMode != '000' & ecoMode != '111' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	otherEco$n <- nrow(temp)#
+	otherEco$mean[i] <- mean(log10(temp$max_vol))#
+	otherEco$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
+	otherEco$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
+	temp <- subset(sizeData, !is.na(circ) & circ == 'open' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	openCirc$n <- nrow(temp)#
+	openCirc$mean[i] <- mean(log10(temp$max_vol))#
+	openCirc$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
+	openCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
+	temp <- subset(sizeData, !is.na(circ) & circ == 'closed' & fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i])#
+	closedCirc$n <- nrow(temp)#
+	closedCirc$mean[i] <- mean(log10(temp$max_vol))#
+	closedCirc$ciMinus[i] <- mean(log10(temp$max_vol)) - (1.96*sd(log10(temp$max_vol)))#
+	closedCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))#
+	closedCirc$max[i] <- max(log10(temp$max_vol[!is.na(temp$fluid) & temp$fluid != 'air']))#
+#	tempData <- subset(sizeData, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i] & !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air))#
+#	myGlm <- lmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail')#
+#	modelComb <- dredge(myGlm)#
+#	avgMod <- model.avg(modelComb, fit=TRUE)#
+#	ci <- confint(avgMod, full=TRUE)#
+#	regCoef[i,] <- avgMod$coefficients[1,match(colnames(regCoef), names(avgMod$coefficients[1,]))]#
+#	regCiMinus[i,] <- ci[match(colnames(regCiMinus), names(avgMod$coefficients[1,])),1]#
+#	regCiPlus[i,] <- ci[match(colnames(regCiPlus), names(avgMod$coefficients[1,])),2]#
+}#
+quartz(height=5, width=16)#
+par(pch=16, mfrow=c(1,3))#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(1,8))#
+lines(timescale$age_mid, eco000$mean, type="o", col='blue', lwd=2)#
+lines(timescale$age_mid, eco111$mean, type="o", col='red', lwd=2)#
+lines(timescale$age_mid, otherEco$mean, type="o", col='black', lwd=2)#
+#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(1,8))#
+lines(timescale$age_mid, open000$mean, type="o", col='blue', lwd=2)#
+lines(timescale$age_mid, closed111$mean, type="o", col='red', lwd=2)#
+lines(timescale$age_mid, otherPhysio$mean, type="o", col='black', lwd=2)#
+#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(1,8))#
+lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
 lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)#
-tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) #
-tempData$duration <- tempData$fad_age - tempData$lad_age#
-myGlm <- lmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail')#
+lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)#
+quartz(height=5, width=16)#
+par(pch=16, mfrow=c(1,2))#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+temp <- subset(sizeData, !is.na(fluid) & fluid != 'air')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)#
+lines(timescale$age_mid, closedCirc$max, type="o", col='red', lwd=2)#
 #
-modelComb <- dredge(myGlm)#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+#lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
+temp <- subset(sizeData, !is.na(circ) & circ == 'closed')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+#lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
+temp <- subset(sizeData, !is.na(circ) & circ == 'closed')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)
+quartz(height=5, width=16)#
+par(pch=16, mfrow=c(1,2))#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+temp <- subset(sizeData, !is.na(fluid) & fluid != 'air')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)#
+lines(timescale$age_mid, closedCirc$max, type="o", col='red', lwd=2)#
 #
-# average across all models, to use only those with, e.g., delta.aicc < 4, add: subset = delta < 4#
-# in output, full is averaging across all models for all coefficients, subset is the avg for each parameter where the value is > 0#
-avgMod <- model.avg(modelComb, fit=TRUE)#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+#lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
+temp <- subset(sizeData, !is.na(circ) & circ == 'closed')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)#
+lines(timescale$age_mid, openCirc$mean, type="o", col='black', lwd=2)
+par(pch=16, mfrow=c(1,2))#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+temp <- subset(sizeData, !is.na(fluid) & fluid != 'air')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)#
+lines(timescale$age_mid, closedCirc$max, type="o", col='red', lwd=2)#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='pink', lwd=2)#
 #
-avgMod#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+#lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
+temp <- subset(sizeData, !is.na(circ) & circ == 'closed')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)#
+lines(timescale$age_mid, openCirc$mean, type="o", col='black', lwd=2)
+head(timescale)
+tail(timescale, 15)
+quartz(height=5, width=16)#
+par(pch=16, mfrow=c(1,2))#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+temp <- subset(sizeData, !is.na(fluid) & fluid != 'air')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)#
+lines(timescale$age_mid, closedCirc$max, type="o", col='red', lwd=2)#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='pink', lwd=2)#
+abline(v=485.4)#
 #
-# get the confidence intervals on coefficients#
-ci <- confint(avgMod, full=TRUE)#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+#lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
+temp <- subset(sizeData, !is.na(circ) & circ == 'closed')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)#
+lines(timescale$age_mid, openCirc$mean, type="o", col='black', lwd=2)
+quartz(height=5, width=16)#
+par(pch=16, mfrow=c(1,2))#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+temp <- subset(sizeData, !is.na(fluid) & fluid != 'air')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)#
+lines(timescale$age_mid, closedCirc$max, type="o", col='red', lwd=2)#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='pink', lwd=2)#
+abline(v=485.4)#
 #
-x <- avgMod$coefficients[1,-1]#
-y <- ci[-1,]#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+#lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
+temp <- subset(sizeData, !is.na(circ) & circ == 'closed')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)#
+lines(timescale$age_mid, openCirc$mean, type="o", col='black', lwd=2)
+tail(timescale, 20)
+quartz(height=5, width=16)#
+par(pch=16, mfrow=c(1,2))#
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+temp <- subset(sizeData, !is.na(fluid) & fluid != 'air')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)#
+lines(timescale$age_mid, closedCirc$max, type="o", col='red', lwd=2)#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='pink', lwd=2)#
+abline(v=c(485.4,445.2))#
 #
-quartz()#
-par(pch=16, las=1)#
-plot(x, ylim=range(y), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:length(x), labels=rownames(y))#
-abline(h=0, lty=2)#
-segments(1:length(x), y[,1], 1:length(x), y[,2])#
-myCol <- rainbow(5)#
-time.plot.mult(1, plot.height=5, plot.width=8.5)#
-par(pch=16)#
-plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus)), xaxt="n", xlab="", ylab="coefficient")#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])#
-	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCol[i])#
-}#
-legend("topleft", legend=colnames(regCoef), lty=1, col=myCol, bty="n", pch=16)
-head(regCoef)
-tail(regCoef)
-myCol <- rainbow(5)#
-time.plot.mult(1, plot.height=5, plot.width=8.5)#
-par(pch=16)#
-plot(1:5, type="n", xlim=c(541,0), ylim=range(rbind(regCiMinus,regCiPlus), na.rm=TRUE), xaxt="n", xlab="", ylab="coefficient")#
-abline(h=0, lty=2)#
-for(i in 1:5) {#
-	points(timescale$age_mid,  regCoef[,i], type="o", col=myCol[i])#
-	segments(timescale$age_mid, regCiMinus[,i], timescale$age_mid, regCiPlus[,i], col=myCol[i])#
-}#
-legend("topleft", legend=colnames(regCoef), lty=1, col=myCol, bty="n", pch=16)
-quartz()#
-par(pch=16, las=1)#
-plot(x, ylim=range(y), xaxt="n", xlab="", ylab="coefficient")#
-axis(side=1, at=1:length(x), labels=rownames(y))#
-abline(h=0, lty=2)#
-segments(1:length(x), y[,1], 1:length(x), y[,2])
+plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))#
+#lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)#
+temp <- subset(sizeData, !is.na(circ) & circ == 'closed')#
+segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")#
+lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)#
+lines(timescale$age_mid, openCirc$mean, type="o", col='black', lwd=2)

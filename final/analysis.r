@@ -131,14 +131,14 @@ for(i in 1:nBins) {
 	closedCirc$ciPlus[i] <- mean(log10(temp$max_vol)) + (1.96*sd(log10(temp$max_vol)))
 	closedCirc$max[i] <- max(log10(temp$max_vol[!is.na(temp$fluid) & temp$fluid != 'air']))
 	
-	tempData <- subset(sizeData, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i] & !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air))
-	myGlm <- lmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail')
-	modelComb <- dredge(myGlm)
-	avgMod <- model.avg(modelComb, fit=TRUE)
-	ci <- confint(avgMod, full=TRUE)
-	regCoef[i,] <- avgMod$coefficients[1,match(colnames(regCoef), names(avgMod$coefficients[1,]))]
-	regCiMinus[i,] <- ci[match(colnames(regCiMinus), names(avgMod$coefficients[1,])),1]
-	regCiPlus[i,] <- ci[match(colnames(regCiPlus), names(avgMod$coefficients[1,])),2]
+#	tempData <- subset(sizeData, fad_age > timescale$age_top[i] & lad_age < timescale$age_bottom[i] & !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air))
+#	myGlm <- lmer(log10(max_vol) ~ air + closedCirc + motile + pelagic + predator + (1 | class), data=tempData, na.action='na.fail')
+#	modelComb <- dredge(myGlm)
+#	avgMod <- model.avg(modelComb, fit=TRUE)
+#	ci <- confint(avgMod, full=TRUE)
+#	regCoef[i,] <- avgMod$coefficients[1,match(colnames(regCoef), names(avgMod$coefficients[1,]))]
+#	regCiMinus[i,] <- ci[match(colnames(regCiMinus), names(avgMod$coefficients[1,])),1]
+#	regCiPlus[i,] <- ci[match(colnames(regCiPlus), names(avgMod$coefficients[1,])),2]
 }
 
 
@@ -169,12 +169,15 @@ temp <- subset(sizeData, !is.na(fluid) & fluid != 'air')
 segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")
 lines(timescale$age_mid, overallMean, type="o", col='black', lwd=2)
 lines(timescale$age_mid, closedCirc$max, type="o", col='red', lwd=2)
+lines(timescale$age_mid, closedCirc$mean, type="o", col='pink', lwd=2)
+abline(v=485.4)
 
 plot(1:10, type="n", xlim=c(541,0), ylim=c(-2,12))
 #lines(timescale$age_mid, openCirc$mean, type="o", col='blue', lwd=2)
 temp <- subset(sizeData, !is.na(circ) & circ == 'closed')
 segments(temp$fad_age, log10(temp$max_vol), temp$lad_age, log10(temp$max_vol), col="gray")
 lines(timescale$age_mid, closedCirc$mean, type="o", col='red', lwd=2)
+lines(timescale$age_mid, openCirc$mean, type="o", col='black', lwd=2)
 
 
 tempData <- subset(sizeData, !is.na(closedCirc) & !is.na(motile) & !is.na(predator) & !is.na(pelagic) & !is.na(air)) 
